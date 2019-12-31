@@ -1,6 +1,6 @@
 <?php
-use Zend\Json\Json;
-use Zend\Json\Decode;
+use Laminas\Json\Decode;
+use Laminas\Json\Json;
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 $json = file_get_contents('users.search.raw.json');
