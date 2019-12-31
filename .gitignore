@@ -1,10 +1,5 @@
-vendor/
-nbproject
-.idea
-.buildpath
-.project
-.settings/
-tmp/
-.DS_Store
-.*.sw*
-.*.un~
+/composer.lock
+/docs/html/
+/laminas-mkdoc-theme.tgz
+/laminas-mkdoc-theme/
+/vendor/
