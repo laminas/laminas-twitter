@@ -3,7 +3,7 @@
 <status>
   <created_at>Sun May 30 10:30:33 +0000 2010</created_at>
   <id>15033538555</id>
-  <text>@padraicb please add a test for using the 'cursor' parameter on Zend_Service_Twitter::userFriends(). And then make it pass. ;-)</text>
+  <text>@padraicb please add a test for using the 'cursor' parameter on Laminas_Service_Twitter::userFriends(). And then make it pass. ;-)</text>
   <source>&lt;a href="https://oauth.filttr.com/" rel="nofollow"&gt;Filttr&lt;/a&gt;</source>
   <truncated>false</truncated>
   <in_reply_to_status_id>15008737288</in_reply_to_status_id>
@@ -138,7 +138,7 @@
 <status>
   <created_at>Thu May 27 19:21:36 +0000 2010</created_at>
   <id>14854191542</id>
-  <text>thank you @padraicb #zf</text>
+  <text>thank you @padraicb #laminas</text>
   <source>&lt;a href="http://www.echofon.com/" rel="nofollow"&gt;Echofon&lt;/a&gt;</source>
   <truncated>false</truncated>
   <in_reply_to_status_id/>
@@ -183,7 +183,7 @@
 <status>
   <created_at>Thu May 27 19:05:36 +0000 2010</created_at>
   <id>14853489927</id>
-  <text>let's see what @padraicb did with that Zend_Feed_Writer thingy...</text>
+  <text>let's see what @padraicb did with that Laminas_Feed_Writer thingy...</text>
   <source>&lt;a href="http://www.echofon.com/" rel="nofollow"&gt;Echofon&lt;/a&gt;</source>
   <truncated>false</truncated>
   <in_reply_to_status_id/>
@@ -408,7 +408,7 @@
 <status>
   <created_at>Thu May 27 14:34:24 +0000 2010</created_at>
   <id>14838395116</id>
-  <text>@padraicb Zend_Service_Twitter - saw on the mailing list you're working on stuff - if you need assistance let me know</text>
+  <text>@padraicb Laminas_Service_Twitter - saw on the mailing list you're working on stuff - if you need assistance let me know</text>
   <source>&lt;a href="http://www.destroytwitter.com" rel="nofollow"&gt;DestroyTwitter&lt;/a&gt;</source>
   <truncated>false</truncated>
   <in_reply_to_status_id/>
@@ -498,7 +498,7 @@
 <status>
   <created_at>Thu May 27 13:35:24 +0000 2010</created_at>
   <id>14834728110</id>
-  <text>RT @padraicb: Interesting #ZF issues fact: There are just 62 open issues marked Blocker/Critical. Nice focus for the next bug hunt...</text>
+  <text>RT @padraicb: Interesting #Laminas issues fact: There are just 62 open issues marked Blocker/Critical. Nice focus for the next bug hunt...</text>
   <source>&lt;a href="http://www.tweetdeck.com" rel="nofollow"&gt;TweetDeck&lt;/a&gt;</source>
   <truncated>false</truncated>
   <in_reply_to_status_id/>
@@ -543,7 +543,7 @@
 <status>
   <created_at>Thu May 27 10:53:03 +0000 2010</created_at>
   <id>14826671084</id>
-  <text>Test spies  are finally catching on? http://bit.ly/cGO75A http://bit.ly/9w6ZFd (@magnars @zmalltalker @padraicb)</text>
+  <text>Test spies  are finally catching on? http://bit.ly/cGO75A http://bit.ly/9w6Laminasd (@magnars @zmalltalker @padraicb)</text>
   <source>&lt;a href="http://www.tweetdeck.com" rel="nofollow"&gt;TweetDeck&lt;/a&gt;</source>
   <truncated>false</truncated>
   <in_reply_to_status_id/>

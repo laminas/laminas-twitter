@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Setup autoloading
  */
@@ -16,11 +17,11 @@ After that, you should be able to run tests.');
 include_once __DIR__ . '/../vendor/autoload.php';
 
 spl_autoload_register(function ($class) {
-    if (0 !== strpos($class, 'ZendServiceTest\\')) {
+    if (0 !== strpos($class, 'LaminasTest\\')) {
         return false;
     }
-    $normalized = str_replace('ZendServiceTest\\', '', $class);
-    $filename   = __DIR__ . '/ZendService/' . str_replace(array('\\', '_'), '/', $normalized) . '.php';
+    $normalized = str_replace('LaminasTest\\', '', $class);
+    $filename   = __DIR__ . '/Laminas/' . str_replace(array('\\', '_'), '/', $normalized) . '.php';
     if (!file_exists($filename)) {
         return false;
     }
