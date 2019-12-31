@@ -1,40 +1,48 @@
 {
-    "name": "zendframework/zendservice-twitter",
+    "name": "laminas/laminas-twitter",
     "description": "OOP wrapper for the Twitter web service",
-    "type": "library",
+    "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "twitter"
     ],
-    "homepage": "http://packages.zendframework.com/",
-    "license": "BSD-3-Clause",
-    "autoload": {
-        "psr-0": {
-            "ZendService\\Twitter\\": "library/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-twitter/",
+        "issues": "https://github.com/laminas/laminas-twitter/issues",
+        "source": "https://github.com/laminas/laminas-twitter",
+        "rss": "https://github.com/laminas/laminas-twitter/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.zendframework.com/"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-feed": ">=2.0.0",
-        "zendframework/zend-http": ">=2.0.0",
-        "zendframework/zend-json": ">=2.0.0",
-        "zendframework/zend-stdlib": ">=2.0.0",
-        "zendframework/zend-uri": ">=2.0.0",
-        "zendframework/zendoauth": ">=2.0.0",
-        "zendframework/zendrest": ">=2.0.0"
-    },
-    "require-dev": {
-        "zendframework/zend-config": ">=2.0.0"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "laminas/laminas-feed": ">=2.0.0",
+        "laminas/laminas-http": ">=2.0.0",
+        "laminas/laminas-json": ">=2.0.0",
+        "laminas/laminas-oauth": ">=2.0.0",
+        "laminas/laminas-stdlib": ">=2.0.0",
+        "laminas/laminas-uri": ">=2.0.0",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "laminas/laminasrest": ">=2.0.0"
+    },
+    "require-dev": {
+        "laminas/laminas-config": ">=2.0.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Laminas\\Twitter\\": "library/"
+        }
+    },
+    "replace": {
+        "zendframework/zendservice-twitter": "self.version"
     }
 }

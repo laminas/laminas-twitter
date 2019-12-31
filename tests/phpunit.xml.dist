@@ -1,7 +1,7 @@
 <phpunit bootstrap="./Bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="ZendService Akismet Test Suite">
-            <directory>./ZendService</directory>
+        <testsuite name="Laminas Akismet Test Suite">
+            <directory>./Laminas</directory>
         </testsuite>
     </testsuites>
 

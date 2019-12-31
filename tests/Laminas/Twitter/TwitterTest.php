@@ -1,25 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Twitter;
+namespace LaminasTest\Twitter;
 
-use ZendService\Twitter;
-use Zend\Http;
-use ZendRest as Rest;
+use Laminas\Http;
+use Laminas\Twitter;
+use LaminasRest as Rest;
 
 /**
- * @category   Zend
- * @package    Zend_Service_Twitter
+ * @category   Laminas
+ * @package    Laminas_Service_Twitter
  * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_Twitter
+ * @group      Laminas_Service
+ * @group      Laminas_Service_Twitter
  */
 class TwitterTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,7 +29,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
      * 3. TODO: Correctly utilises all optional parameters
      *
      * If used correctly, tests will be fast, efficient, and focused on
-     * Zend_Service_Twitter's behaviour only. No other dependencies need be
+     * Laminas_Service_Twitter's behaviour only. No other dependencies need be
      * tested. The Twitter API Changelog should be regularly reviewed to
      * ensure the component is synchronised to the API.
      *
@@ -39,16 +37,16 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
      * @param string $method Do we expect HTTP GET or POST?
      * @param string $responseFile File containing a valid XML response to the request
      * @param array $params Expected GET/POST parameters for the request
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      */
     protected function stubTwitter($path, $method, $responseFile = null, array $params = null)
     {
-        $client = $this->getMock('ZendOAuth\Client', array(), array(), '', false);
+        $client = $this->getMock('Laminas\OAuth\Client', array(), array(), '', false);
         $client->expects($this->any())->method('resetParameters')
             ->will($this->returnValue($client));
         $client->expects($this->once())->method('setUri')
             ->with('http://api.twitter.com/1/' . $path);
-        $response = $this->getMock('Zend\Http\Response', array(), array(), '', false);
+        $response = $this->getMock('Laminas\Http\Response', array(), array(), '', false);
         if (!is_null($params)) {
             $setter = 'setParameter' . ucfirst(strtolower($method));
             $client->expects($this->once())->method($setter)->with($params);
@@ -68,8 +66,8 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
     public function testProvidingAccessTokenInOptionsSetsHttpClientFromAccessToken()
     {
-        $token = $this->getMock('ZendOAuth\Token\Access', array(), array(), '', false);
-        $client = $this->getMock('ZendOAuth\Client', array(), array(), '', false);
+        $token = $this->getMock('Laminas\OAuth\Token\Access', array(), array(), '', false);
+        $client = $this->getMock('Laminas\OAuth\Client', array(), array(), '', false);
         $token->expects($this->once())->method('getHttpClient')
             ->with(array('accessToken'=>$token, 'opt1'=>'val1', 'siteUrl'=>'https://api.twitter.com/oauth'))
             ->will($this->returnValue($client));
@@ -86,8 +84,8 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
     public function testChecksAuthenticatedStateBasedOnAvailabilityOfAccessTokenBasedClient()
     {
-        $token = $this->getMock('ZendOAuth\Token\Access', array(), array(), '', false);
-        $client = $this->getMock('ZendOAuth\Client', array(), array(), '', false);
+        $token = $this->getMock('Laminas\OAuth\Token\Access', array(), array(), '', false);
+        $client = $this->getMock('Laminas\OAuth\Client', array(), array(), '', false);
         $token->expects($this->once())->method('getHttpClient')
             ->with(array('accessToken'=>$token, 'siteUrl'=>'https://api.twitter.com/oauth'))
             ->will($this->returnValue($client));
@@ -98,7 +96,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
     public function testRelaysMethodsToInternalOAuthInstance()
     {
-        $oauth = $this->getMock('ZendOAuth\Consumer', array(), array(), '', false);
+        $oauth = $this->getMock('Laminas\OAuth\Consumer', array(), array(), '', false);
         $oauth->expects($this->once())->method('getRequestToken')->will($this->returnValue('foo'));
         $oauth->expects($this->once())->method('getRedirectUrl')->will($this->returnValue('foo'));
         $oauth->expects($this->once())->method('redirect')->will($this->returnValue('foo'));
@@ -109,34 +107,34 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $twitter->getRequestToken());
         $this->assertEquals('foo', $twitter->getRedirectUrl());
         $this->assertEquals('foo', $twitter->redirect());
-        $this->assertEquals('foo', $twitter->getAccessToken(array(), $this->getMock('ZendOAuth\Token\Request')));
+        $this->assertEquals('foo', $twitter->getAccessToken(array(), $this->getMock('Laminas\OAuth\Token\Request')));
         $this->assertEquals('foo', $twitter->getToken());
     }
 
     public function testResetsHttpClientOnReceiptOfAccessTokenToOauthClient()
     {
         $this->markTestIncomplete('Problem with resolving classes for mocking');
-        $oauth = $this->getMock('ZendOAuth\Consumer', array(), array(), '', false);
-        $client = $this->getMock('ZendOAuth\Client', array(), array(), '', false);
-        $token = $this->getMock('ZendOAuth\Token\Access', array(), array(), '', false);
+        $oauth = $this->getMock('Laminas\OAuth\Consumer', array(), array(), '', false);
+        $client = $this->getMock('Laminas\OAuth\Client', array(), array(), '', false);
+        $token = $this->getMock('Laminas\OAuth\Token\Access', array(), array(), '', false);
         $token->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
         $oauth->expects($this->once())->method('getAccessToken')->will($this->returnValue($token));
         $client->expects($this->once())->method('setHeaders')->with('Accept-Charset', 'ISO-8859-1,utf-8');
 
         $twitter = new Twitter\Twitter(array(), $oauth);
-        $twitter->getAccessToken(array(), $this->getMock('ZendOAuth\Token\Request'));
+        $twitter->getAccessToken(array(), $this->getMock('Laminas\OAuth\Token\Request'));
         $this->assertTrue($client === $twitter->getLocalHttpClient());
     }
 
     public function testAuthorisationFailureWithUsernameAndNoAccessToken()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter(array('username'=>'me'));
         $twitter->statusPublicTimeline();
     }
 
     /**
-     * @group ZF-8218
+     * @group Laminas-8218
      */
     public function testUserNameNotRequired()
     {
@@ -150,7 +148,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testRetrievingStatusesWithValidScreenNameThrowsNoInvalidScreenNameException()
     {
@@ -162,27 +160,27 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testRetrievingStatusesWithInvalidScreenNameCharacterThrowsInvalidScreenNameException()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter();
         $twitter->status->userTimeline(array('screen_name' => 'abc.def'));
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testRetrievingStatusesWithInvalidScreenNameLengthThrowsInvalidScreenNameException()
     {
-        $this->setExpectedException('\ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('\Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter();
         $twitter->status->userTimeline(array('screen_name' => 'abcdef_abc123_abc123x'));
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testStatusUserTimelineConstructsExpectedGetUriAndOmitsInvalidParams()
     {
@@ -218,14 +216,14 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
     public function testOverloadingGetShouldthrowExceptionWithInvalidMethodType()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter;
         $return = $twitter->foo;
     }
 
     public function testOverloadingGetShouldthrowExceptionWithInvalidFunction()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter;
         $return = $twitter->foo();
     }
@@ -241,7 +239,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
     public function testMethodProxyingThrowExceptionsWithInvalidMethods()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter;
         $twitter->status->foo();
     }
@@ -371,14 +369,14 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
     public function testPostStatusUpdateToLongShouldThrowException()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter;
         $twitter->status->update('Test Message - ' . str_repeat(' Hello ', 140));
     }
 
     public function testPostStatusUpdateEmptyShouldThrowException()
     {
-        $this->setExpectedException('ZendService\Twitter\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Twitter\Exception\ExceptionInterface');
         $twitter = new Twitter\Twitter;
         $twitter->status->update('');
     }
@@ -571,12 +569,12 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6284
+     * @group Laminas-6284
      */
     public function testTwitterObjectsSoNotShareSameHttpClientToPreventConflictingAuthentication()
     {
-        $twitter1 = new Twitter\Twitter(array('username'=>'zftestuser1'));
-        $twitter2 = new Twitter\Twitter(array('username'=>'zftestuser2'));
+        $twitter1 = new Twitter\Twitter(array('username'=>'laminastestuser1'));
+        $twitter2 = new Twitter\Twitter(array('username'=>'laminastestuser2'));
         $this->assertFalse($twitter1->getLocalHttpClient() === $twitter2->getLocalHttpClient());
     }
 
