@@ -97,7 +97,7 @@
   <name>Kevin Schroeder</name>
   <screen_name>kpschrade</screen_name>
   <location/>
-  <description>Technology Evangelist for Zend Technologies.  Co-author of the IBM i Programmer's Guide to PHP</description>
+  <description>Technology Evangelist for Laminas Technologies.  Co-author of the IBM i Programmer's Guide to PHP</description>
   <profile_image_url>http://a3.twimg.com/profile_images/790382249/Little_Schrade_normal.gif</profile_image_url>
   <url>http://www.eschrade.com</url>
   <protected>false</protected>
@@ -743,7 +743,7 @@ Technology lead @giftiniti</description>
   <name>julienPauli</name>
   <screen_name>julienPauli</screen_name>
   <location>Paris</location>
-  <description>ZCE, ZFCE. Web app architect. PHP, Apache, ZendF contributor</description>
+  <description>ZCE, LaminasCE. Web app architect. PHP, Apache, LaminasF contributor</description>
   <profile_image_url>http://a3.twimg.com/profile_images/715548091/julienP_normal.jpg</profile_image_url>
   <url>http://www.alterway.fr</url>
   <protected>false</protected>
@@ -905,7 +905,7 @@ Technology lead @giftiniti</description>
   <status>
     <created_at>Thu Feb 04 23:56:27 +0000 2010</created_at>
     <id>8653702328</id>
-    <text>Ya-hoo! First Russian Zend Framework conference is officially announced! :)
+    <text>Ya-hoo! First Russian Laminas conference is officially announced! :)
 http://tinyurl.com/y933rcz</text>
     <source>web</source>
     <truncated>false</truncated>
@@ -2337,7 +2337,7 @@ Personal Tweets, All Thoughts my Own</description>
   <name>Jeroen Keppens</name>
   <screen_name>jkeppens</screen_name>
   <location>Belgium</location>
-  <description>Passionate IT'er with experience as senior webdeveloper, DBA, project manager, team leader. Certifications: ZCE, ZFCE, MySQL 5 Developer, Scrum Master</description>
+  <description>Passionate IT'er with experience as senior webdeveloper, DBA, project manager, team leader. Certifications: ZCE, LaminasCE, MySQL 5 Developer, Scrum Master</description>
   <profile_image_url>http://a3.twimg.com/profile_images/374641259/profile_picture_normal.jpg</profile_image_url>
   <url>http://www.amazium.be</url>
   <protected>false</protected>
@@ -2427,7 +2427,7 @@ Personal Tweets, All Thoughts my Own</description>
   <name>Pieter Kokx</name>
   <screen_name>kokxie</screen_name>
   <location>Netherlands</location>
-  <description>PHP developer, Zend Framework developer, author of Zend_Markup and Pirate</description>
+  <description>PHP developer, Laminas developer, author of Laminas_Markup and Pirate</description>
   <profile_image_url>http://a3.twimg.com/profile_images/734067299/twitter_normal.png</profile_image_url>
   <url>http://blog.kokx.nl/</url>
   <protected>false</protected>
@@ -2757,7 +2757,7 @@ Personal Tweets, All Thoughts my Own</description>
   <name>Zeev Suraski</name>
   <screen_name>zeevs</screen_name>
   <location>Israel</location>
-  <description>Zend CTO &amp; Architect of PHP (one of them!)</description>
+  <description>Laminas CTO &amp; Architect of PHP (one of them!)</description>
   <profile_image_url>http://a1.twimg.com/profile_images/206658984/IMG_6510_normal.jpg</profile_image_url>
   <url>http://suraski.net/</url>
   <protected>false</protected>
@@ -3104,7 +3104,7 @@ Airappz.com Greenhouselimerick.com
   <name>wadearnold</name>
   <screen_name>wadearnold</screen_name>
   <location>Cedar Falls, IA USA</location>
-  <description>Flash Builder, Zend Amf, amfphp, Flex SDK, hadoop, cassandradb, hbase</description>
+  <description>Flash Builder, Laminas Amf, amfphp, Flex SDK, hadoop, cassandradb, hbase</description>
   <profile_image_url>http://a3.twimg.com/profile_images/492783235/wade_crops_150_normal.jpg</profile_image_url>
   <url>http://wadearnold.com/blog/</url>
   <protected>false</protected>
@@ -3749,7 +3749,7 @@ Airappz.com Greenhouselimerick.com
   <name>David Caunt</name>
   <screen_name>dcaunt</screen_name>
   <location>Birmingham, UK</location>
-  <description>A developer specialising in PHP, Zend Framework and all things web at iedesign.co.uk. I'm a Zend Framework contributor</description>
+  <description>A developer specialising in PHP, Laminas and all things web at iedesign.co.uk. I'm a Laminas contributor</description>
   <profile_image_url>http://a1.twimg.com/profile_images/498609274/twitterProfilePhoto_normal.jpg</profile_image_url>
   <url/>
   <protected>false</protected>
@@ -3989,7 +3989,7 @@ Airappz.com Greenhouselimerick.com
   <name>C. R.  Dick</name>
   <screen_name>tixrus</screen_name>
   <location>PDX OR USA</location>
-  <description>Tixrus founder, humorist,  author, web maven,   software collaborator, foodie,  #ZFer  PHP dojo   jquery etc.   </description>
+  <description>Tixrus founder, humorist,  author, web maven,   software collaborator, foodie,  #Laminaser  PHP dojo   jquery etc.   </description>
   <profile_image_url>http://a3.twimg.com/profile_images/503180567/twitterProfilePhoto_normal.jpg</profile_image_url>
   <url>http://dorkage.net</url>
   <protected>false</protected>
