@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_Twitter for the canonical source repository
- * @copyright Copyright (c) 2005-2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_Twitter/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\Twitter;
+namespace Laminas\Twitter;
 
 use Closure;
+use Laminas\Http;
+use Laminas\OAuth as OAuth;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Uri;
 use Normalizer;
 use Traversable;
-use ZendOAuth as OAuth;
-use Zend\Http;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Uri;
 
 /**
  * Interact with the Twitter API.
@@ -283,9 +284,9 @@ class Twitter
      *
      * <code>
      * $response = $twitter->search->tweets('#php');
-     * $response = $twitter->users->search('zfdevteam');
-     * $response = $twitter->users->search('zfdevteam');
-     * $response = $twitter->statuses->mentions_timeline('zfdevteam');
+     * $response = $twitter->users->search('laminasdevteam');
+     * $response = $twitter->users->search('laminasdevteam');
+     * $response = $twitter->statuses->mentions_timeline('laminasdevteam');
      * </code>
      *
      * @return mixed
@@ -382,7 +383,7 @@ class Twitter
      * does not yet have a corresponding method in this class. As an example:
      *
      * <code>
-     * $response = $twitter->get('friends/list', ['screen_name' => 'zfdevteam']);
+     * $response = $twitter->get('friends/list', ['screen_name' => 'laminasdevteam']);
      * foreach ($response->users as $user) {
      *     printf("- %s (%s)\n", $user->name, $user->screen_name);
      * }

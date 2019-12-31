@@ -1,13 +1,14 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_Twitter for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_Twitter/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\Twitter;
+namespace Laminas\Twitter;
 
-use Zend\Http\Client as Client;
+use Laminas\Http\Client as Client;
 
 /**
  * Twitter Media Uploader base class
