@@ -1,5 +1,5 @@
 <?php
-use ZendService\Twitter\Twitter;
+use Laminas\Twitter\Twitter;
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
@@ -13,7 +13,7 @@ $twitter = new Twitter([
         'consumerSecret' => 'ax6VgjiYA5D75bLudAiC3gQAp63u9O2fV5PnXSd0Dq4',
     ],
     'http_client_options' => [
-        'adapter' => 'Zend\Http\Client\Adapter\Curl',
+        'adapter' => 'Laminas\Http\Client\Adapter\Curl',
     ]
 ]);
 
@@ -24,7 +24,7 @@ if (! $response->isSuccess()) {
     exit(2);
 }
 
-$response = $twitter->users->search('Zend');
+$response = $twitter->users->search('Laminas');
 if (! $response->isSuccess()) {
     echo "Search failed!\n";
     var_export($response->getErrors());

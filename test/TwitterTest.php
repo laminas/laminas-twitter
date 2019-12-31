@@ -1,26 +1,26 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_Twitter for the canonical source repository
- * @copyright Copyright (c) 2005-2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_Twitter/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Twitter;
+namespace LaminasTest\Twitter;
 
+use Laminas\Http;
+use Laminas\Http\Client\Adapter\Curl as CurlAdapter;
+use Laminas\OAuth\Client as OAuthClient;
+use Laminas\OAuth\Consumer as OAuthConsumer;
+use Laminas\OAuth\Token\Access as AccessToken;
+use Laminas\OAuth\Token\Request as RequestToken;
+use Laminas\Twitter;
+use Laminas\Twitter\RateLimit as RateLimit;
+use Laminas\Twitter\Response as TwitterResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use ReflectionProperty;
 use stdClass;
-use Zend\Http;
-use ZendOAuth\Client as OAuthClient;
-use ZendOAuth\Consumer as OAuthConsumer;
-use ZendOAuth\Token\Access as AccessToken;
-use ZendOAuth\Token\Request as RequestToken;
-use ZendService\Twitter;
-use ZendService\Twitter\Response as TwitterResponse;
-use ZendService\Twitter\RateLimit as RateLimit;
-
-use Zend\Http\Client\Adapter\Curl as CurlAdapter;
 
 class TwitterTest extends TestCase
 {
@@ -40,7 +40,7 @@ class TwitterTest extends TestCase
      * 3. TODO: Correctly utilises all optional parameters
      *
      * If used correctly, tests will be fast, efficient, and focused on
-     * Zend_Service_Twitter's behaviour only. No other dependencies need be
+     * Laminas_Service_Twitter's behaviour only. No other dependencies need be
      * tested. The Twitter API Changelog should be regularly reviewed to
      * ensure the component is synchronised to the API.
      *
@@ -241,7 +241,7 @@ class TwitterTest extends TestCase
     }
 
     /**
-     * @group ZF-8218
+     * @group Laminas-8218
      */
     public function testUserNameNotRequired()
     {
@@ -253,13 +253,13 @@ class TwitterTest extends TestCase
             ['screen_name' => 'mwop']
         ));
         $response = $twitter->users->show('mwop');
-        $this->assertInstanceOf('ZendService\Twitter\Response', $response);
+        $this->assertInstanceOf('Laminas\Twitter\Response', $response);
         $exists = $response->id !== null;
         $this->assertTrue($exists);
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testRetrievingStatusesWithValidScreenNameThrowsNoInvalidScreenNameException()
     {
@@ -274,7 +274,7 @@ class TwitterTest extends TestCase
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testRetrievingStatusesWithInvalidScreenNameCharacterThrowsInvalidScreenNameException()
     {
@@ -284,7 +284,7 @@ class TwitterTest extends TestCase
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testRetrievingStatusesWithInvalidScreenNameLengthThrowsInvalidScreenNameException()
     {
@@ -294,7 +294,7 @@ class TwitterTest extends TestCase
     }
 
     /**
-     * @group ZF-7781
+     * @group Laminas-7781
      */
     public function testStatusUserTimelineConstructsExpectedGetUriAndOmitsInvalidParams()
     {
@@ -730,12 +730,12 @@ class TwitterTest extends TestCase
     }
 
     /**
-     * @group ZF-6284
+     * @group Laminas-6284
      */
     public function testTwitterObjectsSoNotShareSameHttpClientToPreventConflictingAuthentication()
     {
-        $twitter1 = new Twitter\Twitter(['username' => 'zftestuser1']);
-        $twitter2 = new Twitter\Twitter(['username' => 'zftestuser2']);
+        $twitter1 = new Twitter\Twitter(['username' => 'laminastestuser1']);
+        $twitter2 = new Twitter\Twitter(['username' => 'laminastestuser2']);
         $this->assertNotSame($twitter1->getHttpClient(), $twitter2->getHttpClient());
     }
 
@@ -746,9 +746,9 @@ class TwitterTest extends TestCase
             'search/tweets.json',
             Http\Request::METHOD_GET,
             'search.tweets.json',
-            ['q' => '#zf2']
+            ['q' => '#laminas']
         ));
-        $response = $twitter->search->tweets('#zf2');
+        $response = $twitter->search->tweets('#laminas');
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
@@ -759,9 +759,9 @@ class TwitterTest extends TestCase
             'users/search.json',
             Http\Request::METHOD_GET,
             'users.search.json',
-            ['q' => 'Zend']
+            ['q' => 'Laminas']
         ));
-        $response = $twitter->users->search('Zend');
+        $response = $twitter->users->search('Laminas');
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
@@ -788,9 +788,9 @@ class TwitterTest extends TestCase
             'users/search.json',
             Http\Request::METHOD_GET,
             'users.search.json',
-            ['q' => 'Zend']
+            ['q' => 'Laminas']
         ));
-        $response = $twitter->users->search('Zend');
+        $response = $twitter->users->search('Laminas');
         $this->assertInstanceOf(TwitterResponse::class, $response);
         $payload = $response->toValue();
         $this->assertCount(20, $payload);
@@ -906,7 +906,7 @@ class TwitterTest extends TestCase
 
         $client->setUri('https://api.twitter.com/1.1/users/show.json')->shouldBeCalled();
         $client->setMethod('GET')->will([$client, 'reveal']);
-        $client->setParameterGet(['screen_name' => 'Zend'])->shouldBeCalled();
+        $client->setParameterGet(['screen_name' => 'Laminas'])->shouldBeCalled();
 
         $userResponse = $this->prophesize(Http\Response::class);
         $userResponse->getBody()->willReturn('{"id_str":"1"}');
@@ -946,7 +946,7 @@ class TwitterTest extends TestCase
         );
 
         $twitter->setHttpClient($client->reveal());
-        $response = $twitter->directMessages->new('Zend', 'Message');
+        $response = $twitter->directMessages->new('Laminas', 'Message');
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
@@ -962,7 +962,7 @@ class TwitterTest extends TestCase
 
         $client->setUri('https://api.twitter.com/1.1/users/show.json')->shouldBeCalled();
         $client->setMethod('GET')->will([$client, 'reveal']);
-        $client->setParameterGet(['screen_name' => 'Zend'])->shouldBeCalled();
+        $client->setParameterGet(['screen_name' => 'Laminas'])->shouldBeCalled();
 
         $userResponse = $this->prophesize(Http\Response::class);
         $userResponse->getBody()->willReturn('{"id_str":"1"}');
@@ -979,7 +979,7 @@ class TwitterTest extends TestCase
         $twitter->setHttpClient($client->reveal());
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid user');
-        $response = $twitter->directMessages->new('Zend', 'Message');
+        $response = $twitter->directMessages->new('Laminas', 'Message');
     }
 
     public function testDirectMessageWithUserIdentifierSkipsUserLookup()
@@ -1088,12 +1088,12 @@ class TwitterTest extends TestCase
             Http\Request::METHOD_GET,
             'lists.members.json',
             [
-                'slug'     => 'zendframework',
+                'slug'     => 'laminas',
                 'owner_id' => 12345,
             ]
         ));
 
-        $finalResponse = $twitter->lists->members('zendframework', ['owner_id' => 12345]);
+        $finalResponse = $twitter->lists->members('laminas', ['owner_id' => 12345]);
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
@@ -1105,12 +1105,12 @@ class TwitterTest extends TestCase
             Http\Request::METHOD_GET,
             'lists.members.json',
             [
-                'slug'              => 'zendframework',
-                'owner_screen_name' => 'zfdevteam',
+                'slug'              => 'laminas',
+                'owner_screen_name' => 'laminasdevteam',
             ]
         ));
 
-        $finalResponse = $twitter->lists->members('zendframework', ['owner_screen_name' => 'zfdevteam']);
+        $finalResponse = $twitter->lists->members('laminas', ['owner_screen_name' => 'laminasdevteam']);
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
@@ -1119,7 +1119,7 @@ class TwitterTest extends TestCase
         $twitter = new Twitter\Twitter();
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('missing owner info');
-        $twitter->lists->members('zendframework');
+        $twitter->lists->members('laminas');
     }
 
     public function invalidIntegerIdentifiers() : array
@@ -1145,7 +1145,7 @@ class TwitterTest extends TestCase
         $twitter = new Twitter\Twitter();
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('invalid owner_id');
-        $twitter->lists->members('zendframework', ['owner_id' => $ownerId]);
+        $twitter->lists->members('laminas', ['owner_id' => $ownerId]);
     }
 
     public function invalidStringIdentifiers() : array
@@ -1165,13 +1165,13 @@ class TwitterTest extends TestCase
         $twitter = new Twitter\Twitter();
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('invalid owner_screen_name');
-        $twitter->lists->members('zendframework', ['owner_screen_name' => $owner]);
+        $twitter->lists->members('laminas', ['owner_screen_name' => $owner]);
     }
 
     public function userIdentifierProvider() : iterable
     {
         yield 'single-user_id' => [111, 'user_id'];
-        yield 'single-screen_name' => ['zfdevteam', 'screen_name'];
+        yield 'single-screen_name' => ['laminasdevteam', 'screen_name'];
         yield 'multi-user_id' => [range(100, 150), 'user_id'];
         yield 'multi-screen_name' => [range('a', 'z'), 'screen_name'];
     }

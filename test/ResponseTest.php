@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_Twitter for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_Twitter/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\Twitter;
+namespace LaminasTest\Twitter;
 
+use Laminas\Http\Header\HeaderInterface;
+use Laminas\Http\Headers;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Twitter\RateLimit;
+use Laminas\Twitter\Response;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Zend\Http\Header\HeaderInterface;
-use Zend\Http\Headers;
-use Zend\Http\Response as HttpResponse;
-use ZendService\Twitter\RateLimit;
-use ZendService\Twitter\Response;
 
 class ResponseTest extends TestCase
 {
