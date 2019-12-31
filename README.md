@@ -1,6 +1,6 @@
-# ZendService\Twitter component
+# Laminas\Twitter component
 
-Master: [![Build Status](https://secure.travis-ci.org/zendframework/ZendService_Twitter.png?branch=master)](http://travis-ci.org/zendframework/ZendService_Twitter)
+Master: [![Build Status](https://travis-ci.org/laminas/laminas-twitter.png?branch=master)](https://travis-ci.org/laminas/laminas-twitter)
 
 You can install using:
 
