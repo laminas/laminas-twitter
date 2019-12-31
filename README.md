@@ -1,7 +1,7 @@
-# zendservice-twitter
+# laminas-twitter
 
-[![Build Status](https://secure.travis-ci.org/zendframework/ZendService_Twitter.svg?branch=master)](https://secure.travis-ci.org/zendframework/ZendService_Twitter)
-[![Coverage Status](https://coveralls.io/repos/github/zendframework/ZendService_Twitter/badge.svg?branch=master)](https://coveralls.io/github/zendframework/ZendService_Twitter?branch=master)
+[![Build Status](https://travis-ci.org/laminas/laminas-twitter.svg?branch=master)](https://travis-ci.org/laminas/laminas-twitter)
+[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-twitter/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-twitter?branch=master)
 
 Provides an object oriented PHP wrapper for the [Twitter API](https://developer.twitter.com/en/docs).
 
@@ -10,7 +10,7 @@ Provides an object oriented PHP wrapper for the [Twitter API](https://developer.
 Run the following to install this library:
 
 ```bash
-$ composer require zendframework/zendservice-twitter
+$ composer require laminas/laminas-twitter
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ Instantiate the `Twitter` class by providing your Twitter consumer key and
 secret, as well as the access token and secret:
 
 ```php
-use ZendService\Twitter\Twitter;
+use Laminas\Twitter\Twitter;
 
 $twitter = new Twitter([
     'access_token' => [
@@ -138,7 +138,7 @@ The data to provide will vary based on the endpoint.
 ## Media uploads
 
 Since version 3.0, we have supported media uploads via the classes
-`ZendService\Twitter\Media`, `Image`, and `Video`. In each case, you will
+`Laminas\Twitter\Media`, `Image`, and `Video`. In each case, you will
 instantiate the appropriate class with the local filesystem path of the image to
 upload and the media type, followed by calling `upload()` with a properly
 configured HTTP client. The response will contain a `media_id` property, which
