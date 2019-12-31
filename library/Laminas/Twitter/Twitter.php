@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\Twitter;
+namespace Laminas\Twitter;
 
+use Laminas\Http;
+use Laminas\OAuth as OAuth;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Uri;
 use Traversable;
-use Zend\Http;
-use ZendOAuth as OAuth;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Uri;
 
 /**
- * @category   Zend
- * @package    Zend_Service
+ * @category   Laminas
+ * @package    Laminas_Service
  * @subpackage Twitter
  */
 class Twitter

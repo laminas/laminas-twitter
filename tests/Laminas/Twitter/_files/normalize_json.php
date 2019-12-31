@@ -1,6 +1,7 @@
 <?php
-use Zend\Json\Json;
-use Zend\Json\Decode;
+use Laminas\Json\Decode;
+use Laminas\Json\Json;
+
 require_once '/home/matthew/tmp/composer/vendor/autoload.php';
 $json = file_get_contents('users.search.raw.json');
 $php  = Json::decode($json);
