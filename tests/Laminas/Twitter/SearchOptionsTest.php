@@ -1,28 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\Twitter;
+namespace LaminasTest\Twitter;
 
-use ZendService\Twitter;
+use Laminas\Twitter;
 
 /**
- * @category   Zend
- * @package    Zend_Service_Twitter
+ * @category   Laminas
+ * @package    Laminas_Service_Twitter
  * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_Twitter
+ * @group      Laminas_Service
+ * @group      Laminas_Service_Twitter
  */
 class SearchOptionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \ZendService\Twitter\Search $twitter
+     * @var \Laminas\Twitter\Search $twitter
      */
     protected $twitter;
 
