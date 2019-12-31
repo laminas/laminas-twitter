@@ -1,26 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-twitter for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-twitter/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-twitter/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\Twitter;
+namespace Laminas\Twitter;
 
+use Laminas\Http;
+use Laminas\OAuth;
+use Laminas\Rest;
+use Laminas\Rest\Client;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Uri;
 use Traversable;
-use Zend\Http;
-use Zend\OAuth;
-use Zend\Rest;
-use Zend\Rest\Client;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Uri;
 
 /**
- * @category   Zend
- * @package    Zend_Service
+ * @category   Laminas
+ * @package    Laminas_Service
  * @subpackage Twitter
  */
 class Twitter extends Client\RestClient
@@ -68,9 +66,9 @@ class Twitter extends Client\RestClient
     protected $methodType;
 
     /**
-     * Zend\Oauth Consumer
+     * Laminas\Oauth Consumer
      *
-     * @var \Zend\OAuth\Consumer
+     * @var \Laminas\OAuth\Consumer
      */
     protected $oauthConsumer = null;
 
@@ -99,7 +97,7 @@ class Twitter extends Client\RestClient
     /**
      * Local HTTP Client cloned from statically set client
      *
-     * @var \Zend\Http\Client
+     * @var \Laminas\Http\Client
      */
     protected $localHttpClient = null;
 
@@ -135,9 +133,9 @@ class Twitter extends Client\RestClient
 
     /**
      * Set local HTTP client as distinct from the static HTTP client
-     * as inherited from Zend_Rest_Client.
+     * as inherited from Laminas_Rest_Client.
      *
-     * @param Zend\Http\Client $client
+     * @param Laminas\Http\Client $client
      * @return self
      */
     public function setLocalHttpClient(Http\Client $client)
@@ -149,9 +147,9 @@ class Twitter extends Client\RestClient
 
     /**
      * Get the local HTTP client as distinct from the static HTTP client
-     * inherited from \Zend\Rest\Client
+     * inherited from \Laminas\Rest\Client
      *
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      */
     public function getLocalHttpClient()
     {
@@ -945,8 +943,8 @@ class Twitter extends Client\RestClient
 
         /**
          * Get the HTTP client and configure it for the endpoint URI.
-         * Do this each time because the Zend\Http\Client instance is shared
-         * among all Zend_Service_Abstract subclasses.
+         * Do this each time because the Laminas\Http\Client instance is shared
+         * among all Laminas_Service_Abstract subclasses.
          */
         $this->localHttpClient->resetParameters()->setUri((string) $this->uri);
     }
