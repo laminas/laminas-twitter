@@ -140,8 +140,8 @@
   <name>Christian Albrecht</name>
   <screen_name>c_alb</screen_name>
   <location>Munich, Germany</location>
-  <description>self-taught coder applying  Zend Framework php &amp; jQuery,
-Zend_Form Lead Maintainer</description>
+  <description>self-taught coder applying  Laminas php &amp; jQuery,
+Laminas_Form Lead Maintainer</description>
   <profile_image_url>http://a1.twimg.com/profile_images/802030278/twitter3_normal.png</profile_image_url>
   <url>http://christian-albrecht.info</url>
   <protected>false</protected>
@@ -186,7 +186,7 @@ Zend_Form Lead Maintainer</description>
   <name>Andrey Shevchenko</name>
   <screen_name>distdev</screen_name>
   <location/>
-  <description>PHP developer / Zend Certified Engineer :)</description>
+  <description>PHP developer / Laminas Certified Engineer :)</description>
   <profile_image_url>http://a1.twimg.com/profile_images/598948962/dd_normal.gif</profile_image_url>
   <url/>
   <protected>false</protected>
@@ -664,7 +664,7 @@ Zend_Form Lead Maintainer</description>
   <name>Kevin Schroeder</name>
   <screen_name>kpschrade</screen_name>
   <location/>
-  <description>Technology Evangelist for Zend Technologies.  Co-author of the IBM i Programmer's Guide to PHP</description>
+  <description>Technology Evangelist for Laminas Technologies.  Co-author of the IBM i Programmer's Guide to PHP</description>
   <profile_image_url>http://a3.twimg.com/profile_images/790382249/Little_Schrade_normal.gif</profile_image_url>
   <url>http://www.eschrade.com</url>
   <protected>false</protected>
@@ -1312,7 +1312,7 @@ focused on our clients business objectives. </description>
   <screen_name>sinamiandashti</screen_name>
   <location>Iran Tehran Pasdaran</location>
   <description>trance lover .... PHP developer
-zend frame work developer ...
+laminas frame work developer ...
 
 armin van buuren FAN
 state of trance FAN</description>
@@ -1342,7 +1342,7 @@ state of trance FAN</description>
   <status>
     <created_at>Sat May 29 14:36:39 +0000 2010</created_at>
     <id>14978083982</id>
-    <text>just used the Zend_Db_Profiler_Firebug and Zend_Log_Writer_Firebug for the first time ... with FireBug FF addon . its cool #zf #firefox #php</text>
+    <text>just used the Laminas_Db_Profiler_Firebug and Laminas_Log_Writer_Firebug for the first time ... with FireBug FF addon . its cool #laminas #firefox #php</text>
     <source>web</source>
     <truncated>false</truncated>
     <in_reply_to_status_id/>
@@ -2336,7 +2336,7 @@ XBOX live gamertag: SOG KruncH</description>
   <name>julienPauli</name>
   <screen_name>julienPauli</screen_name>
   <location>Paris</location>
-  <description>ZCE, ZFCE. Web app architect. PHP, Apache, ZendF contributor</description>
+  <description>ZCE, LaminasCE. Web app architect. PHP, Apache, LaminasF contributor</description>
   <profile_image_url>http://a3.twimg.com/profile_images/715548091/julienP_normal.jpg</profile_image_url>
   <url>http://www.alterway.fr</url>
   <protected>false</protected>
@@ -2696,7 +2696,7 @@ XBOX live gamertag: SOG KruncH</description>
   <name>Steve Tran</name>
   <screen_name>clu3</screen_name>
   <location>O-n-l-i-n-e-24-7</location>
-  <description>Web development. Zend Framework and Jquery, and Online Business</description>
+  <description>Web development. Laminas and Jquery, and Online Business</description>
   <profile_image_url>http://a3.twimg.com/profile_images/201515571/avatar_normal.jpg</profile_image_url>
   <url>http://clu3.com</url>
   <protected>false</protected>
@@ -2813,7 +2813,7 @@ XBOX live gamertag: SOG KruncH</description>
   <status>
     <created_at>Thu Apr 22 17:14:04 +0000 2010</created_at>
     <id>12650534190</id>
-    <text>@giorgiosironi I recommed ZFS. lol. But I don't think can do diffs.</text>
+    <text>@giorgiosironi I recommed LaminasS. lol. But I don't think can do diffs.</text>
     <source>&lt;a href="http://www.tweetdeck.com/" rel="nofollow"&gt;TweetDeck&lt;/a&gt;</source>
     <truncated>false</truncated>
     <in_reply_to_status_id>12631604856</in_reply_to_status_id>
@@ -3161,7 +3161,7 @@ XBOX live gamertag: SOG KruncH</description>
   <name>Paul Court</name>
   <screen_name>IAWDev</screen_name>
   <location/>
-  <description>PHP Developer - Drupal &amp; Zend Framework mainly</description>
+  <description>PHP Developer - Drupal &amp; Laminas mainly</description>
   <profile_image_url>http://a1.twimg.com/profile_images/144829882/teitter-logo2_normal.png</profile_image_url>
   <url>http://www.itsaboutwebsites.com</url>
   <protected>false</protected>
@@ -3522,7 +3522,7 @@ XBOX live gamertag: SOG KruncH</description>
   <status>
     <created_at>Thu May 27 20:55:31 +0000 2010</created_at>
     <id>14858717547</id>
-    <text>@iandeveloper yea it will, prolly wont work though ;-)  man these queries in the home page are mental, some will deffo struggle with zf db</text>
+    <text>@iandeveloper yea it will, prolly wont work though ;-)  man these queries in the home page are mental, some will deffo struggle with laminas db</text>
     <source>&lt;a href="http://www.tweetdeck.com" rel="nofollow"&gt;TweetDeck&lt;/a&gt;</source>
     <truncated>false</truncated>
     <in_reply_to_status_id>14858239458</in_reply_to_status_id>
@@ -3657,7 +3657,7 @@ XBOX live gamertag: SOG KruncH</description>
   <status>
     <created_at>Sun May 30 10:30:33 +0000 2010</created_at>
     <id>15033538555</id>
-    <text>@padraicb please add a test for using the 'cursor' parameter on Zend_Service_Twitter::userFriends(). And then make it pass. ;-)</text>
+    <text>@padraicb please add a test for using the 'cursor' parameter on Laminas_Service_Twitter::userFriends(). And then make it pass. ;-)</text>
     <source>&lt;a href="https://oauth.filttr.com/" rel="nofollow"&gt;Filttr&lt;/a&gt;</source>
     <truncated>false</truncated>
     <in_reply_to_status_id>15008737288</in_reply_to_status_id>
@@ -3917,7 +3917,7 @@ XBOX live gamertag: SOG KruncH</description>
   <name>Bobby C</name>
   <screen_name>_phineas</screen_name>
   <location>Philadelphia, Pennsylvania</location>
-  <description>Web developer, internet marketing, php, zend framework, social media</description>
+  <description>Web developer, internet marketing, php, laminas framework, social media</description>
   <profile_image_url>http://a3.twimg.com/profile_images/862699329/me-cropped_normal.jpg</profile_image_url>
   <url/>
   <protected>true</protected>
@@ -4322,7 +4322,7 @@ XBOX live gamertag: SOG KruncH</description>
   <name>ischenko</name>
   <screen_name>ischenko</screen_name>
   <location>Кривой Рог</location>
-  <description>Программист PHP, Zend Framework, JavaScript</description>
+  <description>Программист PHP, Laminas, JavaScript</description>
   <profile_image_url>http://a3.twimg.com/profile_images/53034241/DSC00314_normal.jpg</profile_image_url>
   <url>http://www.jstoolbox.com</url>
   <protected>false</protected>

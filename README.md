@@ -1,4 +1,4 @@
-ZendService\Twitter component
+Laminas\Twitter component
 
 You can install using:
 
