@@ -4,7 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>
-        <testsuite name="ZendService_Twitter">
+        <testsuite name="laminas-twitter">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
