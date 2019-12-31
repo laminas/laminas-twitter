@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PHP OOP wrapper for the Twitter API">  
+    <link rel="canonical" href="https://docs.laminas.dev/intro/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Introduction - laminas-twitter - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-twitter</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-twitter</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-twitter/" class="header__link header__link--github" title="Go to repository of laminas-twitter">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#introduction" class="toc__link">Introduction</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#installation" class="toc__link">Installation</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#quick-start" class="toc__link">Quick Start</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#authentication" class="toc__link">Authentication</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#account-methods" class="toc__link">Account Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#application-methods" class="toc__link">Application Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#blocking-methods" class="toc__link">Blocking Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#direct-message-methods" class="toc__link">Direct Message Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#favorites-methods" class="toc__link">Favorites Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#friendship-methods" class="toc__link">Friendship Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#search-methods" class="toc__link">Search Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#status-methods" class="toc__link">Status Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#user-methods" class="toc__link">User Methods</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-twitter</a></li>
+
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Introduction</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+
+    <h1 id="laminas-twitter">laminas-twitter</h1>
+<h2 id="introduction">Introduction</h2>
+<p><code>Laminas\Twitter\Twitter</code> provides a client for the
+<a href="https://developer.twitter.com/en/docs/api-reference-index">Twitter API</a>.
+<code>Laminas\Twitter\Twitter</code> allows you to query the public timeline.
+If you provide a username and OAuth details for Twitter, or your access
+token and secret, it will allow you to get and update your status, reply
+to friends, direct message friends, mark tweets as favorites, and much
+more.</p>
+<p><code>Laminas\Twitter\Twitter</code> wraps all web service operations,
+including OAuth, and all methods return an instance of
+<code>Laminas\Twitter\Response</code>.</p>
+<p><code>Laminas\Twitter\Twitter</code> is broken up into subsections so you can
+easily identify which type of call is being requested.</p>
+<ul>
+<li><code>account</code> allows you to check that your account credentials are valid</li>
+<li><code>application</code> allows you to check your API rate limits.</li>
+<li><code>blocks</code> blocks and unblocks users from following you.</li>
+<li><code>directMessages</code> retrieves the authenticated user's received direct
+  messages, deletes direct messages, and sends new direct messages.</li>
+<li><code>favorites</code> lists, creates, and removes favorite tweets.</li>
+<li><code>friendships</code> creates and removes friendships for the authenticated
+  user.</li>
+<li><code>search</code> allows you to search statuses for specific criteria.</li>
+<li><code>statuses</code> retrieves the public and user timelines and shows,
+  updates, destroys, and retrieves replies for the authenticated user.</li>
+<li><code>users</code> retrieves friends and followers for the authenticated user
+  and returns extended information about a passed user.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Use <a href="https://getcomposer.org">Composer</a> to install this package:</p>
+<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-twitter
+</pre></div></p>
+<h2 id="quick-start">Quick Start</h2>
+<p>To get started, first you'll need to either create a new application
+with Twitter, or get the details of an existing one you control. To do
+this:</p>
+<ul>
+<li>Go to <a href="https://developer.twitter.com/">https://developer.twitter.com/</a> and sign in.</li>
+<li>Go to <a href="https://apps.twitter.com/">https://apps.twitter.com/</a></li>
+<li>Either create a new application, or select an existing one.</li>
+<li>On the application's settings page, grab the following information:<ul>
+<li>From the header "OAuth settings", grab the "Consumer key" and
+  "Consumer secret" values.</li>
+<li>From the header "Your access token", grab the "Access token" and
+  "Access token secret" values.</li>
+</ul>
+</li>
+</ul>
+<p>Armed with this information, you can now configure and create your
+<code>Laminas\Twitter\Twitter</code> instance:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$config = [</span>
+<span class=x>    &#39;access_token&#39; =&gt; [</span>
+<span class=x>        &#39;token&#39;  =&gt; &#39;twitter-access-token-here&#39;,</span>
+<span class=x>        &#39;secret&#39; =&gt; &#39;twitter-access-secret-here&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>    &#39;oauth_options&#39; =&gt; [</span>
+<span class=x>        &#39;consumerKey&#39; =&gt; &#39;twitter-consumer-key-here&#39;,</span>
+<span class=x>        &#39;consumerSecret&#39; =&gt; &#39;twitter-consumer-secret-here&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>    &#39;http_client_options&#39; =&gt; [</span>
+<span class=x>        &#39;adapter&#39; =&gt; Laminas\Http\Client\Adapter\Curl::class,</span>
+<span class=x>        &#39;curloptions&#39; =&gt; [</span>
+<span class=x>            CURLOPT_SSL_VERIFYHOST =&gt; false,</span>
+<span class=x>            CURLOPT_SSL_VERIFYPEER =&gt; false,</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+<span class=x>];</span>
+
+<span class=x>$twitter = new Laminas\Twitter\Twitter($config);</span>
+</pre></div></p>
+<p>Make sure you substitute the values you discovered earlier in the
+configuration before attempting to connect.</p>
+<blockquote>
+<h4>Note</h4>
+<p>Twitter has a known issue with the SSL certificate for their API
+endpoints, which requires that you use insecure settings for the SSL
+certificate verification.</p>
+</blockquote>
+<p>Once you have the client configured, you can start consuming it:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Verify your credentials:</span>
+<span class=x>$response = $twitter-&gt;account-&gt;verifyCredentials();</span>
+<span class=x>if (!$response-&gt;isSuccess()) {</span>
+<span class=x>    die(&#39;Something is wrong with my credentials!&#39;);</span>
+<span class=x>}</span>
+
+<span class=x>// Search for something:</span>
+<span class=x>$response = $twitter-&gt;search-&gt;tweets(&#39;#zf2&#39;);</span>
+<span class=x>foreach ($response-&gt;toValue() as $tweet) {</span>
+<span class=x>    printf(&quot;%s\n- (%s)\n&quot;, $tweet-&gt;text, $tweet-&gt;user-&gt;name);</span>
+<span class=x>}</span>
+
+<span class=x>// Tweet something:</span>
+<span class=x>$twitter-&gt;statuses-&gt;update(&#39;Hello world!&#39;);</span>
+</pre></div></p>
+<p>Every action you take returns a <code>Laminas\Twitter\Response</code>
+object. This object contains some general purpose methods for
+determining the status of the response (<code>isSuccess()</code>, <code>isError()</code>), and
+otherwise acts as a value object containing the data returned.
+Essentially, if the response returns an object, you will be able to
+access the members listed by the
+<a href="https://developer.twitter.com/en/docs/api-reference-index">Twitter API documentation</a>.
+In the case of responses that return arrays, such as the <code>$twitter-&gt;search-&gt;tweets()</code>
+example shown earlier, you should use the <code>toValue()</code> method of the
+response to retrieve the array.</p>
+<p>If you wish to dive in more into how authentication works, and what
+methods are exposed, keep reading!</p>
+<h2 id="authentication">Authentication</h2>
+<p>With the exception of fetching the public timeline,
+<code>Laminas\Twitter\Twitter</code> requires authentication as a valid user.
+This is achieved using the OAuth authentication protocol. OAuth is the
+only supported authentication mode for Twitter as of August 2010. The
+OAuth implementation used by <code>Laminas\Twitter\Twitter</code> is
+<code>laminas-oauth</code>.</p>
+<h3>Creating the Twitter Class</h3>
+<p><code>Laminas\Twitter\Twitter</code> must authorize itself, on behalf of a
+user, before use with the Twitter API (except for public timeline). This
+must be accomplished using OAuth since Twitter has disabled it's basic
+HTTP authentication as of August 2010.</p>
+<p>There are two options to establishing authorization. The first is to
+implement the workflow of <code>laminas-oauth</code> via <code>Laminas\Twitter\Twitter</code>
+which proxies to an internal <code>Laminas\OAuth\Consumer</code> object. Please
+refer to the <code>laminas-oauth</code> documentation for a full example of this
+workflow - you can call all documented <code>Laminas\OAuth\Consumer</code> methods
+on <code>Laminas\Twitter\Twitter</code> including constructor options. You may
+also use <code>laminas-oauth</code> directly and only pass the resulting access
+token into <code>Laminas\Twitter\Twitter</code>. This is the normal workflow once
+you have established a reusable access token for a particular Twitter
+user. The resulting OAuth access token should be stored to a database
+for future use (otherwise you will need to authorize for every new
+instance of <code>Laminas\Twitter\Twitter</code>). Bear in mind that authorization
+via OAuth results in your user being redirected to Twitter to give their
+consent to the requested authorization (this is not repeated for stored
+access tokens). This will require additional work (i.e. redirecting
+users and hosting a callback URL) over the previous HTTP authentication
+mechanism where a user just needed to allow applications to store their
+username and password.</p>
+<p>The following example demonstrates setting up
+<code>Laminas\Twitter\Twitter</code> which is given an already established
+OAuth access token. Please refer to the <code>laminas-oauth</code> documentation
+to understand the workflow involved. The access token is a serializable
+object, so you may store the serialized object to a database, and
+unserialize it at retrieval time before passing the objects into
+<code>Laminas\Twitter\Twitter</code>. The <code>laminas-oauth</code> documentation
+demonstrates the workflow and objects involved.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
+<span class=x> * We assume $serializedToken is the serialized token retrieved from a database</span>
+<span class=x> * or even $_SESSION (if following the simple laminas-oauth documented example)</span>
+<span class=x> */</span>
+<span class=x>$token = unserialize($serializedToken);</span>
+
+<span class=x>$twitter = new Laminas\Twitter\Twitter([</span>
+<span class=x>    &#39;accessToken&#39; =&gt; $token,</span>
+<span class=x>    &#39;oauth_options&#39; =&gt; [</span>
+<span class=x>        &#39;username&#39; =&gt; &#39;johndoe&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>]);</span>
+
+<span class=x>// verify user&#39;s credentials with Twitter</span>
+<span class=x>$response = $twitter-&gt;account-&gt;verifyCredentials();</span>
+</pre></div></p>
+<blockquote>
+<h4>Note</h4>
+<p>In order to authenticate with Twitter, ALL applications MUST be
+registered with Twitter in order to receive a Consumer Key and
+Consumer Secret to be used when authenticating with OAuth. This can
+not be reused across multiple applications - you must register each
+new application separately. Twitter access tokens have no expiry date,
+so storing them to a database is advised (they can, of course, be
+refreshed simply be repeating the OAuth authorization process). This
+can only be done while interacting with the user associated with that
+access token.</p>
+<p>The previous pre-OAuth version of <code>Laminas\Twitter\Twitter</code>
+allowed passing in a username as the first parameter rather than
+within an array. This is no longer supported.</p>
+</blockquote>
+<p>If you have registered an application with Twitter, you can also use the
+access token and access token secret they provide you in order to setup
+the OAuth consumer. This can be done as follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter = new Laminas\Twitter\Twitter([</span>
+<span class=x>    &#39;access_token&#39; =&gt; [ // or use &quot;accessToken&quot; as the key; both work</span>
+<span class=x>        &#39;token&#39; =&gt; &#39;your-access-token&#39;,</span>
+<span class=x>        &#39;secret&#39; =&gt; &#39;your-access-token-secret&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>    &#39;oauth_options&#39; =&gt; [ // or use &quot;oauthOptions&quot; as the key; both work</span>
+<span class=x>        &#39;consumerKey&#39; =&gt; &#39;your-consumer-key&#39;,</span>
+<span class=x>        &#39;consumerSecret&#39; =&gt; &#39;your-consumer-secret&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>]);</span>
+</pre></div></p>
+<p>If desired, you can also specify a specific HTTP client instance to use,
+or provide configuration for the HTTP client. To provide the HTTP
+client, use the <code>http_client</code> or <code>httpClient</code> key, and provide an
+instance. To provide HTTP client configuration for setting up an
+instance, use the key <code>http_client_options</code> or <code>httpClientOptions</code>. As a
+full example:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter = new Laminas\Twitter\Twitter([</span>
+<span class=x>    &#39;access_token&#39; =&gt; [ // or use &quot;accessToken&quot; as the key; both work</span>
+<span class=x>        &#39;token&#39; =&gt; &#39;your-access-token&#39;,</span>
+<span class=x>        &#39;secret&#39; =&gt; &#39;your-access-token-secret&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>    &#39;oauth_options&#39; =&gt; [ // or use &quot;oauthOptions&quot; as the key; both work</span>
+<span class=x>        &#39;consumerKey&#39; =&gt; &#39;your-consumer-key&#39;,</span>
+<span class=x>        &#39;consumerSecret&#39; =&gt; &#39;your-consumer-secret&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>    &#39;http_client_options&#39; =&gt; [</span>
+<span class=x>        &#39;adapter&#39; =&gt; Laminas\Http\Client\Adapter\Curl::class,</span>
+<span class=x>    ],</span>
+<span class=x>]);</span>
+</pre></div></p>
+<h2 id="account-methods">Account Methods</h2>
+<h3>Verifying credentials</h3>
+<p><code>verifyCredentials()</code> tests if supplied user credentials are valid with
+minimal overhead.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;account-&gt;verifyCredentials();</span>
+</pre></div></p>
+<h2 id="application-methods">Application Methods</h2>
+<h3>Rating limit status</h3>
+<p><code>rateLimitStatus()</code> returns the remaining number of API requests
+available to the authenticating user before the API limit is reached
+for the current hour.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;application-&gt;rateLimitStatus();</span>
+<span class=x>$userTimelineLimit = $response-&gt;resources-&gt;statuses-&gt;{&#39;/statuses/user_timeline&#39;}-&gt;remaining;</span>
+</pre></div></p>
+<h2 id="blocking-methods">Blocking Methods</h2>
+<h3>Blocking a user</h3>
+<p><code>create()</code> blocks the user specified in the <code>id</code> parameter as the
+authenticating user and destroys a friendship to the blocked user if
+one exists. Returns the blocked user in the requested format when
+successful.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;blocks-&gt;create(&#39;usertoblock&#39;);</span>
+</pre></div></p>
+<h3>Removing a block</h3>
+<p><code>destroy()</code> un-blocks the user specified in the <code>id</code> parameter for the
+authenticating user. Returns the un-blocked user in the requested format
+when successful.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;blocks-&gt;destroy(&#39;blockeduser&#39;);</span>
+</pre></div></p>
+<h3>Who are you blocking (identifiers only)</h3>
+<p><code>ids()</code> returns an array of user identifiers that the authenticating
+user is blocking.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;blocks-&gt;ids();</span>
+</pre></div></p>
+<h3>Who are you blocking</h3>
+<p><code>list()</code> returns an array of user objects that the authenticating user
+is blocking.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;blocks-&gt;list();</span>
+</pre></div></p>
+<h2 id="direct-message-methods">Direct Message Methods</h2>
+<h3>Retrieving recent direct messages received</h3>
+<p><code>messages()</code> returns a list of the 20 most recent direct messages sent
+to the authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;directMessages-&gt;messages();</span>
+</pre></div></p>
+<p>The <code>message()</code> method accepts an array of optional parameters to modify
+the query.</p>
+<ul>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>count</code> specifies the number of statuses to return, up to 200.</li>
+<li><code>skip_status</code>, when set to boolean true, "t", or 1 will skip
+  including a user's most recent status in the results.</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+</ul>
+<h3>Retrieving recent direct messages sent</h3>
+<p><code>sent()</code> returns a list of the 20 most recent direct messages sent by
+the authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;directMessages-&gt;sent();</span>
+</pre></div></p>
+<p>The <code>sent()</code> method accepts an array of optional parameters to modify
+the query.</p>
+<ul>
+<li><code>count</code> specifies the number of statuses to return, up to 20.</li>
+<li><code>page</code> specifies the page of results to return, based on the <code>count</code>
+  provided.</li>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+</ul>
+<h3>Sending a direct message</h3>
+<p><code>new()</code> sends a new direct message to the specified user from the
+authenticating user. Requires both the user and text parameters below.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;directMessages-&gt;new(&#39;myfriend&#39;, &#39;mymessage&#39;);</span>
+</pre></div></p>
+<h3>Deleting a direct message</h3>
+<p><code>destroy()</code> destroys the direct message specified in the required <code>id</code>
+parameter. The authenticating user must be the recipient of the
+specified direct message.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;directMessages-&gt;destroy(123548);</span>
+</pre></div></p>
+<h2 id="favorites-methods">Favorites Methods</h2>
+<h3>Retrieving favorites</h3>
+<p><code>list()</code> returns the 20 most recent favorite statuses for the
+authenticating user or user specified by the <code>id</code> parameter.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;favorites-&gt;list();</span>
+</pre></div></p>
+<p>The <code>list()</code> method accepts an array of optional parameters to modify
+the query.</p>
+<ul>
+<li><code>user_id</code> specifies the ID of the user for whom to return the
+  timeline.</li>
+<li><code>screen_name</code> specifies the screen name of the user for whom to
+  return the timeline.</li>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>count</code> specifies the number of statuses to return, up to 200.</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+</ul>
+<h3>Creating favorites</h3>
+<p><code>create()</code> favorites the status specified in the <code>id</code> parameter as the
+authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;favorites-&gt;create(12351);</span>
+</pre></div></p>
+<h3>Deleting a favorite</h3>
+<p><code>destroy()</code> un-favorites the status specified in the <code>id</code> parameter as
+the authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;favorites-&gt;destroy(12351);</span>
+</pre></div></p>
+<h2 id="friendship-methods">Friendship Methods</h2>
+<h3>Creating a friend</h3>
+<p><code>create()</code> befriends the user specified in the <code>id</code> parameter with the
+authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;friendships-&gt;create(&#39;mynewfriend&#39;);</span>
+</pre></div></p>
+<h3>Deleting a friend</h3>
+<p><code>destroy()</code> discontinues friendship with the user specified in the <code>id</code>
+parameter and the authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;friendships-&gt;destroy(&#39;myoldfriend&#39;);</span>
+</pre></div></p>
+<h2 id="search-methods">Search Methods</h2>
+<h3>Searching for tweets</h3>
+<p><code>tweets()</code> returns a list of tweets matching the criteria specified in
+<code>$query</code>. By default, 15 will be returned, but this value may be
+changed using the <code>count</code> option.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;search-&gt;tweets(&#39;#zendframework&#39;);</span>
+</pre></div></p>
+<p>The <code>tweets()</code> method accepts an optional second argument, array of
+optional parameters to modify the query.</p>
+<ul>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>count</code> specifies the number of statuses to return, up to 200.</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+<li><code>lang</code> indicates which two-letter language code to restrict results
+  to.</li>
+<li><code>locale</code> indicates which two-letter language code is being used in
+  the query.</li>
+<li><code>geocode</code> can be used to indicate the geographical radius in which
+  tweets should originate; the string should be in the form
+  "latitude,longitude,radius", with "radius" being a unit followed by
+  one of "mi" or "km".</li>
+<li><code>result_type</code> indicates what type of results to retrieve, and
+  should be one of "mixed," "recent," or "popular."</li>
+<li><code>until</code> can be used to specify a the latest date for which to
+  return tweets.</li>
+</ul>
+<h2 id="status-methods">Status Methods</h2>
+<h3>Retrieving the public timeline</h3>
+<p><code>sample()</code> returns the 20 most recent statuses from non-protected users
+with a custom user icon. The public timeline is cached by Twitter for 60
+seconds.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;sample();</span>
+</pre></div></p>
+<h3>Retrieving the home timeline</h3>
+<p><code>homeTimeline()</code> returns the 20 most recent statuses posted by the
+authenticating user and that user's friends.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;homeTimeline();</span>
+</pre></div></p>
+<p>The <code>homeTimeline()</code> method accepts an array of optional parameters to
+modify the query.</p>
+<ul>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>count</code> specifies the number of statuses to return, up to 200.</li>
+<li><code>trim_user</code>, when set to boolean true, "t", or 1, will list the
+  author identifier only in embedded user objects in the statuses
+  returned.</li>
+<li><code>contributor_details</code>, when set to boolean true, will return the
+  screen name of any contributors to a status (instead of only the
+  contributor identifier).</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+<li><code>exclude_replies</code> controls whether or not status updates that are
+  in reply to other statuses will be returned.</li>
+</ul>
+<h3>Retrieving the user timeline</h3>
+<p><code>userTimeline()</code> returns the 20 most recent statuses posted from the
+authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;userTimeline();</span>
+</pre></div></p>
+<p>The <code>userTimeline()</code> method accepts an array of optional parameters to
+modify the query.</p>
+<ul>
+<li><code>user_id</code> specifies the ID of the user for whom to return the
+  timeline.</li>
+<li><code>screen_name</code> specifies the screen name of the user for whom to
+  return the timeline.</li>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>count</code> specifies the number of statuses to return, up to 200.</li>
+<li><code>trim_user</code>, when set to boolean true, "t", or 1, will list the
+  author identifier only in embedded user objects in the statuses
+  returned.</li>
+<li><code>contributor_details</code>, when set to boolean true, will return the
+  screen name of any contributors to a status (instead of only the
+  contributor identifier).</li>
+<li><code>include_rts</code> controls whether or not to include native retweets in
+  the returned list.</li>
+<li><code>exclude_replies</code> controls whether or not status updates that are
+  in reply to other statuses will be returned.</li>
+</ul>
+<h3>Showing user status</h3>
+<p><code>show()</code> returns a single status, specified by the <code>id</code> parameter below.
+The status' author will be returned inline.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;show(1234);</span>
+</pre></div></p>
+<h3>Updating user status</h3>
+<p><code>update()</code> updates the authenticating user's status. This method
+requires that you pass in the status update that you want to post to
+Twitter.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;update(&#39;My Great Tweet&#39;);</span>
+</pre></div></p>
+<p>The <code>update()</code> method accepts a second additional parameter.</p>
+<p><code>inReplyTo_StatusId</code> specifies the ID of an existing status that
+the status to be posted is in reply to.</p>
+<h3>Showing user replies</h3>
+<p><code>mentionsTimeline()</code> returns the 20 most recent @replies (status updates
+prefixed with @username) for the authenticating user.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;mentionsTimeline();</span>
+</pre></div></p>
+<p>The <code>mentionsTimeline()</code> method accepts an array of optional parameters
+to modify the query.</p>
+<ul>
+<li><code>since_id</code> narrows the returned results to just those statuses
+  after the specified identifier (up to 24 hours old).</li>
+<li><code>max_id</code> narrows the returned results to just those statuses
+  earlier than the specified identifier.</li>
+<li><code>count</code> specifies the number of statuses to return, up to 200.</li>
+<li><code>trim_user</code>, when set to boolean true, "t", or 1, will list the
+  author identifier only in embedded user objects in the statuses
+  returned.</li>
+<li><code>contributor_details</code>, when set to boolean true, will return the
+  screen name of any contributors to a status (instead of only the
+  contributor identifier).</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+</ul>
+<h3>Deleting user status</h3>
+<p><code>destroy()</code> destroys the status specified by the required <code>id</code>
+parameter.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;statuses-&gt;destroy(12345);</span>
+</pre></div></p>
+<h2 id="user-methods">User Methods</h2>
+<h3>Showing user information</h3>
+<p><code>show()</code> returns extended information of a given user, specified by ID
+or screen name as per the required <code>id</code> parameter below.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;users-&gt;show(&#39;myfriend&#39;);</span>
+</pre></div></p>
+<h3>Searching for users</h3>
+<p><code>search()</code> will search for users matching the query provided.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$twitter  = new Laminas\Twitter\Twitter($options);</span>
+<span class=x>$response = $twitter-&gt;users-&gt;search(&#39;Laminas&#39;);</span>
+</pre></div></p>
+<p>The <code>search()</code> method accepts an array of optional parameters to modify
+the query.</p>
+<ul>
+<li><code>count</code> specifies the number of statuses to return, up to 20.</li>
+<li><code>page</code> specifies the page of results to return, based on the <code>count</code>
+  provided.</li>
+<li><code>include_entities</code> controls whether or not entities, which includes
+  URLs, mentioned users, and hashtags, will be returned.</li>
+</ul>
+
+
+
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-twitter/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-twitter</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-twitter//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-twitter//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-twitter';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-twitter" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
