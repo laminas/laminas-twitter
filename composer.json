@@ -1,33 +1,41 @@
 {
-    "name": "zendframework/zendservice-twitter",
+    "name": "laminas/laminas-twitter",
     "description": "OOP wrapper for the Twitter web service",
-    "type": "library",
+    "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "twitter"
     ],
-    "homepage": "http://packages.zendframework.com/",
-    "license": "BSD-3-Clause",
-    "autoload": {
-        "psr-0": {
-            "ZendService": "library/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-twitter/",
+        "issues": "https://github.com/laminas/laminas-twitter/issues",
+        "source": "https://github.com/laminas/laminas-twitter",
+        "rss": "https://github.com/laminas/laminas-twitter/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.zendframework.com/"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-http": ">=2.0.0beta5",
-        "zendframework/zend-uri": ">=2.0.0beta5",
-        "zendframework/zend-version": ">=2.0.0beta5"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0-dev"
         }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "laminas/laminas-http": ">=2.0.0beta5",
+        "laminas/laminas-uri": ">=2.0.0beta5",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "zendframework/zend-version": ">=2.0.0beta5"
+    },
+    "autoload": {
+        "psr-0": {
+            "Laminas\\": "library/"
+        }
+    },
+    "replace": {
+        "zendframework/zendservice-twitter": "self.version"
     }
 }

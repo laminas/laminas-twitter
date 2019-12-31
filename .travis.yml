@@ -14,4 +14,3 @@ script:
  - php ./tests/run-tests.php
 
 notifications:
-  irc: "irc.freenode.org#zftalk.2"
