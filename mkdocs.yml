@@ -6,3 +6,6 @@ pages:
 site_name: laminas-twitter
 site_description: 'PHP OOP wrapper for the Twitter API'
 repo_url: 'https://github.com/laminas/laminas-twitter'
+extra:
+  project: Components
+  project_url: 'https://docs.laminas.dev'
