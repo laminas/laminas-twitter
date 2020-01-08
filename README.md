@@ -1,6 +1,6 @@
 # laminas-twitter
 
-[![Build Status](https://travis-ci.org/laminas/laminas-twitter.svg?branch=master)](https://travis-ci.org/laminas/laminas-twitter)
+[![Build Status](https://travis-ci.com/laminas/laminas-twitter.svg?branch=master)](https://travis-ci.com/laminas/laminas-twitter)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-twitter/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-twitter?branch=master)
 
 Provides an object oriented PHP wrapper for the [Twitter API](https://developer.twitter.com/en/docs).
