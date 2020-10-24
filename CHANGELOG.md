@@ -2,27 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 3.1.0 - TBD
+## 3.1.0 - 2020-10-24
 
 ### Added
 
 - [laminas/laminas-twitter#5](https://github.com/laminas/laminas-twitter/pull/5) Adds PHP 8.0 support
 
-### Changed
 
-- Nothing.
+-----
 
-### Deprecated
+### Release Notes for [3.1.0](https://github.com/laminas/laminas-twitter/milestone/1)
 
-- Nothing.
 
-### Removed
 
-- Nothing.
+### 3.1.0
 
-### Fixed
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-- Nothing.
+#### Enhancement,hacktoberfest-accepted
+
+ - [5: Adds PHP8 support and drops support for PHP &lt; 7.3](https://github.com/laminas/laminas-twitter/pull/5) thanks to @henrikthesing
 
 ## 3.0.4 - 2019-02-07
 
