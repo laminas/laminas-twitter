@@ -9,6 +9,7 @@
 namespace LaminasTest\Twitter;
 
 use Laminas\Twitter\Image;
+use Laminas\Twitter\Media;
 use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
@@ -16,14 +17,30 @@ class ImageTest extends TestCase
     public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
     {
         $image = new Image(__FILE__);
-        $this->assertAttributeEquals(__FILE__, 'imageFilename', $image);
-        $this->assertAttributeEquals('image/jpeg', 'mediaType', $image);
+
+        $imageMediaType = \Closure::bind(function () {
+            return $this->mediaType;
+        }, $image, Media::class)();
+        $this->assertSame('image/jpeg', $imageMediaType);
+
+        $imageFilename = \Closure::bind(function () {
+            return $this->imageFilename;
+        }, $image, Media::class)();
+        $this->assertSame(__FILE__, $imageFilename);
     }
 
     public function testCanBeInstantiatedWithFilenameAndMediaType()
     {
         $image = new Image(__FILE__, 'text/plain');
-        $this->assertAttributeEquals(__FILE__, 'imageFilename', $image);
-        $this->assertAttributeEquals('text/plain', 'mediaType', $image);
+
+        $imageMediaType = \Closure::bind(function () {
+            return $this->mediaType;
+        }, $image, Media::class)();
+        $this->assertSame('text/plain', $imageMediaType);
+
+        $imageFilename = \Closure::bind(function () {
+            return $this->imageFilename;
+        }, $image, Media::class)();
+        $this->assertSame(__FILE__, $imageFilename);
     }
 }

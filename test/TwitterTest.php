@@ -24,7 +24,7 @@ use stdClass;
 
 class TwitterTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $twitter = new Twitter\Twitter();
         $r = new ReflectionProperty($twitter, 'jsonFlags');

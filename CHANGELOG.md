@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [laminas/laminas-twitter#5](https://github.com/laminas/laminas-twitter/pull/5) Adds PHP 8.0 support
 
 ### Changed
 
