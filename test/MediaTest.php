@@ -19,7 +19,7 @@ use ReflectionProperty;
 
 class MediaTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = $this->prophesize(Client::class);
     }
@@ -27,8 +27,16 @@ class MediaTest extends TestCase
     public function testAllowsPassingImageFilenameAndMediaType()
     {
         $media = new Media(__FILE__, 'text/plain');
-        $this->assertAttributeSame(__FILE__, 'imageFilename', $media);
-        $this->assertAttributeSame('text/plain', 'mediaType', $media);
+
+        $imageMediaType = \Closure::bind(function () {
+            return $this->mediaType;
+        }, $media, Media::class)();
+        $this->assertSame('text/plain', $imageMediaType);
+
+        $imageFilename = \Closure::bind(function () {
+            return $this->imageFilename;
+        }, $media, Media::class)();
+        $this->assertSame(__FILE__, $imageFilename);
     }
 
     public function testUploadRaisesExceptionIfNoImageFilenamePresent()
@@ -128,7 +136,7 @@ class MediaTest extends TestCase
         ])->shouldBeCalled();
 
         $this->client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
-            TestCase::assertInternalType('array', $arg);
+            TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             TestCase::assertTrue(in_array($arg['command'], ['INIT', 'APPEND']));
             return true;
@@ -173,7 +181,7 @@ class MediaTest extends TestCase
 
         $commands = [];
         $client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
-            TestCase::assertInternalType('array', $arg);
+            TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             $commands[] = $arg['command'];
             return true;
@@ -201,7 +209,12 @@ class MediaTest extends TestCase
 
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
-        $this->assertAttributeSame($finalizeResponse->reveal(), 'httpResponse', $response);
+
+        $httpResponse = \Closure::bind(function () {
+            return $this->httpResponse;
+        }, $response, TwitterResponse::class)();
+        $this->assertSame($finalizeResponse->reveal(), $httpResponse);
+
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 
@@ -223,7 +236,7 @@ class MediaTest extends TestCase
 
         $commands = [];
         $client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
-            TestCase::assertInternalType('array', $arg);
+            TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             $commands[] = $arg['command'];
 
@@ -257,7 +270,12 @@ class MediaTest extends TestCase
 
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
-        $this->assertAttributeSame($finalizeResponse->reveal(), 'httpResponse', $response);
+
+        $httpResponse = \Closure::bind(function () {
+            return $this->httpResponse;
+        }, $response, TwitterResponse::class)();
+        $this->assertSame($finalizeResponse->reveal(), $httpResponse);
+
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 
@@ -279,7 +297,7 @@ class MediaTest extends TestCase
 
         $commands = [];
         $client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
-            TestCase::assertInternalType('array', $arg);
+            TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             $commands[] = $arg['command'];
 
@@ -314,7 +332,12 @@ class MediaTest extends TestCase
 
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
-        $this->assertAttributeSame($finalizeResponse->reveal(), 'httpResponse', $response);
+
+        $httpResponse = \Closure::bind(function () {
+            return $this->httpResponse;
+        }, $response, TwitterResponse::class)();
+        $this->assertSame($finalizeResponse->reveal(), $httpResponse);
+
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 }

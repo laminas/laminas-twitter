@@ -8,6 +8,7 @@
 
 namespace LaminasTest\Twitter;
 
+use Laminas\Twitter\Media;
 use Laminas\Twitter\Video;
 use PHPUnit\Framework\TestCase;
 
@@ -16,14 +17,30 @@ class VideoTest extends TestCase
     public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
     {
         $video = new Video(__FILE__);
-        $this->assertAttributeEquals(__FILE__, 'imageFilename', $video);
-        $this->assertAttributeEquals('video/mp4', 'mediaType', $video);
+
+        $imageMediaType = \Closure::bind(function () {
+            return $this->mediaType;
+        }, $video, Media::class)();
+        $this->assertSame('video/mp4', $imageMediaType);
+
+        $imageFilename = \Closure::bind(function () {
+            return $this->imageFilename;
+        }, $video, Media::class)();
+        $this->assertSame(__FILE__, $imageFilename);
     }
 
     public function testCanBeInstantiatedWithFilenameAndMediaType()
     {
         $video = new Video(__FILE__, 'text/plain');
-        $this->assertAttributeEquals(__FILE__, 'imageFilename', $video);
-        $this->assertAttributeEquals('text/plain', 'mediaType', $video);
+
+        $imageMediaType = \Closure::bind(function () {
+            return $this->mediaType;
+        }, $video, Media::class)();
+        $this->assertSame('text/plain', $imageMediaType);
+
+        $imageFilename = \Closure::bind(function () {
+            return $this->imageFilename;
+        }, $video, Media::class)();
+        $this->assertSame(__FILE__, $imageFilename);
     }
 }

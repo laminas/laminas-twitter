@@ -47,7 +47,7 @@ class ResponseTest extends TestCase
         $httpResponse->getBody()->willReturn('{}');
 
         $response = new Response($httpResponse->reveal());
-        $this->assertAttributeInstanceOf(RateLimit::class, 'rateLimit', $response);
+        $this->assertInstanceOf(RateLimit::class, $response->getRateLimit());
 
         $r = new ReflectionProperty($response, 'rateLimit');
         $r->setAccessible(true);
