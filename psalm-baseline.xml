@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.7.0@d4377c0baf3ffbf0b1ec6998e8d1be2a40971005">
+  <file src="src/Media.php">
+    <MissingClosureParamType occurrences="2">
+      <code>$errno</code>
+      <code>$errstr</code>
+    </MissingClosureParamType>
+    <MixedAssignment occurrences="2">
+      <code>$this-&gt;fileOperationError</code>
+      <code>$this-&gt;mediaId</code>
+    </MixedAssignment>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$response-&gt;toValue()-&gt;media_id</code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyAssignmentValue occurrences="1">
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>$fileOperationError</code>
+      <code>$mediaCategory</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCast occurrences="1">
+      <code>(bool) $returnValue</code>
+    </RedundantCast>
+    <UnusedClosureParam occurrences="1">
+      <code>$errno</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="src/RateLimit.php">
+    <MixedInferredReturnType occurrences="1">
+      <code>?int</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;$key ?? null</code>
+    </MixedReturnStatement>
+    <PossiblyInvalidMethodCall occurrences="3">
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyUndefinedMethod occurrences="3">
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/Response.php">
+    <DocblockTypeContradiction occurrences="2">
+      <code>null === $this-&gt;jsonBody</code>
+      <code>null === $this-&gt;jsonBody</code>
+    </DocblockTypeContradiction>
+    <InvalidCatch occurrences="1"/>
+    <MixedAssignment occurrences="2">
+      <code>$jsonBody</code>
+      <code>$this-&gt;jsonBody</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;jsonBody-&gt;errors</code>
+    </MixedReturnStatement>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$this-&gt;jsonBody-&gt;errors</code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyAssignmentValue occurrences="2">
+      <code>$httpResponse</code>
+      <code>$httpResponse</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <PossiblyNullReference occurrences="2">
+      <code>getBody</code>
+      <code>getHeaders</code>
+    </PossiblyNullReference>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$jsonBody</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Twitter.php">
+    <DocblockTypeContradiction occurrences="2">
+      <code>! is_string($id) &amp;&amp; ! is_int($id)</code>
+      <code>null === $this-&gt;cookieJar</code>
+    </DocblockTypeContradiction>
+    <InvalidNullableReturnType occurrences="1">
+      <code>Http\Client</code>
+    </InvalidNullableReturnType>
+    <InvalidReturnStatement occurrences="1">
+      <code>$int</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>int</code>
+    </InvalidReturnType>
+    <InvalidThrow occurrences="31">
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+      <code>Http\Client\Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <MissingClosureParamType occurrences="2">
+      <code>$detectedType</code>
+      <code>$id</code>
+    </MissingClosureParamType>
+    <MissingParamType occurrences="1">
+      <code>$extraAttributes</code>
+    </MissingParamType>
+    <MixedArgument occurrences="35">
+      <code>$accessToken['secret']</code>
+      <code>$accessToken['token']</code>
+      <code>$extraAttributes['media_ids']</code>
+      <code>$httpClientOptions</code>
+      <code>$httpClientOptions</code>
+      <code>$id</code>
+      <code>$oauthOptions</code>
+      <code>$oauthOptions</code>
+      <code>$options['username']</code>
+      <code>$params['owner_id']</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="12">
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAssignment occurrences="2">
+      <code>$oauthOptions['siteUrl']</code>
+      <code>$oauthOptions['token']</code>
+    </MixedArrayAssignment>
+    <MixedArrayTypeCoercion occurrences="1">
+      <code>$params[$key]</code>
+    </MixedArrayTypeCoercion>
+    <MixedAssignment occurrences="22">
+      <code>$accessToken</code>
+      <code>$accessToken</code>
+      <code>$detectedType</code>
+      <code>$httpClient</code>
+      <code>$httpClient</code>
+      <code>$httpClientOptions</code>
+      <code>$httpClientOptions</code>
+      <code>$oauthOptions</code>
+      <code>$oauthOptions</code>
+      <code>$params['screen_name']</code>
+      <code>$params['until']</code>
+      <code>$return</code>
+      <code>$user</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;httpClient</code>
+    </NullableReturnStatement>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>addHeaderLine</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="2">
+      <code>$inReplyToStatusId</code>
+      <code>$this-&gt;oauthConsumer</code>
+    </PossiblyNullArgument>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>addHeaderLine</code>
+    </PossiblyUndefinedMethod>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>$cookieJar</code>
+      <code>$username</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>! $this-&gt;isAuthorised($client) &amp;&amp; $this-&gt;username !== null</code>
+      <code>$this-&gt;username !== null</code>
+    </RedundantConditionGivenDocblockType>
+    <TypeDoesNotContainType occurrences="1">
+      <code>! is_string($name)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="test/ImageTest.php">
+    <MissingClosureReturnType occurrences="4">
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+    </MissingClosureReturnType>
+    <PossiblyInvalidFunctionCall occurrences="4"/>
+    <UndefinedThisPropertyFetch occurrences="4">
+      <code>$this-&gt;imageFilename</code>
+      <code>$this-&gt;imageFilename</code>
+      <code>$this-&gt;mediaType</code>
+      <code>$this-&gt;mediaType</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/MediaTest.php">
+    <MissingClosureParamType occurrences="4">
+      <code>$arg</code>
+      <code>$arg</code>
+      <code>$arg</code>
+      <code>$arg</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType occurrences="5">
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+    </MissingClosureReturnType>
+    <MixedArgument occurrences="8">
+      <code>$client-&gt;reveal()</code>
+      <code>$client-&gt;reveal()</code>
+      <code>$client-&gt;reveal()</code>
+      <code>$this-&gt;client-&gt;reveal()</code>
+      <code>$this-&gt;client-&gt;reveal()</code>
+      <code>$this-&gt;client-&gt;reveal()</code>
+      <code>$this-&gt;client-&gt;reveal()</code>
+      <code>$this-&gt;client-&gt;reveal()</code>
+    </MixedArgument>
+    <MixedArrayAssignment occurrences="3">
+      <code>$commands[]</code>
+      <code>$commands[]</code>
+      <code>$commands[]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="6">
+      <code>$client</code>
+      <code>$client</code>
+      <code>$client</code>
+      <code>$commands[]</code>
+      <code>$commands[]</code>
+      <code>$commands[]</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="82">
+      <code>resetParameters</code>
+      <code>resetParameters</code>
+      <code>resetParameters</code>
+      <code>resetParameters</code>
+      <code>resetParameters</code>
+      <code>resetParameters</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>reveal</code>
+      <code>send</code>
+      <code>send</code>
+      <code>send</code>
+      <code>send</code>
+      <code>send</code>
+      <code>send</code>
+      <code>setHeaders</code>
+      <code>setHeaders</code>
+      <code>setHeaders</code>
+      <code>setHeaders</code>
+      <code>setHeaders</code>
+      <code>setHeaders</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setParameterPost</code>
+      <code>setParameterPost</code>
+      <code>setParameterPost</code>
+      <code>setParameterPost</code>
+      <code>setParameterPost</code>
+      <code>setParameterPost</code>
+      <code>setParameterPost</code>
+      <code>setUri</code>
+      <code>setUri</code>
+      <code>setUri</code>
+      <code>setUri</code>
+      <code>setUri</code>
+      <code>setUri</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalled</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>shouldBeCalledTimes</code>
+      <code>will</code>
+      <code>will</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <PossiblyInvalidFunctionCall occurrences="5"/>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;client</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="13">
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;client</code>
+      <code>$this-&gt;httpResponse</code>
+      <code>$this-&gt;httpResponse</code>
+      <code>$this-&gt;httpResponse</code>
+      <code>$this-&gt;imageFilename</code>
+      <code>$this-&gt;mediaType</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/RateLimitTest.php">
+    <MissingParamType occurrences="3">
+      <code>$limit</code>
+      <code>$remaining</code>
+      <code>$reset</code>
+    </MissingParamType>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+  </file>
+  <file src="test/ResponseTest.php">
+    <MixedAssignment occurrences="1">
+      <code>$rateLimit</code>
+    </MixedAssignment>
+    <MixedPropertyFetch occurrences="3">
+      <code>$rateLimit-&gt;limit</code>
+      <code>$rateLimit-&gt;remaining</code>
+      <code>$rateLimit-&gt;reset</code>
+    </MixedPropertyFetch>
+  </file>
+  <file src="test/TwitterTest.php">
+    <InvalidArgument occurrences="8">
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+    </InvalidArgument>
+    <MissingParamType occurrences="2">
+      <code>$adapter</code>
+      <code>$config</code>
+    </MissingParamType>
+    <MixedArgument occurrences="5">
+      <code>$config</code>
+      <code>$payload-&gt;users</code>
+      <code>$response-&gt;ids</code>
+      <code>$this-&gt;jsonFlags</code>
+      <code>$this-&gt;jsonFlags</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$payload-&gt;users[0]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="6">
+      <code>$expected</code>
+      <code>$expected</code>
+      <code>$response</code>
+      <code>$return</code>
+      <code>$status</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="7">
+      <code>\Generator</code>
+      <code>\Generator</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="2">
+      <code>toValue</code>
+      <code>willReturn</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch occurrences="3">
+      <code>$payload-&gt;users[0]-&gt;id</code>
+      <code>$payload[0]-&gt;id</code>
+      <code>$status-&gt;resources</code>
+    </MixedPropertyFetch>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$payload</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$payload-&gt;users</code>
+    </PossiblyInvalidPropertyFetch>
+    <UndefinedMethod occurrences="1">
+      <code>$payload</code>
+    </UndefinedMethod>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;jsonFlags</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="2">
+      <code>$this-&gt;jsonFlags</code>
+      <code>$this-&gt;jsonFlags</code>
+    </UndefinedThisPropertyFetch>
+    <UnusedVariable occurrences="3">
+      <code>$expected</code>
+      <code>$expected</code>
+      <code>$return</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/VideoTest.php">
+    <MissingClosureReturnType occurrences="4">
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+    </MissingClosureReturnType>
+    <PossiblyInvalidFunctionCall occurrences="4"/>
+    <UndefinedThisPropertyFetch occurrences="4">
+      <code>$this-&gt;imageFilename</code>
+      <code>$this-&gt;imageFilename</code>
+      <code>$this-&gt;mediaType</code>
+      <code>$this-&gt;mediaType</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/_files/generate_data.php">
+    <MissingFile occurrences="1">
+      <code>require_once __DIR__ . '/../../../../vendor/autoload.php'</code>
+    </MissingFile>
+    <MixedArgument occurrences="1">
+      <code>$response-&gt;getRawResponse()</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$response</code>
+      <code>$response</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="5">
+      <code>getErrors</code>
+      <code>getErrors</code>
+      <code>getRawResponse</code>
+      <code>isSuccess</code>
+      <code>isSuccess</code>
+    </MixedMethodCall>
+  </file>
+  <file src="test/_files/normalize_json.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK | JSON_BIGINT_AS_STRING | JSON_UNESCAPED_SLASHES</code>
+    </InvalidScalarArgument>
+    <MissingFile occurrences="1">
+      <code>require_once __DIR__ . '/../../../../vendor/autoload.php'</code>
+    </MissingFile>
+    <MixedAssignment occurrences="1">
+      <code>$php</code>
+    </MixedAssignment>
+  </file>
+</files>
