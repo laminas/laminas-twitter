@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.1.4",
+        "laminas/laminas-coding-standard": "^2.1",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.15",
