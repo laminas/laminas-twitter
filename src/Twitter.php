@@ -1532,45 +1532,6 @@ final class Twitter
     }
 
     /**
-     * Protected function to validate a status or user identifier.
-     *
-     * If the value consists of solely digits, it is valid, and will be
-     * returned verbatim. Otherwise, a zero is returned.
-     *
-     * @param string|int $int
-     */
-    private function validInteger($int): int
-    {
-        if (is_int($int) && $int > -1) {
-            return $int;
-        }
-        if (!is_string($int)) {
-            return 0;
-        }
-        if (!preg_match('/^(\d+)$/', $int)) {
-            return 0;
-        }
-        return $int;
-    }
-
-    /**
-     * Validate a screen name using Twitter rules.
-     *
-     * @throws Exception\InvalidArgumentException
-     */
-    private function validateScreenName(string $name): string
-    {
-        if (! is_string($name) || ! preg_match('/^[a-zA-Z0-9_]{1,15}$/', $name)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Screen name, "%s" should only contain alphanumeric characters and'
-                . ' underscores, and not exceed 15 characters.',
-                $name
-            ));
-        }
-        return $name;
-    }
-
-    /**
      * Perform a POST or PUT
      *
      * Performs a POST or PUT request. Any data provided is set in the HTTP
@@ -1627,6 +1588,27 @@ final class Twitter
 
         $params['screen_name'] = $this->validateScreenName($id);
         return $params;
+    }
+    /**
+     * Protected function to validate a status or user identifier.
+     *
+     * If the value consists of solely digits, it is valid, and will be
+     * returned verbatim. Otherwise, a zero is returned.
+     *
+     * @param string|int $int
+     */
+    private function validInteger($int): int
+    {
+        if (is_int($int) && $int > -1) {
+            return $int;
+        }
+        if (!is_string($int)) {
+            return 0;
+        }
+        if (!preg_match('/^(\d+)$/', $int)) {
+            return 0;
+        }
+        return $int;
     }
 
     /**
@@ -1703,6 +1685,22 @@ final class Twitter
         array_walk($ids, Closure::fromCallable([$this, 'validateScreenName']));
         $params['screen_name'] = implode(',', $ids);
         return $params;
+    }
+    /**
+     * Validate a screen name using Twitter rules.
+     *
+     * @throws Exception\InvalidArgumentException
+     */
+    private function validateScreenName(string $name): string
+    {
+        if (! is_string($name) || ! preg_match('/^[a-zA-Z0-9_]{1,15}$/', $name)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                'Screen name, "%s" should only contain alphanumeric characters and'
+                . ' underscores, and not exceed 15 characters.',
+                $name
+            ));
+        }
+        return $name;
     }
 
     /**
