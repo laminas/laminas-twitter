@@ -10,8 +10,6 @@ namespace Laminas\Twitter;
 
 /**
  * Twitter Image Uploader
- *
- * @author Cal Evans <cal@calevans.com>
  */
 class Image extends Media
 {

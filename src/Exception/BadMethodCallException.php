@@ -8,11 +8,6 @@
 
 namespace Laminas\Twitter\Exception;
 
-/**
- * @category   Laminas
- * @package    Laminas_Service
- * @subpackage Twitter
- */
 class BadMethodCallException extends \BadMethodCallException implements ExceptionInterface
 {
 }

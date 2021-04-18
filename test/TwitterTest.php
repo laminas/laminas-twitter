@@ -15,13 +15,25 @@ use Laminas\OAuth\Consumer as OAuthConsumer;
 use Laminas\OAuth\Token\Access as AccessToken;
 use Laminas\OAuth\Token\Request as RequestToken;
 use Laminas\Twitter;
-use Laminas\Twitter\RateLimit as RateLimit;
+use Laminas\Twitter\RateLimit;
 use Laminas\Twitter\Response as TwitterResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 use stdClass;
+
+use function array_merge;
+use function file_get_contents;
+use function implode;
+use function in_array;
+use function is_array;
+use function json_encode;
+use function rand;
+use function range;
+use function str_pad;
+use function str_repeat;
+use function str_replace;
 
 class TwitterTest extends TestCase
 {
@@ -30,7 +42,7 @@ class TwitterTest extends TestCase
     public function setUp(): void
     {
         $twitter = new Twitter\Twitter();
-        $r = new ReflectionProperty($twitter, 'jsonFlags');
+        $r       = new ReflectionProperty($twitter, 'jsonFlags');
         $r->setAccessible(true);
         $this->jsonFlags = $r->getValue($twitter);
     }
@@ -58,7 +70,7 @@ class TwitterTest extends TestCase
         $path,
         $method,
         $responseFile = null,
-        array $params = null,
+        ?array $params = null,
         array $responseHeaders = []
     ) {
         $client = $this->prophesize(OAuthClient::class);
@@ -104,7 +116,7 @@ class TwitterTest extends TestCase
         return $client->reveal();
     }
 
-    protected function prepareJsonPayloadForClient($client, array $params = null)
+    protected function prepareJsonPayloadForClient($client, ?array $params = null)
     {
         $headers = $this->prophesize(Http\Headers::class);
         $headers->addHeaderLine('Content-Type', 'application/json')->shouldBeCalled();
@@ -116,7 +128,7 @@ class TwitterTest extends TestCase
         $client->setRawBody($requestBody)->shouldBeCalled();
     }
 
-    protected function prepareFormEncodedPayloadForClient($client, array $params = null)
+    protected function prepareFormEncodedPayloadForClient($client, ?array $params = null)
     {
         $client->setParameterPost($params)->will([$client, 'reveal']);
     }
@@ -159,7 +171,6 @@ class TwitterTest extends TestCase
         $this->assertSame($rateLimit->reset, $rateLimits['x-rate-limit-reset']);
     }
 
-
     /**
      * OAuth tests
      */
@@ -167,9 +178,9 @@ class TwitterTest extends TestCase
     public function testProvidingAccessTokenInOptionsSetsHttpClientFromAccessToken()
     {
         $client = $this->prophesize(OAuthClient::class);
-        $token = $this->prophesize(AccessToken::class);
+        $token  = $this->prophesize(AccessToken::class);
         $token->getHttpClient([
-            'token' => $token->reveal(),
+            'token'   => $token->reveal(),
             'siteUrl' => 'https://api.twitter.com/oauth',
         ], 'https://api.twitter.com/oauth', [])->will([$client, 'reveal']);
 
@@ -179,16 +190,16 @@ class TwitterTest extends TestCase
 
     public function testNotAuthorisedWithoutToken()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $this->assertFalse($twitter->isAuthorised());
     }
 
     public function testChecksAuthenticatedStateBasedOnAvailabilityOfAccessTokenBasedClient()
     {
         $client = $this->prophesize(OAuthClient::class);
-        $token = $this->prophesize(AccessToken::class);
+        $token  = $this->prophesize(AccessToken::class);
         $token->getHttpClient([
-            'token' => $token->reveal(),
+            'token'   => $token->reveal(),
             'siteUrl' => 'https://api.twitter.com/oauth',
         ], 'https://api.twitter.com/oauth', [])->will([$client, 'reveal']);
 
@@ -200,12 +211,14 @@ class TwitterTest extends TestCase
     {
         $oauth = $this->prophesize(OAuthConsumer::class);
         $oauth->getAccessToken([], Argument::type(RequestToken::class))->willReturn('foo');
-        foreach ([
-            'getRequestToken',
-            'getRedirectUrl',
-            'redirect',
-            'getToken',
-        ] as $method) {
+        foreach (
+            [
+                'getRequestToken',
+                'getRedirectUrl',
+                'redirect',
+                'getToken',
+            ] as $method
+        ) {
             $oauth->$method()->willReturn('foo');
         }
 
@@ -223,9 +236,9 @@ class TwitterTest extends TestCase
     public function testResetsHttpClientOnReceiptOfAccessTokenToOauthClient()
     {
         $requestToken = $this->prophesize(RequestToken::class)->reveal();
-        $oauth = $this->prophesize(OAuthConsumer::class);
-        $client = $this->prophesize(OAuthClient::class);
-        $accessToken = $this->prophesize(AccessToken::class);
+        $oauth        = $this->prophesize(OAuthConsumer::class);
+        $client       = $this->prophesize(OAuthClient::class);
+        $accessToken  = $this->prophesize(AccessToken::class);
 
         $accessToken->getHttpClient([])->will([$client, 'reveal']);
         $oauth->getAccessToken([], $requestToken)->will([$accessToken, 'reveal']);
@@ -256,7 +269,7 @@ class TwitterTest extends TestCase
             ['screen_name' => 'mwop']
         ));
         $response = $twitter->users->show('mwop');
-        $this->assertInstanceOf('Laminas\Twitter\Response', $response);
+        $this->assertInstanceOf(TwitterResponse::class, $response);
         $exists = $response->id !== null;
         $this->assertTrue($exists);
     }
@@ -301,57 +314,57 @@ class TwitterTest extends TestCase
      */
     public function testStatusUserTimelineConstructsExpectedGetUriAndOmitsInvalidParams()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/user_timeline.json',
             Http\Request::METHOD_GET,
             'statuses.user_timeline.mwop.json',
             [
-                'count' => '123',
-                'user_id' => 783214,
-                'since_id' => '10000',
-                'max_id' => '20000',
+                'count'       => '123',
+                'user_id'     => 783214,
+                'since_id'    => '10000',
+                'max_id'      => '20000',
                 'screen_name' => 'twitter',
-                'tweet_mode' => 'extended',
+                'tweet_mode'  => 'extended',
             ]
         ));
         $twitter->statuses->userTimeline([
-            'id' => '783214',
-            'since' => '+2 days', /* invalid param since Apr 2009 */
-            'page' => '1',
-            'count' => '123',
-            'user_id' => '783214',
-            'since_id' => '10000',
-            'max_id' => '20000',
+            'id'          => '783214',
+            'since'       => '+2 days', /* invalid param since Apr 2009 */
+            'page'        => '1',
+            'count'       => '123',
+            'user_id'     => '783214',
+            'since_id'    => '10000',
+            'max_id'      => '20000',
             'screen_name' => 'twitter',
-            'tweet_mode' => 'extended',
+            'tweet_mode'  => 'extended',
         ]);
     }
 
     public function testOverloadingGetShouldReturnObjectInstanceWithValidMethodType()
     {
-        $twitter = new Twitter\Twitter;
-        $return = $twitter->statuses;
+        $twitter = new Twitter\Twitter();
+        $return  = $twitter->statuses;
         $this->assertSame($twitter, $return);
     }
 
     public function testOverloadingGetShouldthrowExceptionWithInvalidMethodType()
     {
         $this->expectException(Twitter\Exception\ExceptionInterface::class);
-        $twitter = new Twitter\Twitter;
-        $return = $twitter->foo;
+        $twitter = new Twitter\Twitter();
+        $return  = $twitter->foo;
     }
 
     public function testOverloadingGetShouldthrowExceptionWithInvalidFunction()
     {
         $this->expectException(Twitter\Exception\ExceptionInterface::class);
-        $twitter = new Twitter\Twitter;
-        $return = $twitter->foo();
+        $twitter = new Twitter\Twitter();
+        $return  = $twitter->foo();
     }
 
     public function testMethodProxyingDoesNotThrowExceptionsWithValidMethods()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/sample.json',
             Http\Request::METHOD_GET,
@@ -364,13 +377,13 @@ class TwitterTest extends TestCase
     public function testMethodProxyingThrowExceptionsWithInvalidMethods()
     {
         $this->expectException(Twitter\Exception\ExceptionInterface::class);
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->statuses->foo();
     }
 
     public function testVerifiedCredentials()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'account/verify_credentials.json',
             Http\Request::METHOD_GET,
@@ -383,7 +396,7 @@ class TwitterTest extends TestCase
 
     public function testSampleTimelineStatusReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/sample.json',
             Http\Request::METHOD_GET,
@@ -396,7 +409,7 @@ class TwitterTest extends TestCase
 
     public function testRateLimitStatusReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'application/rate_limit_status.json',
             Http\Request::METHOD_GET,
@@ -409,7 +422,7 @@ class TwitterTest extends TestCase
 
     public function testRateLimitStatusHasHitsLeft()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'application/rate_limit_status.json',
             Http\Request::METHOD_GET,
@@ -417,7 +430,7 @@ class TwitterTest extends TestCase
             []
         ));
         $response = $twitter->application->rateLimitStatus();
-        $status = $response->toValue();
+        $status   = $response->toValue();
         $this->assertEquals(180, $status->resources->statuses->{'/statuses/user_timeline'}->remaining);
     }
 
@@ -427,7 +440,7 @@ class TwitterTest extends TestCase
      */
     public function testFriendshipCreate()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'friendships/create.json',
             Http\Request::METHOD_POST,
@@ -440,7 +453,7 @@ class TwitterTest extends TestCase
 
     public function testHomeTimelineWithCountReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/home_timeline.json',
             Http\Request::METHOD_GET,
@@ -453,7 +466,7 @@ class TwitterTest extends TestCase
 
     public function testHomeTimelineWithExtendedModeReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/home_timeline.json',
             Http\Request::METHOD_GET,
@@ -469,7 +482,7 @@ class TwitterTest extends TestCase
      */
     public function testUserTimelineReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/user_timeline.json',
             Http\Request::METHOD_GET,
@@ -485,7 +498,7 @@ class TwitterTest extends TestCase
      */
     public function testPostStatusUpdateReturnsResponse()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/update.json',
             Http\Request::METHOD_POST,
@@ -499,14 +512,14 @@ class TwitterTest extends TestCase
     public function testPostStatusUpdateToLongShouldThrowException()
     {
         $this->expectException(Twitter\Exception\ExceptionInterface::class);
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->statuses->update('Test Message - ' . str_repeat(' Hello ', 140));
     }
 
     public function testStatusUpdateShouldAllow280CharactersOfUTF8Encoding()
     {
         $message = str_repeat('é', 280);
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/update.json',
             Http\Request::METHOD_POST,
@@ -520,13 +533,13 @@ class TwitterTest extends TestCase
     public function testPostStatusUpdateEmptyShouldThrowException()
     {
         $this->expectException(Twitter\Exception\ExceptionInterface::class);
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->statuses->update('');
     }
 
     public function testShowStatusReturnsResponse()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/show/307529814640840705.json',
             Http\Request::METHOD_GET,
@@ -539,7 +552,7 @@ class TwitterTest extends TestCase
 
     public function testCreateFavoriteStatusReturnsResponse()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'favorites/create.json',
             Http\Request::METHOD_POST,
@@ -552,7 +565,7 @@ class TwitterTest extends TestCase
 
     public function testFavoritesListReturnsResponse()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'favorites/list.json',
             Http\Request::METHOD_GET,
@@ -565,7 +578,7 @@ class TwitterTest extends TestCase
 
     public function testDestroyFavoriteReturnsResponse()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'favorites/destroy.json',
             Http\Request::METHOD_POST,
@@ -578,7 +591,7 @@ class TwitterTest extends TestCase
 
     public function testStatusDestroyReturnsResult()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/destroy/15042159587.json',
             Http\Request::METHOD_POST,
@@ -590,7 +603,7 @@ class TwitterTest extends TestCase
 
     public function testStatusHomeTimelineWithNoOptionsReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/home_timeline.json',
             Http\Request::METHOD_GET,
@@ -603,7 +616,7 @@ class TwitterTest extends TestCase
 
     public function testUserShowByIdReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'users/show.json',
             Http\Request::METHOD_GET,
@@ -616,11 +629,12 @@ class TwitterTest extends TestCase
 
     /**
      * TODO: Add verification for ALL optional parameters
+     *
      * @todo rename to "mentions_timeline"
      */
     public function testStatusMentionsReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/mentions_timeline.json',
             Http\Request::METHOD_GET,
@@ -633,7 +647,7 @@ class TwitterTest extends TestCase
 
     public function testMentionsTimelineWithExtendedModeReturnsResults()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'statuses/mentions_timeline.json',
             Http\Request::METHOD_GET,
@@ -649,7 +663,7 @@ class TwitterTest extends TestCase
      */
     public function testFriendshipDestroy()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'friendships/destroy.json',
             Http\Request::METHOD_POST,
@@ -662,7 +676,7 @@ class TwitterTest extends TestCase
 
     public function testBlockingCreate()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'blocks/create.json',
             Http\Request::METHOD_POST,
@@ -675,7 +689,7 @@ class TwitterTest extends TestCase
 
     public function testBlockingList()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'blocks/list.json',
             Http\Request::METHOD_GET,
@@ -688,7 +702,6 @@ class TwitterTest extends TestCase
 
     public function testUsersShowAcceptsScreenNamesWithNumbers()
     {
-
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient(
             $this->stubOAuthClient(
@@ -704,7 +717,6 @@ class TwitterTest extends TestCase
 
     public function testUsersShowAcceptsIdAsStringArgument()
     {
-
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient(
             $this->stubOAuthClient(
@@ -735,7 +747,7 @@ class TwitterTest extends TestCase
 
     public function testBlockingIds()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'blocks/ids.json',
             Http\Request::METHOD_GET,
@@ -749,7 +761,7 @@ class TwitterTest extends TestCase
 
     public function testBlockingDestroy()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'blocks/destroy.json',
             Http\Request::METHOD_POST,
@@ -772,7 +784,7 @@ class TwitterTest extends TestCase
 
     public function testSearchTweets()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'search/tweets.json',
             Http\Request::METHOD_GET,
@@ -785,7 +797,7 @@ class TwitterTest extends TestCase
 
     public function testUsersSearch()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'users/search.json',
             Http\Request::METHOD_GET,
@@ -798,7 +810,7 @@ class TwitterTest extends TestCase
 
     public function testListsSubscribers()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'lists/subscribers.json',
             Http\Request::METHOD_GET,
@@ -814,7 +826,7 @@ class TwitterTest extends TestCase
 
     public function testFriendsIds()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'users/search.json',
             Http\Request::METHOD_GET,
@@ -839,11 +851,11 @@ class TwitterTest extends TestCase
                         'adapter' => $adapter,
                     ],
                 ],
-                $adapter
+                $adapter,
             ],
             [
                 [
-                    'access_token' => [
+                    'access_token'        => [
                         'token'  => 'some_token',
                         'secret' => 'some_secret',
                     ],
@@ -851,30 +863,30 @@ class TwitterTest extends TestCase
                         'adapter' => $adapter,
                     ],
                 ],
-                $adapter
+                $adapter,
             ],
             [
                 [
-                    'access_token' => [
+                    'access_token'        => [
                         'token'  => 'some_token',
                         'secret' => 'some_secret',
                     ],
-                    'oauth_options' => [
-                        'consumerKey' => 'some_consumer_key',
+                    'oauth_options'       => [
+                        'consumerKey'    => 'some_consumer_key',
                         'consumerSecret' => 'some_consumer_secret',
                     ],
                     'http_client_options' => [
                         'adapter' => $adapter,
                     ],
                 ],
-                $adapter
+                $adapter,
             ],
         ];
     }
 
     /**
      * @dataProvider providerAdapterAlwaysReachableIfSpecifiedConfiguration
-      */
+     */
     public function testAdapterAlwaysReachableIfSpecified($config, $adapter)
     {
         $twitter = new Twitter\Twitter($config);
@@ -902,16 +914,16 @@ class TwitterTest extends TestCase
 
     public function testDirectMessageUsesEventsApi()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'direct_messages/events/new.json',
             Http\Request::METHOD_POST,
             'direct_messages.events.new.json',
             [
                 'event' => [
-                    'type' => 'message_create',
+                    'type'           => 'message_create',
                     'message_create' => [
-                        'target' => [
+                        'target'       => [
                             'recipient_id' => '1',
                         ],
                         'message_data' => [
@@ -927,8 +939,8 @@ class TwitterTest extends TestCase
 
     public function testDirectMessageUsingScreenNameResultsInUserLookup()
     {
-        $twitter = new Twitter\Twitter;
-        $client = $this->prophesize(OAuthClient::class);
+        $twitter = new Twitter\Twitter();
+        $client  = $this->prophesize(OAuthClient::class);
         $client->resetParameters()->will([$client, 'reveal']);
         $client->setHeaders(['Accept-Charset' => 'ISO-8859-1,utf-8'])->will([$client, 'reveal']);
         $client->clearCookies()->will([$client, 'reveal']);
@@ -952,9 +964,9 @@ class TwitterTest extends TestCase
 
         $data = [
             'event' => [
-                'type' => 'message_create',
+                'type'           => 'message_create',
                 'message_create' => [
-                    'target' => [
+                    'target'       => [
                         'recipient_id' => '1',
                     ],
                     'message_data' => [
@@ -983,8 +995,8 @@ class TwitterTest extends TestCase
 
     public function testDirectMessageWithInvalidScreenNameResultsInException()
     {
-        $twitter = new Twitter\Twitter;
-        $client = $this->prophesize(OAuthClient::class);
+        $twitter = new Twitter\Twitter();
+        $client  = $this->prophesize(OAuthClient::class);
         $client->resetParameters()->will([$client, 'reveal']);
         $client->setHeaders(['Accept-Charset' => 'ISO-8859-1,utf-8'])->will([$client, 'reveal']);
         $client->clearCookies()->will([$client, 'reveal']);
@@ -1015,16 +1027,16 @@ class TwitterTest extends TestCase
 
     public function testDirectMessageWithUserIdentifierSkipsUserLookup()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'direct_messages/events/new.json',
             Http\Request::METHOD_POST,
             'direct_messages.events.new.json',
             [
                 'event' => [
-                    'type' => 'message_create',
+                    'type'           => 'message_create',
                     'message_create' => [
-                        'target' => [
+                        'target'       => [
                             'recipient_id' => '1',
                         ],
                         'message_data' => [
@@ -1040,22 +1052,22 @@ class TwitterTest extends TestCase
 
     public function testDirectMessageAllowsProvidingMedia()
     {
-        $twitter = new Twitter\Twitter;
+        $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
             'direct_messages/events/new.json',
             Http\Request::METHOD_POST,
             'direct_messages.events.new.media.json',
             [
                 'event' => [
-                    'type' => 'message_create',
+                    'type'           => 'message_create',
                     'message_create' => [
-                        'target' => [
+                        'target'       => [
                             'recipient_id' => '1',
                         ],
                         'message_data' => [
-                            'text' => 'Message',
+                            'text'       => 'Message',
                             'attachment' => [
-                                'type' => 'media',
+                                'type'  => 'media',
                                 'media' => [
                                     'id' => 'XXXX',
                                 ],
@@ -1077,18 +1089,18 @@ class TwitterTest extends TestCase
             Http\Request::METHOD_GET,
             'statuses.show.json',
             [
-                'tweet_mode' => 'extended',
-                'include_entities' => true,
-                'trim_user' => true,
+                'tweet_mode'         => 'extended',
+                'include_entities'   => true,
+                'trim_user'          => true,
                 'include_my_retweet' => true,
             ]
         ));
 
         $finalResponse = $twitter->statuses->show(12345, [
-            'tweet_mode' => true,
-            'include_entities' => true,
-            'trim_user' => true,
-            'include_my_retweet' => true,
+            'tweet_mode'             => true,
+            'include_entities'       => true,
+            'trim_user'              => true,
+            'include_my_retweet'     => true,
             'should_not_be_included' => true,
         ]);
 
@@ -1153,7 +1165,7 @@ class TwitterTest extends TestCase
         $twitter->lists->members('laminas');
     }
 
-    public function invalidIntegerIdentifiers() : array
+    public function invalidIntegerIdentifiers(): array
     {
         return [
             'null'       => [null],
@@ -1179,7 +1191,7 @@ class TwitterTest extends TestCase
         $twitter->lists->members('laminas', ['owner_id' => $ownerId]);
     }
 
-    public function invalidStringIdentifiers() : array
+    public function invalidStringIdentifiers(): array
     {
         return [
             'empty'         => [''],
@@ -1199,7 +1211,7 @@ class TwitterTest extends TestCase
         $twitter->lists->members('laminas', ['owner_screen_name' => $owner]);
     }
 
-    public function userIdentifierProvider() : iterable
+    public function userIdentifierProvider(): iterable
     {
         yield 'single-user_id' => [111, 'user_id'];
         yield 'single-screen_name' => ['laminasdevteam', 'screen_name'];
@@ -1213,7 +1225,7 @@ class TwitterTest extends TestCase
      */
     public function testUsersLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey)
     {
-        $expected = is_array($id)
+        $expected       = is_array($id)
             ? $expected = implode(',', $id)
             : $id;
 
@@ -1235,7 +1247,7 @@ class TwitterTest extends TestCase
      */
     public function testFriendshipsLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey)
     {
-        $expected = is_array($id)
+        $expected       = is_array($id)
             ? $expected = implode(',', $id)
             : $id;
 
@@ -1251,7 +1263,7 @@ class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function invalidUserIdentifierProvider() : iterable
+    public function invalidUserIdentifierProvider(): iterable
     {
         yield 'null'                      => [null, 'integer or a string'];
         yield 'true'                      => [true, 'integer or a string'];

@@ -8,7 +8,8 @@
 
 namespace LaminasTest\Twitter;
 
-use Laminas\Http\Client as Client;
+use Closure;
+use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Twitter\Exception;
 use Laminas\Twitter\Media;
@@ -17,6 +18,9 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
+
+use function filesize;
+use function in_array;
 
 class MediaTest extends TestCase
 {
@@ -31,12 +35,12 @@ class MediaTest extends TestCase
     {
         $media = new Media(__FILE__, 'text/plain');
 
-        $imageMediaType = \Closure::bind(function () {
+        $imageMediaType = Closure::bind(function () {
             return $this->mediaType;
         }, $media, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = \Closure::bind(function () {
+        $imageFilename = Closure::bind(function () {
             return $this->imageFilename;
         }, $media, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
@@ -63,7 +67,7 @@ class MediaTest extends TestCase
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalled();
         $this->client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalled();
         $this->client->setMethod('POST')->shouldBeCalled();
         $this->client->setParameterPost([
@@ -94,7 +98,7 @@ class MediaTest extends TestCase
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalled();
         $this->client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalled();
         $this->client->setMethod('POST')->shouldBeCalled();
         $this->client->setParameterPost([
@@ -128,7 +132,7 @@ class MediaTest extends TestCase
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalledTimes(2);
         $this->client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(2);
         $this->client->setMethod('POST')->shouldBeCalledTimes(2);
         $this->client->setParameterPost([
@@ -138,7 +142,7 @@ class MediaTest extends TestCase
             'total_bytes'    => filesize(__FILE__),
         ])->shouldBeCalled();
 
-        $this->client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
+        $this->client->setParameterPost(Argument::that(function ($arg) {
             TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             TestCase::assertTrue(in_array($arg['command'], ['INIT', 'APPEND']));
@@ -170,7 +174,7 @@ class MediaTest extends TestCase
     public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful()
     {
         $media = new Media(__FILE__, 'image/png');
-        $r = new ReflectionProperty($media, 'chunkSize');
+        $r     = new ReflectionProperty($media, 'chunkSize');
         $r->setAccessible(true);
         $r->setValue($media, 4 * filesize(__FILE__));
 
@@ -178,7 +182,7 @@ class MediaTest extends TestCase
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $client->resetParameters()->shouldBeCalled();
         $client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(3);
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
@@ -213,7 +217,7 @@ class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = \Closure::bind(function () {
+        $httpResponse = Closure::bind(function () {
             return $this->httpResponse;
         }, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
@@ -233,7 +237,7 @@ class MediaTest extends TestCase
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $client->resetParameters()->shouldBeCalled();
         $client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(3);
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
@@ -274,7 +278,7 @@ class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = \Closure::bind(function () {
+        $httpResponse = Closure::bind(function () {
             return $this->httpResponse;
         }, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
@@ -294,7 +298,7 @@ class MediaTest extends TestCase
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $client->resetParameters()->shouldBeCalled();
         $client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(3);
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
@@ -336,7 +340,7 @@ class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = \Closure::bind(function () {
+        $httpResponse = Closure::bind(function () {
             return $this->httpResponse;
         }, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);

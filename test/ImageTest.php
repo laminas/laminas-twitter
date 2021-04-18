@@ -8,6 +8,7 @@
 
 namespace LaminasTest\Twitter;
 
+use Closure;
 use Laminas\Twitter\Image;
 use Laminas\Twitter\Media;
 use PHPUnit\Framework\TestCase;
@@ -18,12 +19,12 @@ class ImageTest extends TestCase
     {
         $image = new Image(__FILE__);
 
-        $imageMediaType = \Closure::bind(function () {
+        $imageMediaType = Closure::bind(function () {
             return $this->mediaType;
         }, $image, Media::class)();
         $this->assertSame('image/jpeg', $imageMediaType);
 
-        $imageFilename = \Closure::bind(function () {
+        $imageFilename = Closure::bind(function () {
             return $this->imageFilename;
         }, $image, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
@@ -33,12 +34,12 @@ class ImageTest extends TestCase
     {
         $image = new Image(__FILE__, 'text/plain');
 
-        $imageMediaType = \Closure::bind(function () {
+        $imageMediaType = Closure::bind(function () {
             return $this->mediaType;
         }, $image, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = \Closure::bind(function () {
+        $imageFilename = Closure::bind(function () {
             return $this->imageFilename;
         }, $image, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);

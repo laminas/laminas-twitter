@@ -8,10 +8,6 @@
 
 namespace Laminas\Twitter\Exception;
 
-/**
- * @category   Laminas
- * @package    Laminas_Service
- */
 class UnexpectedValueException extends \UnexpectedValueException implements ExceptionInterface
 {
 }

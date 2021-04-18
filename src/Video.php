@@ -10,8 +10,6 @@ namespace Laminas\Twitter;
 
 /**
  * Twitter Video Uploader
- *
- * @author Cal Evans <cal@calevans.com>
  */
 class Video extends Media
 {
