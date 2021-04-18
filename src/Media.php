@@ -8,6 +8,7 @@
 
 namespace Laminas\Twitter;
 
+use Closure;
 use Laminas\Http\Client;
 
 use function base64_encode;
@@ -104,6 +105,7 @@ class Media
 
         return $this->finalizeUpload($httpClient);
     }
+
     /**
      * Validate that the file exists and can be opened.
      *
@@ -111,13 +113,13 @@ class Media
      */
     private function validateFile(string $fileName): bool
     {
-
         set_error_handler($this->createErrorHandler(), E_WARNING);
         $returnValue = is_readable($fileName);
         restore_error_handler();
 
         return (bool) $returnValue;
     }
+
     /**
      * Validate the mediatype.
      */
@@ -234,7 +236,7 @@ class Media
      * The error handler will store the error message string in the
      * $fileOperationError property.
      */
-    private function createErrorHandler(): \Closure
+    private function createErrorHandler(): Closure
     {
         $this->fileOperationError = null;
         return function ($errno, $errstr) {

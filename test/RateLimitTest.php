@@ -38,8 +38,6 @@ final class RateLimitTest extends TestCase
 
     /**
      * @dataProvider headersProvider
-     *
-     * @return void
      */
     public function testConstructorUsesHeadersToSetProperties($limit, $remaining, $reset): void
     {

@@ -173,8 +173,8 @@ final class MediaTest extends TestCase
 
     public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful(): void
     {
-        $media = new Media(__FILE__, 'image/png');
-        $reflectionProperty     = new ReflectionProperty($media, 'chunkSize');
+        $media              = new Media(__FILE__, 'image/png');
+        $reflectionProperty = new ReflectionProperty($media, 'chunkSize');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 

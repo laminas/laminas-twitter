@@ -8,6 +8,7 @@
 
 namespace LaminasTest\Twitter;
 
+use Generator;
 use Laminas\Http;
 use Laminas\Http\Client\Adapter\Curl as CurlAdapter;
 use Laminas\OAuth\Client as OAuthClient;
@@ -21,6 +22,7 @@ use Laminas\Twitter\Response as TwitterResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use ReflectionProperty;
 use stdClass;
 
@@ -42,8 +44,8 @@ final class TwitterTest extends TestCase
 
     public function setUp(): void
     {
-        $twitter = new Twitter\Twitter();
-        $reflectionProperty       = new ReflectionProperty($twitter, 'jsonFlags');
+        $twitter            = new Twitter\Twitter();
+        $reflectionProperty = new ReflectionProperty($twitter, 'jsonFlags');
         $reflectionProperty->setAccessible(true);
         $this->jsonFlags = $reflectionProperty->getValue($twitter);
     }
@@ -273,7 +275,7 @@ final class TwitterTest extends TestCase
     {
         $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
-        $return = $twitter->foo();
+        $return  = $twitter->foo();
     }
 
     public function testMethodProxyingDoesNotThrowExceptionsWithValidMethods(): void
@@ -1095,7 +1097,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidIntegerIdentifiers
-     *
      * @param mixed $ownerId
      */
     public function testListsMembersRaisesExceptionIfSlugPassedWithInvalidOwnerId($ownerId): void
@@ -1126,7 +1127,7 @@ final class TwitterTest extends TestCase
         $twitter->lists->members('laminas', ['owner_screen_name' => $owner]);
     }
 
-    public function userIdentifierProvider(): \Generator
+    public function userIdentifierProvider(): Generator
     {
         yield 'single-user_id' => [111, 'user_id'];
         yield 'single-screen_name' => ['laminasdevteam', 'screen_name'];
@@ -1136,7 +1137,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider userIdentifierProvider
-     *
      * @param mixed $id
      */
     public function testUsersLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey): void
@@ -1159,7 +1159,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider userIdentifierProvider
-     *
      * @param mixed $id
      */
     public function testFriendshipsLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey): void
@@ -1180,7 +1179,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function invalidUserIdentifierProvider(): \Generator
+    public function invalidUserIdentifierProvider(): Generator
     {
         yield 'null'                      => [null, 'integer or a string'];
         yield 'true'                      => [true, 'integer or a string'];
@@ -1197,7 +1196,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidUserIdentifierProvider
-     *
      * @param mixed $ids
      */
     public function testUsersLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage): void
@@ -1212,7 +1210,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidUserIdentifierProvider
-     *
      * @param mixed $ids
      */
     public function testFriendshipsLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage): void
@@ -1235,7 +1232,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider validGeocodeOptions
-     *
      * @param string $geocode
      */
     public function testSearchTweetsShouldNotInvalidateCorrectlyFormattedGeocodeOption($geocode): void
@@ -1268,7 +1264,6 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidGeocodeOptions
-     *
      * @param string $geocode
      * @param string $expectedMessage
      */
@@ -1286,6 +1281,7 @@ final class TwitterTest extends TestCase
         $this->expectExceptionMessage($expectedMessage);
         $twitter->search->tweets('foo', $options);
     }
+
     /**
      * Quick reusable OAuth client stub setup. Its purpose is to fake
      * HTTP interactions with Twitter so the component can focus on what matters:
@@ -1354,7 +1350,8 @@ final class TwitterTest extends TestCase
 
         return $client->reveal();
     }
-    private function prepareJsonPayloadForClient(\Prophecy\Prophecy\ObjectProphecy $client, ?array $params = null): void
+
+    private function prepareJsonPayloadForClient(ObjectProphecy $client, ?array $params = null): void
     {
         $headers = $this->prophesize(Http\Headers::class);
         $headers->addHeaderLine('Content-Type', 'application/json')->shouldBeCalled();
@@ -1365,7 +1362,8 @@ final class TwitterTest extends TestCase
         $requestBody = json_encode($params, $this->jsonFlags);
         $client->setRawBody($requestBody)->shouldBeCalled();
     }
-    private function prepareFormEncodedPayloadForClient(\Prophecy\Prophecy\ObjectProphecy $client, ?array $params = null): void
+
+    private function prepareFormEncodedPayloadForClient(ObjectProphecy $client, ?array $params = null): void
     {
         $client->setParameterPost($params)->will([$client, 'reveal']);
     }

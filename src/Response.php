@@ -61,7 +61,7 @@ final class Response
     public function __construct(?HttpResponse $httpResponse = null)
     {
         $this->httpResponse = $httpResponse;
-        if (!$httpResponse) {
+        if (! $httpResponse) {
             return;
         }
         if (in_array($httpResponse->getBody(), self::EMPTY_BODY_CONTENT, true)) {

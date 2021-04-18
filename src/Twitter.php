@@ -307,6 +307,7 @@ final class Twitter
 
         return $this->$test(...$params);
     }
+
     /**
      * Proxy service methods.
      *
@@ -1589,6 +1590,7 @@ final class Twitter
         $params['screen_name'] = $this->validateScreenName($id);
         return $params;
     }
+
     /**
      * Protected function to validate a status or user identifier.
      *
@@ -1602,10 +1604,10 @@ final class Twitter
         if (is_int($int) && $int > -1) {
             return $int;
         }
-        if (!is_string($int)) {
+        if (! is_string($int)) {
             return 0;
         }
-        if (!preg_match('/^(\d+)$/', $int)) {
+        if (! preg_match('/^(\d+)$/', $int)) {
             return 0;
         }
         return $int;
@@ -1686,6 +1688,7 @@ final class Twitter
         $params['screen_name'] = implode(',', $ids);
         return $params;
     }
+
     /**
      * Validate a screen name using Twitter rules.
      *
@@ -1707,7 +1710,6 @@ final class Twitter
      * Prepare a JSON payload for the HTTP client.
      *
      * @param mixed $data
-     *
      * @return void
      */
     private function prepareJsonPayloadForClient(Http\Client $client, $data)
@@ -1733,8 +1735,6 @@ final class Twitter
      * Prepare a form-url-encoded payload for the HTTP client.
      *
      * @param mixed $data
-     *
-     * @return void
      */
     private function prepareFormPayloadForClient(Http\Client $client, $data): void
     {
