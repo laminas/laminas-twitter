@@ -4,3 +4,4 @@
 /laminas-mkdoc-theme/
 /vendor/
 .phpcs-cache
+.phpunit.result.cache
