@@ -112,9 +112,9 @@ class MediaTest extends TestCase
         $response->getBody()->willReturn('{"media_id": "XXXX"}');
         $response->getHeaders()->willReturn(null);
         $response->isSuccess()->will(function () use ($media) {
-            $r = new ReflectionProperty($media, 'imageFilename');
-            $r->setAccessible(true);
-            $r->setValue($media, '  This File Does Not Exist  ');
+            $reflectionProperty = new ReflectionProperty($media, 'imageFilename');
+            $reflectionProperty->setAccessible(true);
+            $reflectionProperty->setValue($media, '  This File Does Not Exist  ');
             return true;
         });
 
@@ -174,9 +174,9 @@ class MediaTest extends TestCase
     public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful()
     {
         $media = new Media(__FILE__, 'image/png');
-        $r     = new ReflectionProperty($media, 'chunkSize');
-        $r->setAccessible(true);
-        $r->setValue($media, 4 * filesize(__FILE__));
+        $reflectionProperty     = new ReflectionProperty($media, 'chunkSize');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 
         $client = $this->client;
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
@@ -229,9 +229,9 @@ class MediaTest extends TestCase
     {
         $media = new Media(__FILE__, 'image/png', true, false);
 
-        $r = new ReflectionProperty($media, 'chunkSize');
-        $r->setAccessible(true);
-        $r->setValue($media, 4 * filesize(__FILE__));
+        $reflectionProperty = new ReflectionProperty($media, 'chunkSize');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 
         $client = $this->client;
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
@@ -290,9 +290,9 @@ class MediaTest extends TestCase
     {
         $media = new Media(__FILE__, 'image/png', true, true);
 
-        $r = new ReflectionProperty($media, 'chunkSize');
-        $r->setAccessible(true);
-        $r->setValue($media, 4 * filesize(__FILE__));
+        $reflectionProperty = new ReflectionProperty($media, 'chunkSize');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 
         $client = $this->client;
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();

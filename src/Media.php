@@ -104,6 +104,28 @@ class Media
 
         return $this->finalizeUpload($httpClient);
     }
+    /**
+     * Validate that the file exists and can be opened.
+     *
+     * @todo Put a check to make sure the file is local.
+     */
+    private function validateFile(string $fileName): bool
+    {
+        $returnValue = false;
+
+        set_error_handler($this->createErrorHandler(), E_WARNING);
+        $returnValue = is_readable($fileName);
+        restore_error_handler();
+
+        return (bool) $returnValue;
+    }
+    /**
+     * Validate the mediatype.
+     */
+    private function validateMediaType(string $mediaType): bool
+    {
+        return 1 === preg_match('#^\w+/[-.\w]+(?:\+[-.\w]+)?#', $mediaType);
+    }
 
     /**
      * Initalize the upload with Twitter.
@@ -205,30 +227,6 @@ class Media
         $httpClient->setMethod('POST');
         $httpClient->setParameterPost($payload);
         return new Response($httpClient->send());
-    }
-
-    /**
-     * Validate that the file exists and can be opened.
-     *
-     * @todo Put a check to make sure the file is local.
-     */
-    private function validateFile(string $fileName): bool
-    {
-        $returnValue = false;
-
-        set_error_handler($this->createErrorHandler(), E_WARNING);
-        $returnValue = is_readable($fileName);
-        restore_error_handler();
-
-        return (bool) $returnValue;
-    }
-
-    /**
-     * Validate the mediatype.
-     */
-    private function validateMediaType(string $mediaType): bool
-    {
-        return 1 === preg_match('#^\w+/[-.\w]+(?:\+[-.\w]+)?#', $mediaType);
     }
 
     /**

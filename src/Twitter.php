@@ -219,10 +219,10 @@ class Twitter
             $accessToken && is_array($accessToken)
             && (isset($accessToken['token']) && isset($accessToken['secret']))
         ) {
-            $token = new OAuth\Token\Access();
-            $token->setToken($accessToken['token']);
-            $token->setTokenSecret($accessToken['secret']);
-            $accessToken = $token;
+            $access = new OAuth\Token\Access();
+            $access->setToken($accessToken['token']);
+            $access->setTokenSecret($accessToken['secret']);
+            $accessToken = $access;
         }
         if ($accessToken && $accessToken instanceof OAuth\Token\Access) {
             $oauthOptions['token'] = $accessToken;
@@ -252,42 +252,6 @@ class Twitter
             $consumer = new OAuth\Consumer($oauthOptions);
         }
         $this->oauthConsumer = $consumer;
-    }
-
-    /**
-     * Proxy service methods.
-     *
-     * Allows performing method proxy calls via property access; see {@link __call}
-     * for more details.
-     *
-     * Valid `$type` values currently include:
-     *
-     * - account
-     * - application
-     * - blocks
-     * - directmessages
-     * - favorites
-     * - followers
-     * - friends
-     * - friendships
-     * - lists
-     * - search
-     * - statuses
-     * - users
-     *
-     * @throws Exception\DomainException If method not in method types list
-     */
-    public function __get(string $type): self
-    {
-        $type = strtolower($type);
-        $type = str_replace('_', '', $type);
-        if (! in_array($type, $this->methodTypes)) {
-            throw new Exception\DomainException(
-                'Invalid method type "' . $type . '"'
-            );
-        }
-        $this->methodType = $type;
-        return $this;
     }
 
     /**
@@ -342,6 +306,41 @@ class Twitter
         }
 
         return $this->$test(...$params);
+    }
+    /**
+     * Proxy service methods.
+     *
+     * Allows performing method proxy calls via property access; see {@link __call}
+     * for more details.
+     *
+     * Valid `$type` values currently include:
+     *
+     * - account
+     * - application
+     * - blocks
+     * - directmessages
+     * - favorites
+     * - followers
+     * - friends
+     * - friendships
+     * - lists
+     * - search
+     * - statuses
+     * - users
+     *
+     * @throws Exception\DomainException If method not in method types list
+     */
+    public function __get(string $type): self
+    {
+        $type = strtolower($type);
+        $type = str_replace('_', '', $type);
+        if (! in_array($type, $this->methodTypes)) {
+            throw new Exception\DomainException(
+                'Invalid method type "' . $type . '"'
+            );
+        }
+        $this->methodType = $type;
+        return $this;
     }
 
     /**
