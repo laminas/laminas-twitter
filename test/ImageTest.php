@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ImageTest extends TestCase
 {
-    public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
+    public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults(): void
     {
         $image = new Image(__FILE__);
 
@@ -30,7 +30,7 @@ final class ImageTest extends TestCase
         $this->assertSame(__FILE__, $imageFilename);
     }
 
-    public function testCanBeInstantiatedWithFilenameAndMediaType()
+    public function testCanBeInstantiatedWithFilenameAndMediaType(): void
     {
         $image = new Image(__FILE__, 'text/plain');
 

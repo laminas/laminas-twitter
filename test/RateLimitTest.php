@@ -18,7 +18,7 @@ final class RateLimitTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testInstantiatingWithNoArgumentLeavesAllPropertiesNull()
+    public function testInstantiatingWithNoArgumentLeavesAllPropertiesNull(): void
     {
         $rateLimit = new RateLimit();
         $this->assertNull($rateLimit->limit);
@@ -26,7 +26,7 @@ final class RateLimitTest extends TestCase
         $this->assertNull($rateLimit->reset);
     }
 
-    public function headersProvider()
+    public function headersProvider(): array
     {
         return [
             'limit-only'     => [5000, null, null],
@@ -38,8 +38,10 @@ final class RateLimitTest extends TestCase
 
     /**
      * @dataProvider headersProvider
+     *
+     * @return void
      */
-    public function testConstructorUsesHeadersToSetProperties($limit, $remaining, $reset)
+    public function testConstructorUsesHeadersToSetProperties($limit, $remaining, $reset): void
     {
         $phpunit = $this;
         $headers = $this->prophesize(Headers::class);

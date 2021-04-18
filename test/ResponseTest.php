@@ -21,7 +21,7 @@ final class ResponseTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testPopulateAddsRateLimitBasedOnHttpResponseHeaders()
+    public function testPopulateAddsRateLimitBasedOnHttpResponseHeaders(): void
     {
         $phpunit = $this;
 

@@ -15,6 +15,7 @@ use Laminas\OAuth\Consumer as OAuthConsumer;
 use Laminas\OAuth\Token\Access as AccessToken;
 use Laminas\OAuth\Token\Request as RequestToken;
 use Laminas\Twitter;
+use Laminas\Twitter\Exception\ExceptionInterface;
 use Laminas\Twitter\RateLimit;
 use Laminas\Twitter\Response as TwitterResponse;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +48,7 @@ final class TwitterTest extends TestCase
         $this->jsonFlags = $reflectionProperty->getValue($twitter);
     }
 
-    public function stubHttpClientInitialization()
+    public function stubHttpClientInitialization(): OAuthClient
     {
         $client = $this->prophesize(OAuthClient::class);
         $client->setHeaders(['Accept-Charset' => 'ISO-8859-1,utf-8'])->will([$client, 'reveal']);
@@ -57,7 +58,7 @@ final class TwitterTest extends TestCase
         return $client->reveal();
     }
 
-    public function testRateLimitHeaders()
+    public function testRateLimitHeaders(): void
     {
         $rateLimits = [
             'x-rate-limit-limit'     => rand(1, 100),
@@ -88,8 +89,7 @@ final class TwitterTest extends TestCase
     /**
      * OAuth tests
      */
-
-    public function testProvidingAccessTokenInOptionsSetsHttpClientFromAccessToken()
+    public function testProvidingAccessTokenInOptionsSetsHttpClientFromAccessToken(): void
     {
         $client = $this->prophesize(OAuthClient::class);
         $token  = $this->prophesize(AccessToken::class);
@@ -102,13 +102,13 @@ final class TwitterTest extends TestCase
         $this->assertSame($client->reveal(), $twitter->getHttpClient());
     }
 
-    public function testNotAuthorisedWithoutToken()
+    public function testNotAuthorisedWithoutToken(): void
     {
         $twitter = new Twitter\Twitter();
         $this->assertFalse($twitter->isAuthorised());
     }
 
-    public function testChecksAuthenticatedStateBasedOnAvailabilityOfAccessTokenBasedClient()
+    public function testChecksAuthenticatedStateBasedOnAvailabilityOfAccessTokenBasedClient(): void
     {
         $client = $this->prophesize(OAuthClient::class);
         $token  = $this->prophesize(AccessToken::class);
@@ -121,7 +121,7 @@ final class TwitterTest extends TestCase
         $this->assertTrue($twitter->isAuthorised());
     }
 
-    public function testRelaysMethodsToInternalOAuthInstance()
+    public function testRelaysMethodsToInternalOAuthInstance(): void
     {
         $oauth = $this->prophesize(OAuthConsumer::class);
         $oauth->getAccessToken([], Argument::type(RequestToken::class))->willReturn('foo');
@@ -147,7 +147,7 @@ final class TwitterTest extends TestCase
         $this->assertEquals('foo', $twitter->getToken());
     }
 
-    public function testResetsHttpClientOnReceiptOfAccessTokenToOauthClient()
+    public function testResetsHttpClientOnReceiptOfAccessTokenToOauthClient(): void
     {
         $requestToken = $this->prophesize(RequestToken::class)->reveal();
         $oauth        = $this->prophesize(OAuthConsumer::class);
@@ -163,9 +163,9 @@ final class TwitterTest extends TestCase
         $this->assertSame($client->reveal(), $twitter->getHttpClient());
     }
 
-    public function testAuthorisationFailureWithUsernameAndNoAccessToken()
+    public function testAuthorisationFailureWithUsernameAndNoAccessToken(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter(['username' => 'me']);
         $twitter->statusesPublicTimeline();
     }
@@ -173,7 +173,7 @@ final class TwitterTest extends TestCase
     /**
      * @group Laminas-8218
      */
-    public function testUserNameNotRequired()
+    public function testUserNameNotRequired(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -191,7 +191,7 @@ final class TwitterTest extends TestCase
     /**
      * @group Laminas-7781
      */
-    public function testRetrievingStatusesWithValidScreenNameThrowsNoInvalidScreenNameException()
+    public function testRetrievingStatusesWithValidScreenNameThrowsNoInvalidScreenNameException(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -206,9 +206,9 @@ final class TwitterTest extends TestCase
     /**
      * @group Laminas-7781
      */
-    public function testRetrievingStatusesWithInvalidScreenNameCharacterThrowsInvalidScreenNameException()
+    public function testRetrievingStatusesWithInvalidScreenNameCharacterThrowsInvalidScreenNameException(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
         $twitter->statuses->userTimeline(['screen_name' => 'abc.def']);
     }
@@ -216,9 +216,9 @@ final class TwitterTest extends TestCase
     /**
      * @group Laminas-7781
      */
-    public function testRetrievingStatusesWithInvalidScreenNameLengthThrowsInvalidScreenNameException()
+    public function testRetrievingStatusesWithInvalidScreenNameLengthThrowsInvalidScreenNameException(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
         $twitter->statuses->userTimeline(['screen_name' => 'abcdef_abc123_abc123x']);
     }
@@ -226,7 +226,7 @@ final class TwitterTest extends TestCase
     /**
      * @group Laminas-7781
      */
-    public function testStatusUserTimelineConstructsExpectedGetUriAndOmitsInvalidParams()
+    public function testStatusUserTimelineConstructsExpectedGetUriAndOmitsInvalidParams(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -255,28 +255,28 @@ final class TwitterTest extends TestCase
         ]);
     }
 
-    public function testOverloadingGetShouldReturnObjectInstanceWithValidMethodType()
+    public function testOverloadingGetShouldReturnObjectInstanceWithValidMethodType(): void
     {
         $twitter = new Twitter\Twitter();
         $return  = $twitter->statuses;
         $this->assertSame($twitter, $return);
     }
 
-    public function testOverloadingGetShouldthrowExceptionWithInvalidMethodType()
+    public function testOverloadingGetShouldthrowExceptionWithInvalidMethodType(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
-        $return  = $twitter->foo;
+        $twitter->foo;
     }
 
-    public function testOverloadingGetShouldthrowExceptionWithInvalidFunction()
+    public function testOverloadingGetShouldthrowExceptionWithInvalidFunction(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
-        $return  = $twitter->foo();
+        $return = $twitter->foo();
     }
 
-    public function testMethodProxyingDoesNotThrowExceptionsWithValidMethods()
+    public function testMethodProxyingDoesNotThrowExceptionsWithValidMethods(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -288,14 +288,14 @@ final class TwitterTest extends TestCase
         $twitter->statuses->sample();
     }
 
-    public function testMethodProxyingThrowExceptionsWithInvalidMethods()
+    public function testMethodProxyingThrowExceptionsWithInvalidMethods(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
         $twitter->statuses->foo();
     }
 
-    public function testVerifiedCredentials()
+    public function testVerifiedCredentials(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -308,7 +308,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testSampleTimelineStatusReturnsResults()
+    public function testSampleTimelineStatusReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -321,7 +321,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testRateLimitStatusReturnsResults()
+    public function testRateLimitStatusReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -334,7 +334,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testRateLimitStatusHasHitsLeft()
+    public function testRateLimitStatusHasHitsLeft(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -352,7 +352,7 @@ final class TwitterTest extends TestCase
      * TODO: Check actual purpose. New friend returns XML response, existing
      * friend returns a 403 code.
      */
-    public function testFriendshipCreate()
+    public function testFriendshipCreate(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -365,7 +365,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testHomeTimelineWithCountReturnsResults()
+    public function testHomeTimelineWithCountReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -378,7 +378,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testHomeTimelineWithExtendedModeReturnsResults()
+    public function testHomeTimelineWithExtendedModeReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -394,7 +394,7 @@ final class TwitterTest extends TestCase
     /**
      * TODO: Add verification for ALL optional parameters
      */
-    public function testUserTimelineReturnsResults()
+    public function testUserTimelineReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -410,7 +410,7 @@ final class TwitterTest extends TestCase
     /**
      * TODO: Add verification for ALL optional parameters
      */
-    public function testPostStatusUpdateReturnsResponse()
+    public function testPostStatusUpdateReturnsResponse(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -423,14 +423,14 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testPostStatusUpdateToLongShouldThrowException()
+    public function testPostStatusUpdateToLongShouldThrowException(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
         $twitter->statuses->update('Test Message - ' . str_repeat(' Hello ', 140));
     }
 
-    public function testStatusUpdateShouldAllow280CharactersOfUTF8Encoding()
+    public function testStatusUpdateShouldAllow280CharactersOfUTF8Encoding(): void
     {
         $message = str_repeat('é', 280);
         $twitter = new Twitter\Twitter();
@@ -444,14 +444,14 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testPostStatusUpdateEmptyShouldThrowException()
+    public function testPostStatusUpdateEmptyShouldThrowException(): void
     {
-        $this->expectException(Twitter\Exception\ExceptionInterface::class);
+        $this->expectException(ExceptionInterface::class);
         $twitter = new Twitter\Twitter();
         $twitter->statuses->update('');
     }
 
-    public function testShowStatusReturnsResponse()
+    public function testShowStatusReturnsResponse(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -464,7 +464,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testCreateFavoriteStatusReturnsResponse()
+    public function testCreateFavoriteStatusReturnsResponse(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -477,7 +477,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testFavoritesListReturnsResponse()
+    public function testFavoritesListReturnsResponse(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -490,7 +490,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testDestroyFavoriteReturnsResponse()
+    public function testDestroyFavoriteReturnsResponse(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -503,7 +503,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testStatusDestroyReturnsResult()
+    public function testStatusDestroyReturnsResult(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -515,7 +515,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testStatusHomeTimelineWithNoOptionsReturnsResults()
+    public function testStatusHomeTimelineWithNoOptionsReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -528,7 +528,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testUserShowByIdReturnsResults()
+    public function testUserShowByIdReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -546,7 +546,7 @@ final class TwitterTest extends TestCase
      *
      * @todo rename to "mentions_timeline"
      */
-    public function testStatusMentionsReturnsResults()
+    public function testStatusMentionsReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -559,7 +559,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testMentionsTimelineWithExtendedModeReturnsResults()
+    public function testMentionsTimelineWithExtendedModeReturnsResults(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -575,7 +575,7 @@ final class TwitterTest extends TestCase
     /**
      * TODO: Add verification for ALL optional parameters
      */
-    public function testFriendshipDestroy()
+    public function testFriendshipDestroy(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -588,7 +588,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testBlockingCreate()
+    public function testBlockingCreate(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -601,7 +601,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testBlockingList()
+    public function testBlockingList(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -614,7 +614,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testUsersShowAcceptsScreenNamesWithNumbers()
+    public function testUsersShowAcceptsScreenNamesWithNumbers(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient(
@@ -629,7 +629,7 @@ final class TwitterTest extends TestCase
         $twitter->users->show('JuicyBurger661');
     }
 
-    public function testUsersShowAcceptsIdAsStringArgument()
+    public function testUsersShowAcceptsIdAsStringArgument(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient(
@@ -644,7 +644,7 @@ final class TwitterTest extends TestCase
         $twitter->users->show('9453382');
     }
 
-    public function testUsersShowAcceptsIdAsIntegerArgument()
+    public function testUsersShowAcceptsIdAsIntegerArgument(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient(
@@ -659,7 +659,7 @@ final class TwitterTest extends TestCase
         $twitter->users->show(9453382);
     }
 
-    public function testBlockingIds()
+    public function testBlockingIds(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -673,7 +673,7 @@ final class TwitterTest extends TestCase
         $this->assertContains('23836616', $response->ids);
     }
 
-    public function testBlockingDestroy()
+    public function testBlockingDestroy(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -689,14 +689,14 @@ final class TwitterTest extends TestCase
     /**
      * @group Laminas-6284
      */
-    public function testTwitterObjectsSoNotShareSameHttpClientToPreventConflictingAuthentication()
+    public function testTwitterObjectsSoNotShareSameHttpClientToPreventConflictingAuthentication(): void
     {
         $twitter1 = new Twitter\Twitter(['username' => 'laminastestuser1']);
         $twitter2 = new Twitter\Twitter(['username' => 'laminastestuser2']);
         $this->assertNotSame($twitter1->getHttpClient(), $twitter2->getHttpClient());
     }
 
-    public function testSearchTweets()
+    public function testSearchTweets(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -709,7 +709,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testUsersSearch()
+    public function testUsersSearch(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -722,7 +722,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testListsSubscribers()
+    public function testListsSubscribers(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -738,7 +738,7 @@ final class TwitterTest extends TestCase
         $this->assertEquals(4795561, $payload->users[0]->id);
     }
 
-    public function testFriendsIds()
+    public function testFriendsIds(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -754,7 +754,7 @@ final class TwitterTest extends TestCase
         $this->assertEquals(15012215, $payload[0]->id);
     }
 
-    public function providerAdapterAlwaysReachableIfSpecifiedConfiguration()
+    public function providerAdapterAlwaysReachableIfSpecifiedConfiguration(): array
     {
         $curl = new CurlAdapter();
 
@@ -801,13 +801,13 @@ final class TwitterTest extends TestCase
     /**
      * @dataProvider providerAdapterAlwaysReachableIfSpecifiedConfiguration
      */
-    public function testAdapterAlwaysReachableIfSpecified($config, $adapter)
+    public function testAdapterAlwaysReachableIfSpecified($config, $adapter): void
     {
         $twitter = new Twitter\Twitter($config);
         $this->assertSame($adapter, $twitter->getHttpClient()->getAdapter());
     }
 
-    public function testDirectMessagesNewRaisesExceptionForEmptyMessage()
+    public function testDirectMessagesNewRaisesExceptionForEmptyMessage(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubHttpClientInitialization());
@@ -816,7 +816,7 @@ final class TwitterTest extends TestCase
         $twitter->directMessagesNew('twitter', '');
     }
 
-    public function testDirectMessagesNewRaisesExceptionForTooLongOfMessage()
+    public function testDirectMessagesNewRaisesExceptionForTooLongOfMessage(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubHttpClientInitialization());
@@ -826,7 +826,7 @@ final class TwitterTest extends TestCase
         $twitter->directMessagesNew('twitter', $text);
     }
 
-    public function testDirectMessageUsesEventsApi()
+    public function testDirectMessageUsesEventsApi(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -851,7 +851,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testDirectMessageUsingScreenNameResultsInUserLookup()
+    public function testDirectMessageUsingScreenNameResultsInUserLookup(): void
     {
         $twitter = new Twitter\Twitter();
         $client  = $this->prophesize(OAuthClient::class);
@@ -907,7 +907,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testDirectMessageWithInvalidScreenNameResultsInException()
+    public function testDirectMessageWithInvalidScreenNameResultsInException(): void
     {
         $twitter = new Twitter\Twitter();
         $client  = $this->prophesize(OAuthClient::class);
@@ -936,10 +936,10 @@ final class TwitterTest extends TestCase
         $twitter->setHttpClient($client->reveal());
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid user');
-        $response = $twitter->directMessages->new('Laminas', 'Message');
+        $twitter->directMessages->new('Laminas', 'Message');
     }
 
-    public function testDirectMessageWithUserIdentifierSkipsUserLookup()
+    public function testDirectMessageWithUserIdentifierSkipsUserLookup(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -964,7 +964,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testDirectMessageAllowsProvidingMedia()
+    public function testDirectMessageAllowsProvidingMedia(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -995,7 +995,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
-    public function testStatusesShowWillPassAdditionalOptionsWhenPresent()
+    public function testStatusesShowWillPassAdditionalOptionsWhenPresent(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -1021,7 +1021,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function testListsMembersCanBeCalledWithListIdentifierOnly()
+    public function testListsMembersCanBeCalledWithListIdentifierOnly(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -1037,7 +1037,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function testListsMembersCanBeCalledWithListSlugAndIntegerOwnerId()
+    public function testListsMembersCanBeCalledWithListSlugAndIntegerOwnerId(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -1054,7 +1054,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function testListsMembersCanBeCalledWithListSlugAndStringOwnerScreenName()
+    public function testListsMembersCanBeCalledWithListSlugAndStringOwnerScreenName(): void
     {
         $twitter = new Twitter\Twitter();
         $twitter->setHttpClient($this->stubOAuthClient(
@@ -1071,7 +1071,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function testListsMembersRaisesExceptionIfSlugPassedWithoutOwnerInformation()
+    public function testListsMembersRaisesExceptionIfSlugPassedWithoutOwnerInformation(): void
     {
         $twitter = new Twitter\Twitter();
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
@@ -1095,9 +1095,10 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidIntegerIdentifiers
+     *
      * @param mixed $ownerId
      */
-    public function testListsMembersRaisesExceptionIfSlugPassedWithInvalidOwnerId($ownerId)
+    public function testListsMembersRaisesExceptionIfSlugPassedWithInvalidOwnerId($ownerId): void
     {
         $twitter = new Twitter\Twitter();
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
@@ -1117,7 +1118,7 @@ final class TwitterTest extends TestCase
     /**
      * @dataProvider invalidStringIdentifiers
      */
-    public function testListsMembersRaisesExceptionIfSlugPassedWithInvalidOwnerScreenName(string $owner)
+    public function testListsMembersRaisesExceptionIfSlugPassedWithInvalidOwnerScreenName(string $owner): void
     {
         $twitter = new Twitter\Twitter();
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);
@@ -1125,7 +1126,7 @@ final class TwitterTest extends TestCase
         $twitter->lists->members('laminas', ['owner_screen_name' => $owner]);
     }
 
-    public function userIdentifierProvider(): iterable
+    public function userIdentifierProvider(): \Generator
     {
         yield 'single-user_id' => [111, 'user_id'];
         yield 'single-screen_name' => ['laminasdevteam', 'screen_name'];
@@ -1135,9 +1136,10 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider userIdentifierProvider
+     *
      * @param mixed $id
      */
-    public function testUsersLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey)
+    public function testUsersLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey): void
     {
         $expected       = is_array($id)
             ? $expected = implode(',', $id)
@@ -1157,9 +1159,10 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider userIdentifierProvider
+     *
      * @param mixed $id
      */
-    public function testFriendshipsLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey)
+    public function testFriendshipsLookupAcceptsAllSupportedUserIdentifiers($id, string $paramKey): void
     {
         $expected       = is_array($id)
             ? $expected = implode(',', $id)
@@ -1177,7 +1180,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function invalidUserIdentifierProvider(): iterable
+    public function invalidUserIdentifierProvider(): \Generator
     {
         yield 'null'                      => [null, 'integer or a string'];
         yield 'true'                      => [true, 'integer or a string'];
@@ -1194,9 +1197,10 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidUserIdentifierProvider
+     *
      * @param mixed $ids
      */
-    public function testUsersLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage)
+    public function testUsersLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage): void
     {
         $twitter = new Twitter\Twitter();
 
@@ -1208,9 +1212,10 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidUserIdentifierProvider
+     *
      * @param mixed $ids
      */
-    public function testFriendshipsLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage)
+    public function testFriendshipsLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage): void
     {
         $twitter = new Twitter\Twitter();
 
@@ -1220,7 +1225,7 @@ final class TwitterTest extends TestCase
         $twitter->friendships->lookup($ids);
     }
 
-    public function validGeocodeOptions()
+    public function validGeocodeOptions(): array
     {
         return [
             'mile-radius' => ['53.3242381,-6.3857848,1mi'],
@@ -1230,9 +1235,10 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider validGeocodeOptions
+     *
      * @param string $geocode
      */
-    public function testSearchTweetsShouldNotInvalidateCorrectlyFormattedGeocodeOption($geocode)
+    public function testSearchTweetsShouldNotInvalidateCorrectlyFormattedGeocodeOption($geocode): void
     {
         $twitter = new Twitter\Twitter();
 
@@ -1251,7 +1257,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function invalidGeocodeOptions()
+    public function invalidGeocodeOptions(): array
     {
         return [
             'too-few-commas'  => ['53.3242381,-6.3857848', 'latitude,longitude,radius'],
@@ -1262,13 +1268,14 @@ final class TwitterTest extends TestCase
 
     /**
      * @dataProvider invalidGeocodeOptions
+     *
      * @param string $geocode
      * @param string $expectedMessage
      */
     public function testSearchTweetsShouldInvalidateIncorrectlyFormattedGeocodeOption(
         $geocode,
         $expectedMessage
-    ) {
+    ): void {
         $twitter = new Twitter\Twitter();
 
         $options = [
@@ -1347,7 +1354,7 @@ final class TwitterTest extends TestCase
 
         return $client->reveal();
     }
-    private function prepareJsonPayloadForClient($client, ?array $params = null)
+    private function prepareJsonPayloadForClient(\Prophecy\Prophecy\ObjectProphecy $client, ?array $params = null): void
     {
         $headers = $this->prophesize(Http\Headers::class);
         $headers->addHeaderLine('Content-Type', 'application/json')->shouldBeCalled();
@@ -1358,7 +1365,7 @@ final class TwitterTest extends TestCase
         $requestBody = json_encode($params, $this->jsonFlags);
         $client->setRawBody($requestBody)->shouldBeCalled();
     }
-    private function prepareFormEncodedPayloadForClient($client, ?array $params = null)
+    private function prepareFormEncodedPayloadForClient(\Prophecy\Prophecy\ObjectProphecy $client, ?array $params = null): void
     {
         $client->setParameterPost($params)->will([$client, 'reveal']);
     }

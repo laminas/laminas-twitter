@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 final class VideoTest extends TestCase
 {
-    public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
+    public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults(): void
     {
         $video = new Video(__FILE__);
 
@@ -30,7 +30,7 @@ final class VideoTest extends TestCase
         $this->assertSame(__FILE__, $imageFilename);
     }
 
-    public function testCanBeInstantiatedWithFilenameAndMediaType()
+    public function testCanBeInstantiatedWithFilenameAndMediaType(): void
     {
         $video = new Video(__FILE__, 'text/plain');
 

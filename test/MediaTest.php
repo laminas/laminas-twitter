@@ -31,7 +31,7 @@ final class MediaTest extends TestCase
         $this->client = $this->prophesize(Client::class);
     }
 
-    public function testAllowsPassingImageFilenameAndMediaType()
+    public function testAllowsPassingImageFilenameAndMediaType(): void
     {
         $media = new Media(__FILE__, 'text/plain');
 
@@ -46,7 +46,7 @@ final class MediaTest extends TestCase
         $this->assertSame(__FILE__, $imageFilename);
     }
 
-    public function testUploadRaisesExceptionIfNoImageFilenamePresent()
+    public function testUploadRaisesExceptionIfNoImageFilenamePresent(): void
     {
         $media = new Media('', 'text/plain');
         $this->expectException(Exception\InvalidMediaException::class);
@@ -54,7 +54,7 @@ final class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testUploadRaisesExceptionIfNoMediaTypePresent()
+    public function testUploadRaisesExceptionIfNoMediaTypePresent(): void
     {
         $media = new Media(__FILE__, '');
         $this->expectException(Exception\InvalidMediaException::class);
@@ -62,7 +62,7 @@ final class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testUnsuccessfulUploadInitializationRaisesException()
+    public function testUnsuccessfulUploadInitializationRaisesException(): void
     {
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalled();
@@ -91,7 +91,7 @@ final class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testAppendUploadRaisesExceptionIfUnableToOpenFile()
+    public function testAppendUploadRaisesExceptionIfUnableToOpenFile(): void
     {
         $media = new Media(__FILE__, 'image/png');
 
@@ -125,7 +125,7 @@ final class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testAppendUploadRaisesExceptionIfChunkUploadFails()
+    public function testAppendUploadRaisesExceptionIfChunkUploadFails(): void
     {
         $media = new Media(__FILE__, 'image/png');
 
@@ -171,7 +171,7 @@ final class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful()
+    public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful(): void
     {
         $media = new Media(__FILE__, 'image/png');
         $reflectionProperty     = new ReflectionProperty($media, 'chunkSize');
@@ -225,7 +225,7 @@ final class MediaTest extends TestCase
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 
-    public function testAllowsMarkingMediaAsForDirectMessageButUnshared()
+    public function testAllowsMarkingMediaAsForDirectMessageButUnshared(): void
     {
         $media = new Media(__FILE__, 'image/png', true, false);
 
@@ -286,7 +286,7 @@ final class MediaTest extends TestCase
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 
-    public function testAllowsMarkingMediaForDirectMessageAndShared()
+    public function testAllowsMarkingMediaForDirectMessageAndShared(): void
     {
         $media = new Media(__FILE__, 'image/png', true, true);
 

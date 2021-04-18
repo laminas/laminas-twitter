@@ -111,7 +111,6 @@ class Media
      */
     private function validateFile(string $fileName): bool
     {
-        $returnValue = false;
 
         set_error_handler($this->createErrorHandler(), E_WARNING);
         $returnValue = is_readable($fileName);
@@ -235,7 +234,7 @@ class Media
      * The error handler will store the error message string in the
      * $fileOperationError property.
      */
-    private function createErrorHandler(): callable
+    private function createErrorHandler(): \Closure
     {
         $this->fileOperationError = null;
         return function ($errno, $errstr) {

@@ -1705,6 +1705,10 @@ final class Twitter
 
     /**
      * Prepare a JSON payload for the HTTP client.
+     *
+     * @param mixed $data
+     *
+     * @return void
      */
     private function prepareJsonPayloadForClient(Http\Client $client, $data)
     {
@@ -1727,8 +1731,12 @@ final class Twitter
 
     /**
      * Prepare a form-url-encoded payload for the HTTP client.
+     *
+     * @param mixed $data
+     *
+     * @return void
      */
-    private function prepareFormPayloadForClient(Http\Client $client, $data)
+    private function prepareFormPayloadForClient(Http\Client $client, $data): void
     {
         if (! is_array($data)) {
             return;
