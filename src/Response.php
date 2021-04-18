@@ -61,13 +61,13 @@ class Response
     public function __construct(?HttpResponse $httpResponse = null)
     {
         $this->httpResponse = $httpResponse;
-
-        if (
-            $httpResponse
-            && ! in_array($httpResponse->getBody(), $this->emptyBodyContent, true)
-        ) {
-            $this->populate($httpResponse);
+        if (!$httpResponse) {
+            return;
         }
+        if (in_array($httpResponse->getBody(), $this->emptyBodyContent, true)) {
+            return;
+        }
+        $this->populate($httpResponse);
     }
 
     /**

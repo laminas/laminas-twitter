@@ -1326,7 +1326,8 @@ class Twitter
                 self::STATUS_MAX_CHARACTERS,
                 $len
             ));
-        } elseif (0 == $len) {
+        }
+        if (0 == $len) {
             throw new Exception\InvalidArgumentException(
                 'Status must contain at least one character'
             );
@@ -1544,12 +1545,13 @@ class Twitter
         if (is_int($int) && $int > -1) {
             return $int;
         }
-
-        if (is_string($int) && preg_match('/^(\d+)$/', $int)) {
-            return $int;
+        if (!is_string($int)) {
+            return 0;
         }
-
-        return 0;
+        if (!preg_match('/^(\d+)$/', $int)) {
+            return 0;
+        }
+        return $int;
     }
 
     /**
@@ -1712,8 +1714,10 @@ class Twitter
         if (is_array($data) || is_object($data)) {
             $data = json_encode($data, $this->jsonFlags);
         }
-
-        if (empty($data) || ! is_string($data)) {
+        if (empty($data)) {
+            return;
+        }
+        if (! is_string($data)) {
             return;
         }
 
