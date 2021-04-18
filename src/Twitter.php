@@ -81,7 +81,7 @@ use const JSON_UNESCAPED_UNICODE;
  *
  * @see https://developer.twitter.com/en/docs/basics/counting-characters
  */
-class Twitter
+final class Twitter
 {
     /**
      * Base URI for all API calls
@@ -1509,7 +1509,7 @@ class Twitter
      */
     public function init(string $path, Http\Client $client): void
     {
-        if (! $this->isAuthorised($client) && $this->getUsername() !== null) {
+        if (! $this->isAuthorised($client) && $this->username !== null) {
             throw new Exception\DomainException(
                 'Twitter session is unauthorised. You need to initialize '
                 . self::class . ' with an OAuth Access Token or use '
@@ -1539,7 +1539,7 @@ class Twitter
      *
      * @param string|int $int
      */
-    protected function validInteger($int): int
+    private function validInteger($int): int
     {
         if (is_int($int) && $int > -1) {
             return $int;
@@ -1558,7 +1558,7 @@ class Twitter
      *
      * @throws Exception\InvalidArgumentException
      */
-    protected function validateScreenName(string $name): string
+    private function validateScreenName(string $name): string
     {
         if (! is_string($name) || ! preg_match('/^[a-zA-Z0-9_]{1,15}$/', $name)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -1581,7 +1581,7 @@ class Twitter
      * @param bool $asJson Whether or not the data should be submitted as JSON
      *     (vs form urlencoded, which is the default)
      */
-    protected function performPost(string $method, $data, Http\Client $client, bool $asJson): Http\Response
+    private function performPost(string $method, $data, Http\Client $client, bool $asJson): Http\Response
     {
         $client->setMethod($method);
 
@@ -1604,7 +1604,7 @@ class Twitter
      * @param array $params
      * @throws Exception\InvalidArgumentException if the value is neither an integer nor a string
      */
-    protected function createUserParameter($id, array $params): array
+    private function createUserParameter($id, array $params): array
     {
         if (! is_string($id) && ! is_int($id)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -1652,7 +1652,7 @@ class Twitter
      * @throws Exception\InvalidArgumentException if an array of $ids are not all of the same type.
      * @throws Exception\InvalidArgumentException if any screen name element is invalid.
      */
-    protected function createUserListParameter($ids, array $params, string $context): array
+    private function createUserListParameter($ids, array $params, string $context): array
     {
         if (! is_array($ids)) {
             return $this->createUserParameter($ids, $params);

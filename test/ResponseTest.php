@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     use ProphecyTrait;
 

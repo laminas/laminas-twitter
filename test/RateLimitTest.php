@@ -14,7 +14,7 @@ use Laminas\Twitter\RateLimit;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-class RateLimitTest extends TestCase
+final class RateLimitTest extends TestCase
 {
     use ProphecyTrait;
 

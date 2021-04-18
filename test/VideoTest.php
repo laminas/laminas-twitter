@@ -13,7 +13,7 @@ use Laminas\Twitter\Media;
 use Laminas\Twitter\Video;
 use PHPUnit\Framework\TestCase;
 
-class VideoTest extends TestCase
+final class VideoTest extends TestCase
 {
     public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
     {

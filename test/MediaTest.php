@@ -22,7 +22,7 @@ use ReflectionProperty;
 use function filesize;
 use function in_array;
 
-class MediaTest extends TestCase
+final class MediaTest extends TestCase
 {
     use ProphecyTrait;
 

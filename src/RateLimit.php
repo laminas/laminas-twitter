@@ -15,7 +15,7 @@ use function property_exists;
 /**
  * Representation of the Rate Limit Headers from Twitter.
  */
-class RateLimit
+final class RateLimit
 {
     /** @var int */
     private $limit;

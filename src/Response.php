@@ -28,12 +28,12 @@ use function sprintf;
  * - proxying to elements of the decoded response via property overloading
  * - method for retrieving a RateLimit instance with derived rate-limit headers
  */
-class Response
+final class Response
 {
     /**
      * Empty body content that should not result in response population.
      */
-    private $emptyBodyContent = [
+    private const EMPTY_BODY_CONTENT = [
         null,
         '',
     ];
@@ -64,7 +64,7 @@ class Response
         if (!$httpResponse) {
             return;
         }
-        if (in_array($httpResponse->getBody(), $this->emptyBodyContent, true)) {
+        if (in_array($httpResponse->getBody(), self::EMPTY_BODY_CONTENT, true)) {
             return;
         }
         $this->populate($httpResponse);

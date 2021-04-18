@@ -13,7 +13,7 @@ use Laminas\Twitter\Image;
 use Laminas\Twitter\Media;
 use PHPUnit\Framework\TestCase;
 
-class ImageTest extends TestCase
+final class ImageTest extends TestCase
 {
     public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
     {

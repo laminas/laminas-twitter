@@ -11,7 +11,7 @@ namespace Laminas\Twitter;
 /**
  * Twitter Video Uploader
  */
-class Video extends Media
+final class Video extends Media
 {
     public function __construct(
         string $imageUrl,

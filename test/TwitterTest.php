@@ -35,7 +35,7 @@ use function str_pad;
 use function str_repeat;
 use function str_replace;
 
-class TwitterTest extends TestCase
+final class TwitterTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -1298,7 +1298,7 @@ class TwitterTest extends TestCase
      * @param array $responseHeaders Headers expected on the returned response
      * @return OAuthClient
      */
-    protected function stubOAuthClient(
+    private function stubOAuthClient(
         $path,
         $method,
         $responseFile = null,
@@ -1347,7 +1347,7 @@ class TwitterTest extends TestCase
 
         return $client->reveal();
     }
-    protected function prepareJsonPayloadForClient($client, ?array $params = null)
+    private function prepareJsonPayloadForClient($client, ?array $params = null)
     {
         $headers = $this->prophesize(Http\Headers::class);
         $headers->addHeaderLine('Content-Type', 'application/json')->shouldBeCalled();
@@ -1358,7 +1358,7 @@ class TwitterTest extends TestCase
         $requestBody = json_encode($params, $this->jsonFlags);
         $client->setRawBody($requestBody)->shouldBeCalled();
     }
-    protected function prepareFormEncodedPayloadForClient($client, ?array $params = null)
+    private function prepareFormEncodedPayloadForClient($client, ?array $params = null)
     {
         $client->setParameterPost($params)->will([$client, 'reveal']);
     }
