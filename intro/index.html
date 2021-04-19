@@ -361,7 +361,7 @@ $twitter = new Laminas\Twitter\Twitter($config);</code></pre>
 <p>Make sure you substitute the values you discovered earlier in the
 configuration before attempting to connect.</p>
 <blockquote>
-<h4>Note</h4>
+<h4 id="note">Note</h4>
 <p>Twitter has a known issue with the SSL certificate for their API
 endpoints, which requires that you use insecure settings for the SSL
 certificate verification.</p>
@@ -400,7 +400,7 @@ This is achieved using the OAuth authentication protocol. OAuth is the
 only supported authentication mode for Twitter as of August 2010. The
 OAuth implementation used by <code>Laminas\Twitter\Twitter</code> is
 <code>laminas-oauth</code>.</p>
-<h3>Creating the Twitter Class</h3>
+<h3 id="creating-the-twitter-class">Creating the Twitter Class</h3>
 <p><code>Laminas\Twitter\Twitter</code> must authorize itself, on behalf of a
 user, before use with the Twitter API (except for public timeline). This
 must be accomplished using OAuth since Twitter has disabled it's basic
@@ -447,7 +447,7 @@ $twitter = new Laminas\Twitter\Twitter([
 // verify user's credentials with Twitter
 $response = $twitter-&gt;account-&gt;verifyCredentials();</code></pre>
 <blockquote>
-<h4>Note</h4>
+<h4 id="note_1">Note</h4>
 <p>In order to authenticate with Twitter, ALL applications MUST be
 registered with Twitter in order to receive a Consumer Key and
 Consumer Secret to be used when authenticating with OAuth. This can
@@ -494,13 +494,13 @@ full example:</p>
     ],
 ]);</code></pre>
 <h2 id="account-methods">Account Methods</h2>
-<h3>Verifying credentials</h3>
+<h3 id="verifying-credentials">Verifying credentials</h3>
 <p><code>verifyCredentials()</code> tests if supplied user credentials are valid with
 minimal overhead.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;account-&gt;verifyCredentials();</code></pre>
 <h2 id="application-methods">Application Methods</h2>
-<h3>Rating limit status</h3>
+<h3 id="rating-limit-status">Rating limit status</h3>
 <p><code>rateLimitStatus()</code> returns the remaining number of API requests
 available to the authenticating user before the API limit is reached
 for the current hour.</p>
@@ -508,31 +508,31 @@ for the current hour.</p>
 $response = $twitter-&gt;application-&gt;rateLimitStatus();
 $userTimelineLimit = $response-&gt;resources-&gt;statuses-&gt;{'/statuses/user_timeline'}-&gt;remaining;</code></pre>
 <h2 id="blocking-methods">Blocking Methods</h2>
-<h3>Blocking a user</h3>
+<h3 id="blocking-a-user">Blocking a user</h3>
 <p><code>create()</code> blocks the user specified in the <code>id</code> parameter as the
 authenticating user and destroys a friendship to the blocked user if
 one exists. Returns the blocked user in the requested format when
 successful.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;blocks-&gt;create('usertoblock');</code></pre>
-<h3>Removing a block</h3>
+<h3 id="removing-a-block">Removing a block</h3>
 <p><code>destroy()</code> un-blocks the user specified in the <code>id</code> parameter for the
 authenticating user. Returns the un-blocked user in the requested format
 when successful.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;blocks-&gt;destroy('blockeduser');</code></pre>
-<h3>Who are you blocking (identifiers only)</h3>
+<h3 id="who-are-you-blocking-identifiers-only">Who are you blocking (identifiers only)</h3>
 <p><code>ids()</code> returns an array of user identifiers that the authenticating
 user is blocking.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;blocks-&gt;ids();</code></pre>
-<h3>Who are you blocking</h3>
+<h3 id="who-are-you-blocking">Who are you blocking</h3>
 <p><code>list()</code> returns an array of user objects that the authenticating user
 is blocking.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;blocks-&gt;list();</code></pre>
 <h2 id="direct-message-methods">Direct Message Methods</h2>
-<h3>Retrieving recent direct messages received</h3>
+<h3 id="retrieving-recent-direct-messages-received">Retrieving recent direct messages received</h3>
 <p><code>messages()</code> returns a list of the 20 most recent direct messages sent
 to the authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
@@ -550,7 +550,7 @@ the query.</p>
 <li><code>include_entities</code> controls whether or not entities, which includes
   URLs, mentioned users, and hashtags, will be returned.</li>
 </ul>
-<h3>Retrieving recent direct messages sent</h3>
+<h3 id="retrieving-recent-direct-messages-sent">Retrieving recent direct messages sent</h3>
 <p><code>sent()</code> returns a list of the 20 most recent direct messages sent by
 the authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
@@ -568,19 +568,19 @@ the query.</p>
 <li><code>include_entities</code> controls whether or not entities, which includes
   URLs, mentioned users, and hashtags, will be returned.</li>
 </ul>
-<h3>Sending a direct message</h3>
+<h3 id="sending-a-direct-message">Sending a direct message</h3>
 <p><code>new()</code> sends a new direct message to the specified user from the
 authenticating user. Requires both the user and text parameters below.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;directMessages-&gt;new('myfriend', 'mymessage');</code></pre>
-<h3>Deleting a direct message</h3>
+<h3 id="deleting-a-direct-message">Deleting a direct message</h3>
 <p><code>destroy()</code> destroys the direct message specified in the required <code>id</code>
 parameter. The authenticating user must be the recipient of the
 specified direct message.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;directMessages-&gt;destroy(123548);</code></pre>
 <h2 id="favorites-methods">Favorites Methods</h2>
-<h3>Retrieving favorites</h3>
+<h3 id="retrieving-favorites">Retrieving favorites</h3>
 <p><code>list()</code> returns the 20 most recent favorite statuses for the
 authenticating user or user specified by the <code>id</code> parameter.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
@@ -600,29 +600,29 @@ the query.</p>
 <li><code>include_entities</code> controls whether or not entities, which includes
   URLs, mentioned users, and hashtags, will be returned.</li>
 </ul>
-<h3>Creating favorites</h3>
+<h3 id="creating-favorites">Creating favorites</h3>
 <p><code>create()</code> favorites the status specified in the <code>id</code> parameter as the
 authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;favorites-&gt;create(12351);</code></pre>
-<h3>Deleting a favorite</h3>
+<h3 id="deleting-a-favorite">Deleting a favorite</h3>
 <p><code>destroy()</code> un-favorites the status specified in the <code>id</code> parameter as
 the authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;favorites-&gt;destroy(12351);</code></pre>
 <h2 id="friendship-methods">Friendship Methods</h2>
-<h3>Creating a friend</h3>
+<h3 id="creating-a-friend">Creating a friend</h3>
 <p><code>create()</code> befriends the user specified in the <code>id</code> parameter with the
 authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;friendships-&gt;create('mynewfriend');</code></pre>
-<h3>Deleting a friend</h3>
+<h3 id="deleting-a-friend">Deleting a friend</h3>
 <p><code>destroy()</code> discontinues friendship with the user specified in the <code>id</code>
 parameter and the authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;friendships-&gt;destroy('myoldfriend');</code></pre>
 <h2 id="search-methods">Search Methods</h2>
-<h3>Searching for tweets</h3>
+<h3 id="searching-for-tweets">Searching for tweets</h3>
 <p><code>tweets()</code> returns a list of tweets matching the criteria specified in
 <code>$query</code>. By default, 15 will be returned, but this value may be
 changed using the <code>count</code> option.</p>
@@ -652,13 +652,13 @@ optional parameters to modify the query.</p>
   return tweets.</li>
 </ul>
 <h2 id="status-methods">Status Methods</h2>
-<h3>Retrieving the public timeline</h3>
+<h3 id="retrieving-the-public-timeline">Retrieving the public timeline</h3>
 <p><code>sample()</code> returns the 20 most recent statuses from non-protected users
 with a custom user icon. The public timeline is cached by Twitter for 60
 seconds.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;statuses-&gt;sample();</code></pre>
-<h3>Retrieving the home timeline</h3>
+<h3 id="retrieving-the-home-timeline">Retrieving the home timeline</h3>
 <p><code>homeTimeline()</code> returns the 20 most recent statuses posted by the
 authenticating user and that user's friends.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
@@ -682,7 +682,7 @@ modify the query.</p>
 <li><code>exclude_replies</code> controls whether or not status updates that are
   in reply to other statuses will be returned.</li>
 </ul>
-<h3>Retrieving the user timeline</h3>
+<h3 id="retrieving-the-user-timeline">Retrieving the user timeline</h3>
 <p><code>userTimeline()</code> returns the 20 most recent statuses posted from the
 authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
@@ -710,12 +710,12 @@ modify the query.</p>
 <li><code>exclude_replies</code> controls whether or not status updates that are
   in reply to other statuses will be returned.</li>
 </ul>
-<h3>Showing user status</h3>
+<h3 id="showing-user-status">Showing user status</h3>
 <p><code>show()</code> returns a single status, specified by the <code>id</code> parameter below.
 The status' author will be returned inline.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;statuses-&gt;show(1234);</code></pre>
-<h3>Updating user status</h3>
+<h3 id="updating-user-status">Updating user status</h3>
 <p><code>update()</code> updates the authenticating user's status. This method
 requires that you pass in the status update that you want to post to
 Twitter.</p>
@@ -724,7 +724,7 @@ $response = $twitter-&gt;statuses-&gt;update('My Great Tweet');</code></pre>
 <p>The <code>update()</code> method accepts a second additional parameter.</p>
 <p><code>inReplyTo_StatusId</code> specifies the ID of an existing status that
 the status to be posted is in reply to.</p>
-<h3>Showing user replies</h3>
+<h3 id="showing-user-replies">Showing user replies</h3>
 <p><code>mentionsTimeline()</code> returns the 20 most recent @replies (status updates
 prefixed with @username) for the authenticating user.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
@@ -746,18 +746,18 @@ to modify the query.</p>
 <li><code>include_entities</code> controls whether or not entities, which includes
   URLs, mentioned users, and hashtags, will be returned.</li>
 </ul>
-<h3>Deleting user status</h3>
+<h3 id="deleting-user-status">Deleting user status</h3>
 <p><code>destroy()</code> destroys the status specified by the required <code>id</code>
 parameter.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;statuses-&gt;destroy(12345);</code></pre>
 <h2 id="user-methods">User Methods</h2>
-<h3>Showing user information</h3>
+<h3 id="showing-user-information">Showing user information</h3>
 <p><code>show()</code> returns extended information of a given user, specified by ID
 or screen name as per the required <code>id</code> parameter below.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;users-&gt;show('myfriend');</code></pre>
-<h3>Searching for users</h3>
+<h3 id="searching-for-users">Searching for users</h3>
 <p><code>search()</code> will search for users matching the query provided.</p>
 <pre class="highlight"><code class="language-php">$twitter  = new Laminas\Twitter\Twitter($options);
 $response = $twitter-&gt;users-&gt;search('Laminas');</code></pre>
@@ -852,6 +852,7 @@ the query.</p>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -924,7 +925,7 @@ the query.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-twitter/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
