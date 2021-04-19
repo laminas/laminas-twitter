@@ -12,9 +12,12 @@ use Laminas\Http\Header\HeaderInterface;
 use Laminas\Http\Headers;
 use Laminas\Twitter\RateLimit;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class RateLimitTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testInstantiatingWithNoArgumentLeavesAllPropertiesNull()
     {
         $rateLimit = new RateLimit();

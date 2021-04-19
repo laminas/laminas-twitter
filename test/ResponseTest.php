@@ -14,10 +14,13 @@ use Laminas\Http\Response as HttpResponse;
 use Laminas\Twitter\RateLimit;
 use Laminas\Twitter\Response;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 
 class ResponseTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testPopulateAddsRateLimitBasedOnHttpResponseHeaders()
     {
         $phpunit = $this;

@@ -19,11 +19,14 @@ use Laminas\Twitter\RateLimit as RateLimit;
 use Laminas\Twitter\Response as TwitterResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 use stdClass;
 
 class TwitterTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function setUp(): void
     {
         $twitter = new Twitter\Twitter();
