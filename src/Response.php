@@ -56,7 +56,7 @@ final class Response
      * Assigns the HttpResponse to a property, as well as the body
      * representation. It then attempts to decode the body as JSON.
      *
-     * @throws Exception\DomainException if unable to decode JSON response
+     * @throws Exception\DomainException If unable to decode JSON response.
      */
     public function __construct(?HttpResponse $httpResponse = null)
     {
@@ -114,7 +114,7 @@ final class Response
      *
      * If the response was successful, an empty array is returned.
      *
-     * @throws Exception\DomainException if unable to detect structure of error response
+     * @throws Exception\DomainException If unable to detect structure of error response.
      */
     public function getErrors(): array
     {
@@ -162,7 +162,7 @@ final class Response
      * Populates the object with info. This can possibly called from the
      * constructor, or it can be called later.
      *
-     * @throws Exception\DomainException if an error occurs parsing the response.
+     * @throws Exception\DomainException If an error occurs parsing the response..
      */
     private function populate(?HttpResponse $httpResponse = null): void
     {

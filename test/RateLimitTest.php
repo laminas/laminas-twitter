@@ -26,6 +26,13 @@ final class RateLimitTest extends TestCase
         $this->assertNull($rateLimit->reset);
     }
 
+    /**
+     * @psalm-return array<string, array{
+     *     0: null|int,
+     *     1: null|int,
+     *     2: null|int
+     * }>
+     */
     public function headersProvider(): array
     {
         return [
@@ -39,7 +46,7 @@ final class RateLimitTest extends TestCase
     /**
      * @dataProvider headersProvider
      */
-    public function testConstructorUsesHeadersToSetProperties($limit, $remaining, $reset): void
+    public function testConstructorUsesHeadersToSetProperties(?int $limit, ?int $remaining, ?int $reset): void
     {
         $phpunit = $this;
         $headers = $this->prophesize(Headers::class);

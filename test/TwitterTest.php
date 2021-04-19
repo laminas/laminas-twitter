@@ -8,8 +8,8 @@
 
 namespace LaminasTest\Twitter;
 
-use Generator;
 use Laminas\Http;
+use Laminas\Http\Client\Adapter\AdapterInterface;
 use Laminas\Http\Client\Adapter\Curl as CurlAdapter;
 use Laminas\OAuth\Client as OAuthClient;
 use Laminas\OAuth\Consumer as OAuthConsumer;
@@ -756,6 +756,12 @@ final class TwitterTest extends TestCase
         $this->assertEquals(15012215, $payload[0]->id);
     }
 
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: array<string, array<string, mixed>>,
+     *     1: AdapterInterface
+     * }>
+     */
     public function providerAdapterAlwaysReachableIfSpecifiedConfiguration(): array
     {
         $curl = new CurlAdapter();
@@ -803,7 +809,7 @@ final class TwitterTest extends TestCase
     /**
      * @dataProvider providerAdapterAlwaysReachableIfSpecifiedConfiguration
      */
-    public function testAdapterAlwaysReachableIfSpecified($config, $adapter): void
+    public function testAdapterAlwaysReachableIfSpecified(array $config, AdapterInterface $adapter): void
     {
         $twitter = new Twitter\Twitter($config);
         $this->assertSame($adapter, $twitter->getHttpClient()->getAdapter());
@@ -1224,8 +1230,10 @@ final class TwitterTest extends TestCase
      * @dataProvider invalidUserIdentifierProvider
      * @param mixed $ids
      */
-    public function testFriendshipsLookupRaisesExceptionIfInvalidIdentifiersProvided($ids, string $expectedMessage): void
-    {
+    public function testFriendshipsLookupRaisesExceptionIfInvalidIdentifiersProvided(
+        $ids,
+        string $expectedMessage
+    ): void {
         $twitter = new Twitter\Twitter();
 
         $this->expectException(Twitter\Exception\InvalidArgumentException::class);

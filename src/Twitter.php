@@ -86,17 +86,17 @@ final class Twitter
     /**
      * Base URI for all API calls
      */
-    const API_BASE_URI = 'https://api.twitter.com/1.1/';
+    public const API_BASE_URI = 'https://api.twitter.com/1.1/';
 
     /**
      * OAuth Endpoint
      */
-    const OAUTH_BASE_URI = 'https://api.twitter.com/oauth';
+    public const OAUTH_BASE_URI = 'https://api.twitter.com/oauth';
 
     /**
      * Paths that use JSON payloads (vs form-encoded)
      */
-    const PATHS_JSON_PAYLOAD = [
+    public const PATHS_JSON_PAYLOAD = [
         'direct_messages/events/new',
         'direct_messages/welcome_messages/new',
         'direct_messages/welcome_messages/rules/new',
@@ -105,17 +105,10 @@ final class Twitter
     /**
      * As of November 2017, the character limit for status messages is 280.
      */
-    const STATUS_MAX_CHARACTERS = 280;
+    public const STATUS_MAX_CHARACTERS = 280;
 
     /** @var array */
     private $cookieJar;
-
-    /**
-     * Date format for 'since' strings
-     *
-     * @var string
-     */
-    private $dateFormat = 'D, d M Y H:i:s T';
 
     /** @var Http\Client|null */
     private $httpClient;
@@ -279,7 +272,7 @@ final class Twitter
      * </code>
      *
      * @return mixed
-     * @throws Exception\BadMethodCallException if unable to find method
+     * @throws Exception\BadMethodCallException If unable to find method.
      */
     public function __call(string $method, array $params)
     {
@@ -329,7 +322,7 @@ final class Twitter
      * - statuses
      * - users
      *
-     * @throws Exception\DomainException If method not in method types list
+     * @throws Exception\DomainException If method not in method types list.
      */
     public function __get(string $type): self
     {
@@ -475,8 +468,8 @@ final class Twitter
     /**
      * Verify account credentials.
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function accountVerifyCredentials(): Response
     {
@@ -486,8 +479,8 @@ final class Twitter
     /**
      * Returns the number of api requests you have left per hour.
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function applicationRateLimitStatus(): Response
     {
@@ -500,7 +493,7 @@ final class Twitter
      * Destroys a friendship to the blocked user if it exists.
      *
      * @param int|string $id The ID or screen name of a user to block.
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function blocksCreate($id): Response
     {
@@ -513,7 +506,7 @@ final class Twitter
      * Un-blocks the user specified in the ID parameter for the authenticating user.
      *
      * @param int|string $id The ID or screen_name of the user to un-block.
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function blocksDestroy($id): Response
     {
@@ -527,7 +520,7 @@ final class Twitter
      *
      * @param int $cursor Optional. Specifies the cursor position at which to
      *     begin listing ids; defaults to first "page" of results.
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function blocksIds(int $cursor = -1): Response
     {
@@ -540,7 +533,7 @@ final class Twitter
      *
      * @param int $cursor Optional. Specifies the cursor position at which to
      *     begin listing ids; defaults to first "page" of results.
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function blocksList(int $cursor = -1): Response
     {
@@ -552,8 +545,8 @@ final class Twitter
      * Destroy a direct message
      *
      * @param  string|int $id ID of message to destroy.
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function directMessagesDestroy($id): Response
     {
@@ -574,8 +567,8 @@ final class Twitter
      * - skip_status:setting to true, "t", or 1 will omit the status in returned users
      *
      * @param  array $options
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function directMessagesMessages(array $options = []): Response
     {
@@ -612,10 +605,10 @@ final class Twitter
      * path is deprecated.
      *
      * @param  int|string $user User to whom to send message
-     * @throws Exception\InvalidArgumentException if message is empty
-     * @throws Exception\OutOfRangeException if message is too long
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Exception\InvalidArgumentException If message is empty.
+     * @throws Exception\OutOfRangeException If message is too long.
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function directMessagesNew($user, string $text, array $extraParams = []): Response
     {
@@ -629,10 +622,10 @@ final class Twitter
      * used to provide a media attachment for the message.
      *
      * @param  int|string $user User to whom to send message
-     * @throws Exception\InvalidArgumentException if message is empty
-     * @throws Exception\OutOfRangeException if message is too long
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Exception\InvalidArgumentException If message is empty.
+     * @throws Exception\OutOfRangeException If message is too long.
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function directMessagesEventsNew($user, string $text, array $extraParams = []): Response
     {
@@ -697,8 +690,8 @@ final class Twitter
      * - include_entities: setting to false will disable embedded entities
      *
      * @param  array $options
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function directMessagesSent(array $options = []): Response
     {
@@ -732,8 +725,8 @@ final class Twitter
      * Mark a status as a favorite.
      *
      * @param int|string $id Status ID you want to mark as a favorite
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function favoritesCreate($id): Response
     {
@@ -746,8 +739,8 @@ final class Twitter
      * Remove a favorite.
      *
      * @param int|string $id Status ID you want to de-list as a favorite
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function favoritesDestroy($id): Response
     {
@@ -768,8 +761,8 @@ final class Twitter
      * - max_id: return results with an ID less than (older than) or equal to the specified ID
      * - include_entities: when set to false, entities member will be omitted
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function favoritesList(array $options = []): Response
     {
@@ -810,8 +803,8 @@ final class Twitter
      * returned.
      *
      * @param  int|string $id
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function followersIds($id, array $params = []): Response
     {
@@ -828,8 +821,8 @@ final class Twitter
      * Returns the next cursor if there are more to be returned.
      *
      * @param int|string $id
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function friendsIds($id, array $params = []): Response
     {
@@ -849,8 +842,8 @@ final class Twitter
      * - follow
      *
      * @param int|string $id User ID or name of new friend
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function friendshipsCreate($id, array $params = []): Response
     {
@@ -878,8 +871,8 @@ final class Twitter
      * - a list of screen names
      *
      * @param int|string|array $id
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function friendshipsLookup($id, array $params = []): Response
     {
@@ -892,8 +885,8 @@ final class Twitter
      * Destroy friendship.
      *
      * @param  int|string $id User ID or name of friend to remove
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function friendshipsDestroy($id): Response
     {
@@ -916,15 +909,15 @@ final class Twitter
      * If either are missing, or malformed, an exception is raised.
      *
      * @param int|string $listIdOrSlug
-     * @throws Exception\InvalidArgumentException if $listIdOrSlug is a string
+     * @throws Exception\InvalidArgumentException If $listIdOrSlug is a string
      *     slug and neither the `owner_id` nor the `owner_screen_name` are
      *     provided in `$params`.
-     * @throws Exception\InvalidArgumentException if $listIdOrSlug is a string
+     * @throws Exception\InvalidArgumentException If $listIdOrSlug is a string
      *     slug and the `owner_id` provided is not a valid integer.
-     * @throws Exception\InvalidArgumentException if $listIdOrSlug is a string
+     * @throws Exception\InvalidArgumentException If $listIdOrSlug is a string
      *     slug and the `owner_screen_name` provided is not valid.
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function listsMembers($listIdOrSlug, array $params = []): Response
     {
@@ -983,8 +976,8 @@ final class Twitter
      * Returns the next cursor if there are more to be returned.
      *
      * @param int|string $id
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function listsMemberships($id, array $params = []): Response
     {
@@ -1000,8 +993,8 @@ final class Twitter
      * Returns the next cursor if there are more to be returned.
      *
      * @param int|string $id
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function listsSubscribers($id, array $params = []): Response
     {
@@ -1025,15 +1018,15 @@ final class Twitter
      * - max_id: return results with an ID less than (older than) the given ID
      * - include_entities: whether or not to include embedded entities
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function searchTweets(string $query, array $options = []): Response
     {
         $path = 'search/tweets';
 
         $len = strlen(utf8_decode($query));
-        if (0 == $len) {
+        if (0 === $len) {
             throw new Exception\InvalidArgumentException(
                 'Query must contain at least one character'
             );
@@ -1121,8 +1114,8 @@ final class Twitter
      * Destroy a status message.
      *
      * @param int|string $id ID of status to destroy
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesDestroy($id): Response
     {
@@ -1143,8 +1136,8 @@ final class Twitter
      * - include_entities: when set to false, entities member will be omitted
      * - exclude_replies: when set to true, will strip replies appearing in the timeline
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesHomeTimeline(array $options = []): Response
     {
@@ -1202,8 +1195,8 @@ final class Twitter
      * - include_entities: when set to false, entities member will be omitted
      *
      * @param  array $options
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesMentionsTimeline(array $options = []): Response
     {
@@ -1251,8 +1244,8 @@ final class Twitter
      * Note: this method is not in the current Twitter API documentation, and
      * may not work currently.
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesSample(): Response
     {
@@ -1273,8 +1266,8 @@ final class Twitter
      * - include_my_retweet: whether or not to return statuses that are your own retweets
      *
      * @param  int|string $id Id of status to show
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesShow($id, array $options = []): Response
     {
@@ -1311,10 +1304,11 @@ final class Twitter
      *   media via the Twitter API, and which should be attached to the tweet.
      *
      * @param  null|int|string $inReplyToStatusId
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\OutOfRangeException if message is too long
-     * @throws Exception\InvalidArgumentException if message is empty
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @param  null|array $extraAttributes
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\OutOfRangeException If message is too long.
+     * @throws Exception\InvalidArgumentException If message is empty.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesUpdate(string $status, $inReplyToStatusId = null, $extraAttributes = []): Response
     {
@@ -1327,7 +1321,7 @@ final class Twitter
                 $len
             ));
         }
-        if (0 == $len) {
+        if (0 === $len) {
             throw new Exception\InvalidArgumentException(
                 'Status must contain at least one character'
             );
@@ -1366,8 +1360,8 @@ final class Twitter
      * - contributor_details: when set to true, includes screen_name of each contributor
      * - include_rts: when set to false, will strip native retweets
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function statusesUserTimeline(array $options = []): Response
     {
@@ -1431,8 +1425,8 @@ final class Twitter
      * - a list of screen names
      *
      * @param int|string|array $id
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function usersLookup($id, array $params = []): Response
     {
@@ -1450,15 +1444,15 @@ final class Twitter
      * - count: the number of users to retrieve per page; max is 20
      * - include_entities: if set to boolean true, include embedded entities
      *
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function usersSearch(string $query, array $options = []): Response
     {
         $path = 'users/search';
 
         $len = strlen(utf8_decode($query));
-        if (0 == $len) {
+        if (0 === $len) {
             throw new Exception\InvalidArgumentException(
                 'Query must contain at least one character'
             );
@@ -1493,8 +1487,8 @@ final class Twitter
      * Show extended information on a user.
      *
      * @param  int|string $id User ID or name
-     * @throws Http\Client\Exception\ExceptionInterface if HTTP request fails or times out
-     * @throws Exception\DomainException if unable to decode JSON payload
+     * @throws Http\Client\Exception\ExceptionInterface If HTTP request fails or times out.
+     * @throws Exception\DomainException If unable to decode JSON payload.
      */
     public function usersShow($id): Response
     {
@@ -1506,7 +1500,7 @@ final class Twitter
     /**
      * Initialize HTTP authentication
      *
-     * @throws Exception\DomainException if unauthorised
+     * @throws Exception\DomainException If unauthorised.
      */
     public function init(string $path, Http\Client $client): void
     {
@@ -1564,7 +1558,7 @@ final class Twitter
      *
      * @param int|string $id
      * @param array $params
-     * @throws Exception\InvalidArgumentException if the value is neither an integer nor a string
+     * @throws Exception\InvalidArgumentException If the value is neither an integer nor a string.
      */
     private function createUserParameter($id, array $params): array
     {
@@ -1631,10 +1625,10 @@ final class Twitter
      * returning them via the `screen_name` parameter.
      *
      * @param int|string|array $ids
-     * @throws Exception\InvalidArgumentException for a non-int/string/array $ids value.
-     * @throws Exception\InvalidArgumentException if an array of $ids exceeds 100 items.
-     * @throws Exception\InvalidArgumentException if an array of $ids are not all of the same type.
-     * @throws Exception\InvalidArgumentException if any screen name element is invalid.
+     * @throws Exception\InvalidArgumentException For a non-int/string/array $ids value.
+     * @throws Exception\InvalidArgumentException If an array of $ids exceeds 100 items.
+     * @throws Exception\InvalidArgumentException If an array of $ids are not all of the same type.
+     * @throws Exception\InvalidArgumentException If any screen name element is invalid.
      */
     private function createUserListParameter($ids, array $params, string $context): array
     {

@@ -31,7 +31,7 @@ use const E_WARNING;
  */
 class Media
 {
-    const UPLOAD_BASE_URI = 'https://upload.twitter.com/1.1/media/upload.json';
+    public const UPLOAD_BASE_URI = 'https://upload.twitter.com/1.1/media/upload.json';
 
     /** @var int The maximum number of bytes to send to Twitter per request. */
     private $chunkSize = (1024 * 1024) * 4;
@@ -44,9 +44,6 @@ class Media
 
     /** @var string Filename of image to upload. */
     private $imageFilename = '';
-
-    /** @var string Media category to use when media is for a direct message. */
-    private $mediaCategory;
 
     /** @var string|int Media identifier provided by Twitter following upload. */
     private $mediaId = 0;
