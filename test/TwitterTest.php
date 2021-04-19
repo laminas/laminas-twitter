@@ -1127,7 +1127,13 @@ final class TwitterTest extends TestCase
         $twitter->lists->members('laminas', ['owner_screen_name' => $owner]);
     }
 
-    public function userIdentifierProvider(): Generator
+    /**
+     * @psalm-return iterable<string, array{
+     *     0: int|string|int[]|string[],
+     *     1: string
+     * }>
+     */
+    public function userIdentifierProvider(): iterable
     {
         yield 'single-user_id' => [111, 'user_id'];
         yield 'single-screen_name' => ['laminasdevteam', 'screen_name'];
@@ -1179,7 +1185,13 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $finalResponse);
     }
 
-    public function invalidUserIdentifierProvider(): Generator
+    /**
+     * @psalm-return iterable<string, array{
+     *     0: mixed,
+     *     1: string
+     * }>
+     */
+    public function invalidUserIdentifierProvider(): iterable
     {
         yield 'null'                      => [null, 'integer or a string'];
         yield 'true'                      => [true, 'integer or a string'];
