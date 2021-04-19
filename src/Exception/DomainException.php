@@ -8,11 +8,6 @@
 
 namespace Laminas\Twitter\Exception;
 
-/**
- * @category   Laminas
- * @package    Laminas_Service
- * @subpackage Twitter
- */
-class DomainException extends \DomainException implements ExceptionInterface
+final class DomainException extends \DomainException implements ExceptionInterface
 {
 }

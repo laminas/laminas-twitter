@@ -10,10 +10,8 @@ namespace Laminas\Twitter;
 
 /**
  * Twitter Image Uploader
- *
- * @author Cal Evans <cal@calevans.com>
  */
-class Image extends Media
+final class Image extends Media
 {
     public function __construct(
         string $imageUrl,

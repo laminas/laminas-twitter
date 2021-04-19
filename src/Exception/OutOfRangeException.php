@@ -8,11 +8,6 @@
 
 namespace Laminas\Twitter\Exception;
 
-/**
- * @category   Laminas
- * @package    Laminas_Service
- * @subpackage Twitter
- */
-class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
+final class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
 {
 }

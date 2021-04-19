@@ -1,25 +1,12 @@
 {
     "name": "laminas/laminas-twitter",
     "description": "OOP wrapper for the Twitter web service",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "twitter"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-twitter/",
-        "issues": "https://github.com/laminas/laminas-twitter/issues",
-        "source": "https://github.com/laminas/laminas-twitter",
-        "rss": "https://github.com/laminas/laminas-twitter/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-feed": "^2.7",
@@ -30,11 +17,21 @@
         "laminas/laminas-uri": "^2.5.2",
         "laminas/laminas-zendframework-bridge": "^1.0"
     },
-    "require-dev": {
-        "laminas/laminas-coding-standard": "^1.0",
-        "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.4.1"
+    "replace": {
+        "zendframework/zendservice-twitter": "^3.0.4"
     },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "^2.1.4",
+        "laminas/laminas-coding-standard": "^2.1",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.15",
+        "vimeo/psalm": "^4.5"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {},
     "autoload": {
         "psr-4": {
             "Laminas\\Twitter\\": "src/"
@@ -52,10 +49,16 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zendservice-twitter": "^3.0.4"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-twitter/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-twitter",
+        "docs": "https://docs.laminas.dev/laminas-twitter/",
+        "rss": "https://github.com/laminas/laminas-twitter/releases.atom"
     }
 }

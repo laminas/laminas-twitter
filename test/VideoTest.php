@@ -8,37 +8,38 @@
 
 namespace LaminasTest\Twitter;
 
+use Closure;
 use Laminas\Twitter\Media;
 use Laminas\Twitter\Video;
 use PHPUnit\Framework\TestCase;
 
-class VideoTest extends TestCase
+final class VideoTest extends TestCase
 {
-    public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults()
+    public function testCanBeInstantiatedWithNoMediaTypeAndUsesSaneDefaults(): void
     {
         $video = new Video(__FILE__);
 
-        $imageMediaType = \Closure::bind(function () {
+        $imageMediaType = Closure::bind(function () {
             return $this->mediaType;
         }, $video, Media::class)();
         $this->assertSame('video/mp4', $imageMediaType);
 
-        $imageFilename = \Closure::bind(function () {
+        $imageFilename = Closure::bind(function () {
             return $this->imageFilename;
         }, $video, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 
-    public function testCanBeInstantiatedWithFilenameAndMediaType()
+    public function testCanBeInstantiatedWithFilenameAndMediaType(): void
     {
         $video = new Video(__FILE__, 'text/plain');
 
-        $imageMediaType = \Closure::bind(function () {
+        $imageMediaType = Closure::bind(function () {
             return $this->mediaType;
         }, $video, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = \Closure::bind(function () {
+        $imageFilename = Closure::bind(function () {
             return $this->imageFilename;
         }, $video, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);

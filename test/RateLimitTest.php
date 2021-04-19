@@ -14,11 +14,11 @@ use Laminas\Twitter\RateLimit;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-class RateLimitTest extends TestCase
+final class RateLimitTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testInstantiatingWithNoArgumentLeavesAllPropertiesNull()
+    public function testInstantiatingWithNoArgumentLeavesAllPropertiesNull(): void
     {
         $rateLimit = new RateLimit();
         $this->assertNull($rateLimit->limit);
@@ -26,7 +26,14 @@ class RateLimitTest extends TestCase
         $this->assertNull($rateLimit->reset);
     }
 
-    public function headersProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: null|int,
+     *     1: null|int,
+     *     2: null|int
+     * }>
+     */
+    public function headersProvider(): array
     {
         return [
             'limit-only'     => [5000, null, null],
@@ -39,7 +46,7 @@ class RateLimitTest extends TestCase
     /**
      * @dataProvider headersProvider
      */
-    public function testConstructorUsesHeadersToSetProperties($limit, $remaining, $reset)
+    public function testConstructorUsesHeadersToSetProperties(?int $limit, ?int $remaining, ?int $reset): void
     {
         $phpunit = $this;
         $headers = $this->prophesize(Headers::class);

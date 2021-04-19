@@ -8,7 +8,8 @@
 
 namespace LaminasTest\Twitter;
 
-use Laminas\Http\Client as Client;
+use Closure;
+use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Twitter\Exception;
 use Laminas\Twitter\Media;
@@ -18,7 +19,10 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 
-class MediaTest extends TestCase
+use function filesize;
+use function in_array;
+
+final class MediaTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -27,22 +31,22 @@ class MediaTest extends TestCase
         $this->client = $this->prophesize(Client::class);
     }
 
-    public function testAllowsPassingImageFilenameAndMediaType()
+    public function testAllowsPassingImageFilenameAndMediaType(): void
     {
         $media = new Media(__FILE__, 'text/plain');
 
-        $imageMediaType = \Closure::bind(function () {
+        $imageMediaType = Closure::bind(function () {
             return $this->mediaType;
         }, $media, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = \Closure::bind(function () {
+        $imageFilename = Closure::bind(function () {
             return $this->imageFilename;
         }, $media, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 
-    public function testUploadRaisesExceptionIfNoImageFilenamePresent()
+    public function testUploadRaisesExceptionIfNoImageFilenamePresent(): void
     {
         $media = new Media('', 'text/plain');
         $this->expectException(Exception\InvalidMediaException::class);
@@ -50,7 +54,7 @@ class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testUploadRaisesExceptionIfNoMediaTypePresent()
+    public function testUploadRaisesExceptionIfNoMediaTypePresent(): void
     {
         $media = new Media(__FILE__, '');
         $this->expectException(Exception\InvalidMediaException::class);
@@ -58,12 +62,12 @@ class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testUnsuccessfulUploadInitializationRaisesException()
+    public function testUnsuccessfulUploadInitializationRaisesException(): void
     {
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalled();
         $this->client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalled();
         $this->client->setMethod('POST')->shouldBeCalled();
         $this->client->setParameterPost([
@@ -87,14 +91,14 @@ class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testAppendUploadRaisesExceptionIfUnableToOpenFile()
+    public function testAppendUploadRaisesExceptionIfUnableToOpenFile(): void
     {
         $media = new Media(__FILE__, 'image/png');
 
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalled();
         $this->client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalled();
         $this->client->setMethod('POST')->shouldBeCalled();
         $this->client->setParameterPost([
@@ -108,9 +112,9 @@ class MediaTest extends TestCase
         $response->getBody()->willReturn('{"media_id": "XXXX"}');
         $response->getHeaders()->willReturn(null);
         $response->isSuccess()->will(function () use ($media) {
-            $r = new ReflectionProperty($media, 'imageFilename');
-            $r->setAccessible(true);
-            $r->setValue($media, '  This File Does Not Exist  ');
+            $reflectionProperty = new ReflectionProperty($media, 'imageFilename');
+            $reflectionProperty->setAccessible(true);
+            $reflectionProperty->setValue($media, '  This File Does Not Exist  ');
             return true;
         });
 
@@ -121,14 +125,14 @@ class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testAppendUploadRaisesExceptionIfChunkUploadFails()
+    public function testAppendUploadRaisesExceptionIfChunkUploadFails(): void
     {
         $media = new Media(__FILE__, 'image/png');
 
         $this->client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $this->client->resetParameters()->shouldBeCalledTimes(2);
         $this->client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(2);
         $this->client->setMethod('POST')->shouldBeCalledTimes(2);
         $this->client->setParameterPost([
@@ -138,7 +142,7 @@ class MediaTest extends TestCase
             'total_bytes'    => filesize(__FILE__),
         ])->shouldBeCalled();
 
-        $this->client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
+        $this->client->setParameterPost(Argument::that(function ($arg) {
             TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             TestCase::assertTrue(in_array($arg['command'], ['INIT', 'APPEND']));
@@ -167,18 +171,18 @@ class MediaTest extends TestCase
         $media->upload($this->client->reveal());
     }
 
-    public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful()
+    public function testReturnsFinalizeCommandResponseWhenInitializationAndAppendAreSuccessful(): void
     {
-        $media = new Media(__FILE__, 'image/png');
-        $r = new ReflectionProperty($media, 'chunkSize');
-        $r->setAccessible(true);
-        $r->setValue($media, 4 * filesize(__FILE__));
+        $media              = new Media(__FILE__, 'image/png');
+        $reflectionProperty = new ReflectionProperty($media, 'chunkSize');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 
         $client = $this->client;
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $client->resetParameters()->shouldBeCalled();
         $client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(3);
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
@@ -213,7 +217,7 @@ class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = \Closure::bind(function () {
+        $httpResponse = Closure::bind(function () {
             return $this->httpResponse;
         }, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
@@ -221,19 +225,19 @@ class MediaTest extends TestCase
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 
-    public function testAllowsMarkingMediaAsForDirectMessageButUnshared()
+    public function testAllowsMarkingMediaAsForDirectMessageButUnshared(): void
     {
         $media = new Media(__FILE__, 'image/png', true, false);
 
-        $r = new ReflectionProperty($media, 'chunkSize');
-        $r->setAccessible(true);
-        $r->setValue($media, 4 * filesize(__FILE__));
+        $reflectionProperty = new ReflectionProperty($media, 'chunkSize');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 
         $client = $this->client;
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $client->resetParameters()->shouldBeCalled();
         $client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(3);
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
@@ -274,7 +278,7 @@ class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = \Closure::bind(function () {
+        $httpResponse = Closure::bind(function () {
             return $this->httpResponse;
         }, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
@@ -282,19 +286,19 @@ class MediaTest extends TestCase
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
     }
 
-    public function testAllowsMarkingMediaForDirectMessageAndShared()
+    public function testAllowsMarkingMediaForDirectMessageAndShared(): void
     {
         $media = new Media(__FILE__, 'image/png', true, true);
 
-        $r = new ReflectionProperty($media, 'chunkSize');
-        $r->setAccessible(true);
-        $r->setValue($media, 4 * filesize(__FILE__));
+        $reflectionProperty = new ReflectionProperty($media, 'chunkSize');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($media, 4 * filesize(__FILE__));
 
         $client = $this->client;
         $client->setUri(Media::UPLOAD_BASE_URI)->shouldBeCalled();
         $client->resetParameters()->shouldBeCalled();
         $client->setHeaders([
-            'Content-type' => 'application/x-www-form-urlencoded'
+            'Content-type' => 'application/x-www-form-urlencoded',
         ])->shouldBeCalledTimes(3);
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
@@ -336,7 +340,7 @@ class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = \Closure::bind(function () {
+        $httpResponse = Closure::bind(function () {
             return $this->httpResponse;
         }, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);

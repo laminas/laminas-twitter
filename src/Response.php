@@ -11,6 +11,10 @@ namespace Laminas\Twitter;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Json\Exception\ExceptionInterface as JsonException;
 use Laminas\Json\Json;
+use stdClass;
+
+use function in_array;
+use function sprintf;
 
 /**
  * Representation of a response from Twitter.
@@ -24,34 +28,26 @@ use Laminas\Json\Json;
  * - proxying to elements of the decoded response via property overloading
  * - method for retrieving a RateLimit instance with derived rate-limit headers
  */
-class Response
+final class Response
 {
     /**
      * Empty body content that should not result in response population.
      */
-    private $emptyBodyContent = [
+    private const EMPTY_BODY_CONTENT = [
         null,
         '',
     ];
 
-    /**
-     * @var HttpResponse
-     */
+    /** @var HttpResponse */
     private $httpResponse;
 
-    /**
-     * @var array|\stdClass
-     */
+    /** @var array|stdClass */
     private $jsonBody;
 
-    /**
-     * @var RateLimit
-     */
+    /** @var RateLimit */
     private $rateLimit;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $rawBody;
 
     /**
@@ -60,18 +56,18 @@ class Response
      * Assigns the HttpResponse to a property, as well as the body
      * representation. It then attempts to decode the body as JSON.
      *
-     * @param  null|HttpResponse $httpResponse
-     * @throws Exception\DomainException if unable to decode JSON response
+     * @throws Exception\DomainException If unable to decode JSON response.
      */
-    public function __construct(HttpResponse $httpResponse = null)
+    public function __construct(?HttpResponse $httpResponse = null)
     {
         $this->httpResponse = $httpResponse;
-
-        if ($httpResponse
-            && ! in_array($httpResponse->getBody(), $this->emptyBodyContent, true)
-        ) {
-            $this->populate($httpResponse);
+        if (! $httpResponse) {
+            return;
         }
+        if (in_array($httpResponse->getBody(), self::EMPTY_BODY_CONTENT, true)) {
+            return;
+        }
+        $this->populate($httpResponse);
     }
 
     /**
@@ -96,7 +92,7 @@ class Response
     /**
      * Was the request successful?
      */
-    public function isSuccess() : bool
+    public function isSuccess(): bool
     {
         return $this->httpResponse->isSuccess();
     }
@@ -104,7 +100,7 @@ class Response
     /**
      * Did an error occur in the request?
      */
-    public function isError() : bool
+    public function isError(): bool
     {
         return ! $this->httpResponse->isSuccess();
     }
@@ -118,14 +114,15 @@ class Response
      *
      * If the response was successful, an empty array is returned.
      *
-     * @throws Exception\DomainException if unable to detect structure of error response
+     * @throws Exception\DomainException If unable to detect structure of error response.
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         if (! $this->isError()) {
             return [];
         }
-        if (null === $this->jsonBody
+        if (
+            null === $this->jsonBody
             || ! isset($this->jsonBody->errors)
         ) {
             throw new Exception\DomainException(
@@ -138,7 +135,7 @@ class Response
     /**
      * Retrieve the raw response body
      */
-    public function getRawResponse() : string
+    public function getRawResponse(): string
     {
         return $this->rawBody;
     }
@@ -146,7 +143,7 @@ class Response
     /**
      * Retun the decoded response body
      *
-     * @return array|\stdClass
+     * @return array|stdClass
      */
     public function toValue()
     {
@@ -156,7 +153,7 @@ class Response
     /**
      * Retun the RateLimit object associated with the response.
      */
-    public function getRateLimit() : RateLimit
+    public function getRateLimit(): RateLimit
     {
         return $this->rateLimit;
     }
@@ -165,16 +162,16 @@ class Response
      * Populates the object with info. This can possibly called from the
      * constructor, or it can be called later.
      *
-     * @throws Exception\DomainException if an error occurs parsing the response.
+     * @throws Exception\DomainException If an error occurs parsing the response..
      */
-    private function populate(HttpResponse $httpResponse = null) : void
+    private function populate(?HttpResponse $httpResponse = null): void
     {
         $this->httpResponse = $httpResponse;
-        $this->rawBody = $httpResponse->getBody();
-        $this->rateLimit = new RateLimit($this->httpResponse->getHeaders());
+        $this->rawBody      = $httpResponse->getBody();
+        $this->rateLimit    = new RateLimit($this->httpResponse->getHeaders());
 
         try {
-            $jsonBody = Json::decode($this->rawBody, Json::TYPE_OBJECT);
+            $jsonBody       = Json::decode($this->rawBody, Json::TYPE_OBJECT);
             $this->jsonBody = $jsonBody;
         } catch (JsonException $e) {
             throw new Exception\DomainException(sprintf(

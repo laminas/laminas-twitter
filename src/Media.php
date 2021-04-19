@@ -8,55 +8,50 @@
 
 namespace Laminas\Twitter;
 
-use Laminas\Http\Client as Client;
+use Closure;
+use Laminas\Http\Client;
+
+use function base64_encode;
+use function fclose;
+use function feof;
+use function filesize;
+use function fopen;
+use function fread;
+use function is_readable;
+use function preg_match;
+use function restore_error_handler;
+use function set_error_handler;
+use function sprintf;
+use function strtolower;
+
+use const E_WARNING;
 
 /**
  * Twitter Media Uploader base class
- *
- * @author Cal Evans <cal@calevans.com>
  */
 class Media
 {
-    const UPLOAD_BASE_URI = 'https://upload.twitter.com/1.1/media/upload.json';
+    public const UPLOAD_BASE_URI = 'https://upload.twitter.com/1.1/media/upload.json';
 
-    /**
-     * @var int The maximum number of bytes to send to Twitter per request.
-     */
+    /** @var int The maximum number of bytes to send to Twitter per request. */
     private $chunkSize = (1024 * 1024) * 4;
 
-    /**
-     * @var string Error message from f*() operations.
-     */
+    /** @var string Error message from f*() operations. */
     private $fileOperationError;
 
-    /**
-     * @var bool Whether or not the media upload is for a direct message.
-     */
+    /** @var bool Whether or not the media upload is for a direct message. */
     private $forDirectMessage;
 
-    /**
-     * @var string Filename of image to upload.
-     */
+    /** @var string Filename of image to upload. */
     private $imageFilename = '';
 
-    /**
-     * @var string Media category to use when media is for a direct message.
-     */
-    private $mediaCategory;
-
-    /**
-     * @var string|int Media identifier provided by Twitter following upload.
-     */
+    /** @var string|int Media identifier provided by Twitter following upload. */
     private $mediaId = 0;
 
-    /**
-     * @var string Mediatype of image.
-     */
+    /** @var string Mediatype of image. */
     private $mediaType = '';
 
-    /**
-     * @var int Next chunked upload offset.
-     */
+    /** @var int Next chunked upload offset. */
     private $segmentIndex = 0;
 
     /**
@@ -71,10 +66,10 @@ class Media
         bool $forDirectMessage = false,
         bool $shared = false
     ) {
-        $this->imageFilename = $imageFilename;
-        $this->mediaType = $mediaType;
+        $this->imageFilename    = $imageFilename;
+        $this->mediaType        = $mediaType;
         $this->forDirectMessage = $forDirectMessage;
-        $this->shared = $shared;
+        $this->shared           = $shared;
     }
 
     /**
@@ -83,9 +78,9 @@ class Media
      * @throws Exception\InvalidMediaException If the file can't be opened.
      * @throws Exception\InvalidMediaException If no media type is present.
      */
-    public function upload(Client $httpClient) : Response
+    public function upload(Client $httpClient): Response
     {
-        $this->mediaId = 0;
+        $this->mediaId      = 0;
         $this->segmentIndex = 0;
 
         if (! $this->validateFile($this->imageFilename)) {
@@ -99,7 +94,7 @@ class Media
         $httpClient->setUri(self::UPLOAD_BASE_URI);
 
         $totalBytes = filesize($this->imageFilename);
-        $response = $this->initUpload($httpClient, $this->mediaType, $totalBytes);
+        $response   = $this->initUpload($httpClient, $this->mediaType, $totalBytes);
 
         $this->mediaId = $response->toValue()->media_id;
 
@@ -109,11 +104,33 @@ class Media
     }
 
     /**
+     * Validate that the file exists and can be opened.
+     *
+     * @todo Put a check to make sure the file is local.
+     */
+    private function validateFile(string $fileName): bool
+    {
+        set_error_handler($this->createErrorHandler(), E_WARNING);
+        $returnValue = is_readable($fileName);
+        restore_error_handler();
+
+        return (bool) $returnValue;
+    }
+
+    /**
+     * Validate the mediatype.
+     */
+    private function validateMediaType(string $mediaType): bool
+    {
+        return 1 === preg_match('#^\w+/[-.\w]+(?:\+[-.\w]+)?#', $mediaType);
+    }
+
+    /**
      * Initalize the upload with Twitter.
      *
      * @throws Exception\MediaUploadException If upload initialization fails.
      */
-    private function initUpload(Client $httpClient, string $mediaType, int $totalBytes) : Response
+    private function initUpload(Client $httpClient, string $mediaType, int $totalBytes): Response
     {
         $payload = [
             'command'        => 'INIT',
@@ -147,7 +164,7 @@ class Media
      *
      * @throws Exception\MediaUploadException If any upload chunk operation fails.
      */
-    private function appendUpload(Client $httpClient) : void
+    private function appendUpload(Client $httpClient): void
     {
         $payload = [
             'command'  => 'APPEND',
@@ -168,7 +185,7 @@ class Media
         while (! feof($fileHandle)) {
             $data = fread($fileHandle, $this->chunkSize);
 
-            $payload['media_data'] = base64_encode($data);
+            $payload['media_data']    = base64_encode($data);
             $payload['segment_index'] = $this->segmentIndex++;
 
             $httpClient->resetParameters();
@@ -196,7 +213,7 @@ class Media
     /**
      * Tell Twitter to finalize the upload.
      */
-    private function finalizeUpload(Client $httpClient) : Response
+    private function finalizeUpload(Client $httpClient): Response
     {
         $payload = [
             'command'  => 'FINALIZE',
@@ -211,36 +228,12 @@ class Media
     }
 
     /**
-     * Validate that the file exists and can be opened.
-     *
-     * @todo Put a check to make sure the file is local.
-     */
-    private function validateFile(string $fileName) : bool
-    {
-        $returnValue = false;
-
-        set_error_handler($this->createErrorHandler(), E_WARNING);
-        $returnValue = is_readable($fileName);
-        restore_error_handler();
-
-        return (bool) $returnValue;
-    }
-
-    /**
-     * Validate the mediatype.
-     */
-    private function validateMediaType(string $mediaType) : bool
-    {
-        return 1 === preg_match('#^\w+/[-.\w]+(?:\+[-.\w]+)?#', $mediaType);
-    }
-
-    /**
      * Creates and returns an error handler.
      *
      * The error handler will store the error message string in the
      * $fileOperationError property.
      */
-    private function createErrorHandler() : callable
+    private function createErrorHandler(): Closure
     {
         $this->fileOperationError = null;
         return function ($errno, $errstr) {
@@ -249,16 +242,16 @@ class Media
         };
     }
 
-    private function deriveMediaCategeory(string $mediaType, bool $forDirectMessage) : string
+    private function deriveMediaCategeory(string $mediaType, bool $forDirectMessage): string
     {
         switch (true) {
-            case ('image/gif' === strtolower($mediaType)):
+            case 'image/gif' === strtolower($mediaType):
                 $category = 'gif';
                 break;
-            case (preg_match('#^video/#i', $mediaType)):
+            case preg_match('#^video/#i', $mediaType):
                 $category = 'video';
                 break;
-            case (preg_match('#^image/#i', $mediaType)):
+            case preg_match('#^image/#i', $mediaType):
                 // fall-through
             default:
                 $category = 'image';

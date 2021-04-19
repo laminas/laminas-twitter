@@ -3,3 +3,5 @@
 /laminas-mkdoc-theme.tgz
 /laminas-mkdoc-theme/
 /vendor/
+.phpcs-cache
+.phpunit.result.cache

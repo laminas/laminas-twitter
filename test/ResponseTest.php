@@ -17,11 +17,11 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testPopulateAddsRateLimitBasedOnHttpResponseHeaders()
+    public function testPopulateAddsRateLimitBasedOnHttpResponseHeaders(): void
     {
         $phpunit = $this;
 
@@ -52,9 +52,9 @@ class ResponseTest extends TestCase
         $response = new Response($httpResponse->reveal());
         $this->assertInstanceOf(RateLimit::class, $response->getRateLimit());
 
-        $r = new ReflectionProperty($response, 'rateLimit');
-        $r->setAccessible(true);
-        $rateLimit = $r->getValue($response);
+        $reflectionProperty = new ReflectionProperty($response, 'rateLimit');
+        $reflectionProperty->setAccessible(true);
+        $rateLimit = $reflectionProperty->getValue($response);
 
         $this->assertSame(3600, $rateLimit->limit);
         $this->assertSame(237, $rateLimit->remaining);
