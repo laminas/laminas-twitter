@@ -1,4 +1,4 @@
-/composer.lock
+/.phpunit.result.cache
 /docs/html/
 /laminas-mkdoc-theme.tgz
 /laminas-mkdoc-theme/

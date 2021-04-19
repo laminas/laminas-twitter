@@ -15,10 +15,13 @@ use Laminas\Twitter\Media;
 use Laminas\Twitter\Response as TwitterResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionProperty;
 
 class MediaTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function setUp(): void
     {
         $this->client = $this->prophesize(Client::class);
