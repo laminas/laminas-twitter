@@ -36,7 +36,7 @@ easily identify which type of call is being requested.
 Use [Composer](https://getcomposer.org) to install this package:
 
 ```bash
-composer require laminas/laminas-twitter
+$ composer require laminas/laminas-twitter
 ```
 
 ## Quick Start
@@ -82,7 +82,7 @@ $twitter = new Laminas\Twitter\Twitter($config);
 Make sure you substitute the values you discovered earlier in the
 configuration before attempting to connect.
 
-> ### Note on SSL certificate verification
+> ### Note on SSL Certificate Verification
 >
 > Twitter has a known issue with the SSL certificate for their API
 > endpoints, which requires that you use insecure settings for the SSL

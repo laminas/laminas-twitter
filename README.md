@@ -9,7 +9,7 @@ Provides an object oriented PHP wrapper for the [Twitter API](https://developer.
 Run the following to install this library:
 
 ```bash
-composer require laminas/laminas-twitter
+$ composer require laminas/laminas-twitter
 ```
 
 ## Usage
