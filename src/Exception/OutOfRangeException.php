@@ -8,6 +8,6 @@
 
 namespace Laminas\Twitter\Exception;
 
-final class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
+class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
 {
 }
