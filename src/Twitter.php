@@ -198,7 +198,7 @@ final class Twitter
         } elseif (isset($options['oauth_options'])) {
             $oauthOptions = $options['oauth_options'];
         }
-        $oauthOptions['siteUrl'] = static::OAUTH_BASE_URI;
+        $oauthOptions['siteUrl'] = self::OAUTH_BASE_URI;
 
         $httpClientOptions = [];
         if (isset($options['httpClientOptions'])) {
@@ -221,7 +221,7 @@ final class Twitter
             $oauthOptions['token'] = $accessToken;
             $this->setHttpClient($accessToken->getHttpClient(
                 $oauthOptions,
-                static::OAUTH_BASE_URI,
+                self::OAUTH_BASE_URI,
                 $httpClientOptions
             ));
             return;
@@ -1515,7 +1515,7 @@ final class Twitter
 
         // Reset on every request to prevent parameters leaking between them.
         $client->resetParameters();
-        $client->setUri(static::API_BASE_URI . $path . '.json');
+        $client->setUri(self::API_BASE_URI . $path . '.json');
 
         if (null === $this->cookieJar) {
             $client->clearCookies();
