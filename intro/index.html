@@ -329,13 +329,11 @@ this:</p>
 <li>Go to <a href="https://developer.twitter.com/">https://developer.twitter.com/</a> and sign in.</li>
 <li>Go to <a href="https://apps.twitter.com/">https://apps.twitter.com/</a></li>
 <li>Either create a new application, or select an existing one.</li>
-<li>On the application's settings page, grab the following information:<ul>
+<li>On the application's settings page, grab the following information:</li>
 <li>From the header "OAuth settings", grab the "Consumer key" and
-  "Consumer secret" values.</li>
+    "Consumer secret" values.</li>
 <li>From the header "Your access token", grab the "Access token" and
-  "Access token secret" values.</li>
-</ul>
-</li>
+    "Access token secret" values.</li>
 </ul>
 <p>Armed with this information, you can now configure and create your
 <code>Laminas\Twitter\Twitter</code> instance:</p>
@@ -361,7 +359,7 @@ $twitter = new Laminas\Twitter\Twitter($config);</code></pre>
 <p>Make sure you substitute the values you discovered earlier in the
 configuration before attempting to connect.</p>
 <blockquote>
-<h4 id="note">Note</h4>
+<h3 id="note-on-ssl-certificate-verification">Note on SSL Certificate Verification</h3>
 <p>Twitter has a known issue with the SSL certificate for their API
 endpoints, which requires that you use insecure settings for the SSL
 certificate verification.</p>
@@ -447,7 +445,7 @@ $twitter = new Laminas\Twitter\Twitter([
 // verify user's credentials with Twitter
 $response = $twitter-&gt;account-&gt;verifyCredentials();</code></pre>
 <blockquote>
-<h4 id="note_1">Note</h4>
+<h3 id="note-on-twitter-oauth-authentication">Note on Twitter OAuth Authentication</h3>
 <p>In order to authenticate with Twitter, ALL applications MUST be
 registered with Twitter in order to receive a Consumer Key and
 Consumer Secret to be used when authenticating with OAuth. This can
