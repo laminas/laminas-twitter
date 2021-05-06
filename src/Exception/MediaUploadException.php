@@ -10,6 +10,6 @@ namespace Laminas\Twitter\Exception;
 
 use RuntimeException;
 
-final class MediaUploadException extends RuntimeException implements ExceptionInterface
+class MediaUploadException extends RuntimeException implements ExceptionInterface
 {
 }

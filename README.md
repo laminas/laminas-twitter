@@ -143,7 +143,6 @@ upload and the media type, followed by calling `upload()` with a properly
 configured HTTP client. The response will contain a `media_id` property, which
 you can then provide via the `media_ids` parameter when posting a status:
 
-
 ```php
 $image = new Image('data/logo.png', 'image/png');
 $response = $image->upload($twitter->getHttpClient());

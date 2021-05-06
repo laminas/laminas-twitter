@@ -81,7 +81,7 @@ use const JSON_UNESCAPED_UNICODE;
  *
  * @see https://developer.twitter.com/en/docs/basics/counting-characters
  */
-final class Twitter
+class Twitter
 {
     /**
      * Base URI for all API calls

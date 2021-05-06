@@ -10,6 +10,6 @@ namespace Laminas\Twitter\Exception;
 
 use RuntimeException;
 
-final class InvalidMediaException extends RuntimeException implements ExceptionInterface
+class InvalidMediaException extends RuntimeException implements ExceptionInterface
 {
 }
