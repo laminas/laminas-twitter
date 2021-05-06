@@ -28,7 +28,7 @@ use function sprintf;
  * - proxying to elements of the decoded response via property overloading
  * - method for retrieving a RateLimit instance with derived rate-limit headers
  */
-final class Response
+class Response
 {
     /**
      * Empty body content that should not result in response population.
