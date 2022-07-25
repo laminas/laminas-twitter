@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Twitter\Twitter;
 

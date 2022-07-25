@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Twitter;
 
 use Laminas\Http\Header\HeaderInterface;
