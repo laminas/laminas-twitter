@@ -17,4 +17,9 @@
 
     <!-- Include all rules from the Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard"/>
+
+    <!-- do not apply `declare(strict_types=1);` everywhere: too risky of a change for this codebase -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
+        <exclude-pattern>src/</exclude-pattern>
+    </rule>
 </ruleset>
