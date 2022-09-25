@@ -31,14 +31,10 @@ final class MediaTest extends TestCase
     {
         $media = new Media(__FILE__, 'text/plain');
 
-        $imageMediaType = Closure::bind(function () {
-            return $this->mediaType;
-        }, $media, Media::class)();
+        $imageMediaType = Closure::bind(fn() => $this->mediaType, $media, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = Closure::bind(function () {
-            return $this->imageFilename;
-        }, $media, Media::class)();
+        $imageFilename = Closure::bind(fn() => $this->imageFilename, $media, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 
@@ -107,7 +103,7 @@ final class MediaTest extends TestCase
         $response = $this->prophesize(Response::class);
         $response->getBody()->willReturn('{"media_id": "XXXX"}');
         $response->getHeaders()->willReturn(null);
-        $response->isSuccess()->will(function () use ($media) {
+        $response->isSuccess()->will(function () use ($media): bool {
             $reflectionProperty = new ReflectionProperty($media, 'imageFilename');
             $reflectionProperty->setAccessible(true);
             $reflectionProperty->setValue($media, '  This File Does Not Exist  ');
@@ -138,7 +134,7 @@ final class MediaTest extends TestCase
             'total_bytes'    => filesize(__FILE__),
         ])->shouldBeCalled();
 
-        $this->client->setParameterPost(Argument::that(function ($arg) {
+        $this->client->setParameterPost(Argument::that(static function ($arg): bool {
             TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             TestCase::assertTrue(in_array($arg['command'], ['INIT', 'APPEND']));
@@ -183,7 +179,7 @@ final class MediaTest extends TestCase
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
         $commands = [];
-        $client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
+        $client->setParameterPost(Argument::that(static function ($arg) use (&$commands): bool {
             TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             $commands[] = $arg['command'];
@@ -213,9 +209,7 @@ final class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = Closure::bind(function () {
-            return $this->httpResponse;
-        }, $response, TwitterResponse::class)();
+        $httpResponse = Closure::bind(fn() => $this->httpResponse, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
 
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
@@ -238,7 +232,7 @@ final class MediaTest extends TestCase
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
         $commands = [];
-        $client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
+        $client->setParameterPost(Argument::that(static function ($arg) use (&$commands): bool {
             TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             $commands[] = $arg['command'];
@@ -274,9 +268,7 @@ final class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = Closure::bind(function () {
-            return $this->httpResponse;
-        }, $response, TwitterResponse::class)();
+        $httpResponse = Closure::bind(fn() => $this->httpResponse, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
 
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);
@@ -299,7 +291,7 @@ final class MediaTest extends TestCase
         $client->setMethod('POST')->shouldBeCalledTimes(3);
 
         $commands = [];
-        $client->setParameterPost(Argument::that(function ($arg) use (&$commands) {
+        $client->setParameterPost(Argument::that(static function ($arg) use (&$commands): bool {
             TestCase::assertIsArray($arg);
             TestCase::assertArrayHasKey('command', $arg);
             $commands[] = $arg['command'];
@@ -336,9 +328,7 @@ final class MediaTest extends TestCase
         $response = $media->upload($client->reveal());
         $this->assertInstanceOf(TwitterResponse::class, $response);
 
-        $httpResponse = Closure::bind(function () {
-            return $this->httpResponse;
-        }, $response, TwitterResponse::class)();
+        $httpResponse = Closure::bind(fn() => $this->httpResponse, $response, TwitterResponse::class)();
         $this->assertSame($finalizeResponse->reveal(), $httpResponse);
 
         $this->assertEquals(['INIT', 'APPEND', 'FINALIZE'], $commands);

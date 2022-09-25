@@ -11,14 +11,11 @@ use function property_exists;
  */
 class RateLimit
 {
-    /** @var int */
-    private $limit;
+    private int $limit;
 
-    /** @var int */
-    private $remaining;
+    private int $remaining;
 
-    /** @var int */
-    private $reset;
+    private int $reset;
 
     /**
      * Constructor

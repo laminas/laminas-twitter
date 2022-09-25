@@ -23,19 +23,19 @@ final class ResponseTest extends TestCase
 
         $headers = $this->prophesize(Headers::class);
         $headers->has('x-rate-limit-limit')->willReturn(true);
-        $headers->get('x-rate-limit-limit')->will(function () use ($phpunit) {
+        $headers->get('x-rate-limit-limit')->will(function () use ($phpunit): object {
             $header = $phpunit->prophesize(HeaderInterface::class);
             $header->getFieldValue()->willReturn(3600);
             return $header->reveal();
         });
         $headers->has('x-rate-limit-remaining')->willReturn(true);
-        $headers->get('x-rate-limit-remaining')->will(function () use ($phpunit) {
+        $headers->get('x-rate-limit-remaining')->will(function () use ($phpunit): object {
             $header = $phpunit->prophesize(HeaderInterface::class);
             $header->getFieldValue()->willReturn(237);
             return $header->reveal();
         });
         $headers->has('x-rate-limit-reset')->willReturn(true);
-        $headers->get('x-rate-limit-reset')->will(function () use ($phpunit) {
+        $headers->get('x-rate-limit-reset')->will(function () use ($phpunit): object {
             $header = $phpunit->prophesize(HeaderInterface::class);
             $header->getFieldValue()->willReturn(4200);
             return $header->reveal();

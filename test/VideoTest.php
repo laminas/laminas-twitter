@@ -15,14 +15,10 @@ final class VideoTest extends TestCase
     {
         $video = new Video(__FILE__);
 
-        $imageMediaType = Closure::bind(function () {
-            return $this->mediaType;
-        }, $video, Media::class)();
+        $imageMediaType = Closure::bind(fn() => $this->mediaType, $video, Media::class)();
         $this->assertSame('video/mp4', $imageMediaType);
 
-        $imageFilename = Closure::bind(function () {
-            return $this->imageFilename;
-        }, $video, Media::class)();
+        $imageFilename = Closure::bind(fn() => $this->imageFilename, $video, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 
@@ -30,14 +26,10 @@ final class VideoTest extends TestCase
     {
         $video = new Video(__FILE__, 'text/plain');
 
-        $imageMediaType = Closure::bind(function () {
-            return $this->mediaType;
-        }, $video, Media::class)();
+        $imageMediaType = Closure::bind(fn() => $this->mediaType, $video, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = Closure::bind(function () {
-            return $this->imageFilename;
-        }, $video, Media::class)();
+        $imageFilename = Closure::bind(fn() => $this->imageFilename, $video, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 }

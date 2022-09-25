@@ -52,7 +52,7 @@ final class RateLimitTest extends TestCase
             $limit = 0;
         } else {
             $headers->has('x-rate-limit-limit')->willReturn(true);
-            $headers->get('x-rate-limit-limit')->will(function () use ($limit, $phpunit) {
+            $headers->get('x-rate-limit-limit')->will(function () use ($limit, $phpunit): object {
                 $header = $phpunit->prophesize(HeaderInterface::class);
                 $header->getFieldValue()->willReturn($limit);
                 return $header->reveal();
@@ -64,7 +64,7 @@ final class RateLimitTest extends TestCase
             $remaining = 0;
         } else {
             $headers->has('x-rate-limit-remaining')->willReturn(true);
-            $headers->get('x-rate-limit-remaining')->will(function () use ($remaining, $phpunit) {
+            $headers->get('x-rate-limit-remaining')->will(function () use ($remaining, $phpunit): object {
                 $header = $phpunit->prophesize(HeaderInterface::class);
                 $header->getFieldValue()->willReturn($remaining);
                 return $header->reveal();
@@ -76,7 +76,7 @@ final class RateLimitTest extends TestCase
             $reset = 0;
         } else {
             $headers->has('x-rate-limit-reset')->willReturn(true);
-            $headers->get('x-rate-limit-reset')->will(function () use ($reset, $phpunit) {
+            $headers->get('x-rate-limit-reset')->will(function () use ($reset, $phpunit): object {
                 $header = $phpunit->prophesize(HeaderInterface::class);
                 $header->getFieldValue()->willReturn($reset);
                 return $header->reveal();

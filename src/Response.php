@@ -5,8 +5,10 @@ namespace Laminas\Twitter;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Json\Exception\ExceptionInterface as JsonException;
 use Laminas\Json\Json;
+use Laminas\Twitter\RateLimit;
 use stdClass;
 
+use function assert;
 use function in_array;
 use function sprintf;
 
@@ -32,17 +34,14 @@ class Response
         '',
     ];
 
-    /** @var HttpResponse */
-    private $httpResponse;
+    private ?HttpResponse $httpResponse;
 
     /** @var array|stdClass */
     private $jsonBody;
 
-    /** @var RateLimit */
-    private $rateLimit;
+    private RateLimit $rateLimit;
 
-    /** @var string */
-    private $rawBody;
+    private string $rawBody;
 
     /**
      * Constructor
@@ -88,6 +87,8 @@ class Response
      */
     public function isSuccess(): bool
     {
+        assert($this->httpResponse instanceof HttpResponse);
+
         return $this->httpResponse->isSuccess();
     }
 
@@ -96,6 +97,8 @@ class Response
      */
     public function isError(): bool
     {
+        assert($this->httpResponse instanceof HttpResponse);
+
         return ! $this->httpResponse->isSuccess();
     }
 
