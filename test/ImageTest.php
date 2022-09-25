@@ -15,14 +15,10 @@ final class ImageTest extends TestCase
     {
         $image = new Image(__FILE__);
 
-        $imageMediaType = Closure::bind(function () {
-            return $this->mediaType;
-        }, $image, Media::class)();
+        $imageMediaType = Closure::bind(fn() => $this->mediaType, $image, Media::class)();
         $this->assertSame('image/jpeg', $imageMediaType);
 
-        $imageFilename = Closure::bind(function () {
-            return $this->imageFilename;
-        }, $image, Media::class)();
+        $imageFilename = Closure::bind(fn() => $this->imageFilename, $image, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 
@@ -30,14 +26,10 @@ final class ImageTest extends TestCase
     {
         $image = new Image(__FILE__, 'text/plain');
 
-        $imageMediaType = Closure::bind(function () {
-            return $this->mediaType;
-        }, $image, Media::class)();
+        $imageMediaType = Closure::bind(fn() => $this->mediaType, $image, Media::class)();
         $this->assertSame('text/plain', $imageMediaType);
 
-        $imageFilename = Closure::bind(function () {
-            return $this->imageFilename;
-        }, $image, Media::class)();
+        $imageFilename = Closure::bind(fn() => $this->imageFilename, $image, Media::class)();
         $this->assertSame(__FILE__, $imageFilename);
     }
 }

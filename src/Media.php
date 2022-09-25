@@ -28,31 +28,31 @@ class Media
     public const UPLOAD_BASE_URI = 'https://upload.twitter.com/1.1/media/upload.json';
 
     /** @var int The maximum number of bytes to send to Twitter per request. */
-    private $chunkSize = (1024 * 1024) * 4;
+    private int $chunkSize = (1024 * 1024) * 4;
 
     /** @var string Error message from f*() operations. */
     private $fileOperationError;
 
     /** @var bool Whether or not the media upload is for a direct message. */
-    private $forDirectMessage;
+    private bool $forDirectMessage;
 
     /** @var string Filename of image to upload. */
-    private $imageFilename = '';
+    private string $imageFilename = '';
 
     /** @var string|int Media identifier provided by Twitter following upload. */
     private $mediaId = 0;
 
     /** @var string Mediatype of image. */
-    private $mediaType = '';
+    private string $mediaType = '';
 
     /** @var int Next chunked upload offset. */
-    private $segmentIndex = 0;
+    private int $segmentIndex = 0;
 
     /**
      * @var bool Whether or not the media will be shared across multiple
      *     direct messages.
      */
-    private $shared;
+    private bool $shared;
 
     public function __construct(
         string $imageFilename,
@@ -230,7 +230,7 @@ class Media
     private function createErrorHandler(): Closure
     {
         $this->fileOperationError = null;
-        return function ($errno, $errstr) {
+        return function ($errno, $errstr): bool {
             $this->fileOperationError = $errstr;
             return true;
         };

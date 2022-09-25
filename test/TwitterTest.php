@@ -469,9 +469,9 @@ final class TwitterTest extends TestCase
             'favorites/create.json',
             Http\Request::METHOD_POST,
             'favorites.create.json',
-            ['id' => 15042159587]
+            ['id' => 15_042_159_587]
         ));
-        $response = $twitter->favorites->create(15042159587);
+        $response = $twitter->favorites->create(15_042_159_587);
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
@@ -495,9 +495,9 @@ final class TwitterTest extends TestCase
             'favorites/destroy.json',
             Http\Request::METHOD_POST,
             'favorites.destroy.json',
-            ['id' => 15042159587]
+            ['id' => 15_042_159_587]
         ));
-        $response = $twitter->favorites->destroy(15042159587);
+        $response = $twitter->favorites->destroy(15_042_159_587);
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
@@ -509,7 +509,7 @@ final class TwitterTest extends TestCase
             Http\Request::METHOD_POST,
             'statuses.destroy.json'
         ));
-        $response = $twitter->statuses->destroy(15042159587);
+        $response = $twitter->statuses->destroy(15_042_159_587);
         $this->assertInstanceOf(TwitterResponse::class, $response);
     }
 
@@ -635,7 +635,7 @@ final class TwitterTest extends TestCase
                 'users/show.json',
                 Http\Request::METHOD_GET,
                 'users.show.mwop.json',
-                ['user_id' => 9453382]
+                ['user_id' => 9_453_382]
             )
         );
         // $id as string
@@ -650,11 +650,11 @@ final class TwitterTest extends TestCase
                 'users/show.json',
                 Http\Request::METHOD_GET,
                 'users.show.mwop.json',
-                ['user_id' => 9453382]
+                ['user_id' => 9_453_382]
             )
         );
         // $id as integer
-        $twitter->users->show(9453382);
+        $twitter->users->show(9_453_382);
     }
 
     public function testBlockingIds(): void
@@ -733,7 +733,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
         $payload = $response->toValue();
         $this->assertCount(1, $payload->users);
-        $this->assertEquals(4795561, $payload->users[0]->id);
+        $this->assertEquals(4_795_561, $payload->users[0]->id);
     }
 
     public function testFriendsIds(): void
@@ -749,7 +749,7 @@ final class TwitterTest extends TestCase
         $this->assertInstanceOf(TwitterResponse::class, $response);
         $payload = $response->toValue();
         $this->assertCount(20, $payload);
-        $this->assertEquals(15012215, $payload[0]->id);
+        $this->assertEquals(15_012_215, $payload[0]->id);
     }
 
     /**

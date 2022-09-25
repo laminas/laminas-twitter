@@ -4,7 +4,9 @@ namespace Laminas\Twitter;
 
 use Closure;
 use Laminas\Http;
+use Laminas\Http\Client;
 use Laminas\OAuth;
+use Laminas\OAuth\Consumer;
 use Laminas\Stdlib\ArrayUtils;
 use stdClass;
 use Traversable;
@@ -101,32 +103,24 @@ class Twitter
      */
     public const STATUS_MAX_CHARACTERS = 280;
 
-    /** @var array */
-    private $cookieJar;
+    private ?array $cookieJar = null;
 
-    /** @var Http\Client|null */
-    private $httpClient;
+    private ?Client $httpClient = null;
 
     /**
      * Flags to use with json_encode for POST requests
-     *
-     * @var int
      */
-    private $jsonFlags = JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+    private int $jsonFlags = JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
     /**
      * Current method type (for method proxying)
-     *
-     * @var string|null
      */
-    private $methodType;
+    private ?string $methodType = null;
 
     /**
      * Types of API methods
-     *
-     * @var array
      */
-    private $methodTypes = [
+    private array $methodTypes = [
         'account',
         'application',
         'blocks',
@@ -143,24 +137,18 @@ class Twitter
 
     /**
      * Oauth Consumer
-     *
-     * @var OAuth\Consumer|null
      */
-    private $oauthConsumer;
+    private Consumer $oauthConsumer;
 
     /**
      * Options passed to constructor
-     *
-     * @var array
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * Username
-     *
-     * @var string
      */
-    private $username;
+    private ?string $username = null;
 
     public function __construct(
         ?iterable $options = null,

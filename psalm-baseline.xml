@@ -231,11 +231,16 @@
     </TypeDoesNotContainType>
   </file>
   <file src="test/ImageTest.php">
-    <MissingClosureReturnType occurrences="4">
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
+    <MissingClosureReturnType occurrences="8">
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
     </MissingClosureReturnType>
     <PossiblyInvalidFunctionCall occurrences="4"/>
     <UndefinedThisPropertyFetch occurrences="4">
@@ -247,11 +252,12 @@
   </file>
   <file src="test/MediaTest.php">
     <MissingClosureReturnType occurrences="5">
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
     </MissingClosureReturnType>
     <MixedArgument occurrences="8">
       <code>$client-&gt;reveal()</code>
@@ -461,10 +467,11 @@
   </file>
   <file src="test/VideoTest.php">
     <MissingClosureReturnType occurrences="4">
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
-      <code>function () {</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
+      <code>fn()</code>
     </MissingClosureReturnType>
     <PossiblyInvalidFunctionCall occurrences="4"/>
     <UndefinedThisPropertyFetch occurrences="4">
