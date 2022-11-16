@@ -17,7 +17,7 @@ use function array_reduce;
 use function array_walk;
 use function count;
 use function explode;
-use function get_class;
+use function get_debug_type;
 use function gettype;
 use function implode;
 use function in_array;
@@ -1547,7 +1547,7 @@ class Twitter
         if (! is_string($id) && ! is_int($id)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '$id must be an integer or a string, received %s',
-                is_object($id) ? get_class($id) : gettype($id)
+                get_debug_type($id)
             ));
         }
 
