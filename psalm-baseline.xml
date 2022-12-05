@@ -29,7 +29,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>?int</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;$key ?? null</code>
       <code>$this-&gt;$key ?? null</code>
     </MixedReturnStatement>
     <PossiblyInvalidMethodCall occurrences="3">
@@ -215,8 +216,18 @@
     </TypeDoesNotContainType>
   </file>
   <file src="test/ImageTest.php">
-    <MissingClosureReturnType occurrences="4"/>
-    <PossiblyInvalidFunctionCall occurrences="4"/>
+    <MissingClosureReturnType occurrences="4">
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+    </MissingClosureReturnType>
+    <PossiblyInvalidFunctionCall occurrences="4">
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $image, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $image, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $image, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $image, Media::class)()</code>
+    </PossiblyInvalidFunctionCall>
     <UndefinedThisPropertyFetch occurrences="4">
       <code>$this-&gt;imageFilename</code>
       <code>$this-&gt;imageFilename</code>
@@ -225,7 +236,13 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="test/MediaTest.php">
-    <MissingClosureReturnType occurrences="5"/>
+    <MissingClosureReturnType occurrences="5">
+      <code>fn() =&gt; $this-&gt;httpResponse</code>
+      <code>fn() =&gt; $this-&gt;httpResponse</code>
+      <code>fn() =&gt; $this-&gt;httpResponse</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+    </MissingClosureReturnType>
     <MixedArgument occurrences="8">
       <code>$client-&gt;reveal()</code>
       <code>$client-&gt;reveal()</code>
@@ -333,7 +350,13 @@
       <code>willReturn</code>
       <code>willReturn</code>
     </MixedMethodCall>
-    <PossiblyInvalidFunctionCall occurrences="5"/>
+    <PossiblyInvalidFunctionCall occurrences="5">
+      <code>Closure::bind(fn() =&gt; $this-&gt;httpResponse, $response, TwitterResponse::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;httpResponse, $response, TwitterResponse::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;httpResponse, $response, TwitterResponse::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $media, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $media, Media::class)()</code>
+    </PossiblyInvalidFunctionCall>
     <UndefinedThisPropertyAssignment occurrences="1">
       <code>$this-&gt;client</code>
     </UndefinedThisPropertyAssignment>
@@ -405,10 +428,13 @@
       <code>toValue</code>
       <code>willReturn</code>
     </MixedMethodCall>
-    <MixedPropertyFetch occurrences="3">
+    <MixedPropertyFetch occurrences="6">
       <code>$payload-&gt;users[0]-&gt;id</code>
       <code>$payload[0]-&gt;id</code>
       <code>$status-&gt;resources</code>
+      <code>$status-&gt;resources-&gt;statuses</code>
+      <code>$status-&gt;resources-&gt;statuses-&gt;{'/statuses/user_timeline'}</code>
+      <code>$status-&gt;resources-&gt;statuses-&gt;{'/statuses/user_timeline'}-&gt;remaining</code>
     </MixedPropertyFetch>
     <PossiblyInvalidArgument occurrences="1">
       <code>$payload</code>
@@ -431,8 +457,18 @@
     </UnusedVariable>
   </file>
   <file src="test/VideoTest.php">
-    <MissingClosureReturnType occurrences="4"/>
-    <PossiblyInvalidFunctionCall occurrences="4"/>
+    <MissingClosureReturnType occurrences="4">
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+    </MissingClosureReturnType>
+    <PossiblyInvalidFunctionCall occurrences="4">
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $video, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $video, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $video, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $video, Media::class)()</code>
+    </PossiblyInvalidFunctionCall>
     <UndefinedThisPropertyFetch occurrences="4">
       <code>$this-&gt;imageFilename</code>
       <code>$this-&gt;imageFilename</code>
