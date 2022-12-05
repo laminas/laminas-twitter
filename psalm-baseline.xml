@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
   <file src="src/Media.php">
     <MissingClosureParamType occurrences="2">
       <code>$errno</code>
@@ -29,7 +29,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>?int</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;$key ?? null</code>
       <code>$this-&gt;$key ?? null</code>
     </MixedReturnStatement>
     <PossiblyInvalidMethodCall occurrences="3">
@@ -48,7 +49,6 @@
       <code>null === $this-&gt;jsonBody</code>
       <code>null === $this-&gt;jsonBody</code>
     </DocblockTypeContradiction>
-    <InvalidCatch occurrences="1"/>
     <MixedAssignment occurrences="2">
       <code>$jsonBody</code>
       <code>$this-&gt;jsonBody</code>
@@ -62,10 +62,6 @@
     <PossiblyInvalidPropertyFetch occurrences="1">
       <code>$this-&gt;jsonBody-&gt;errors</code>
     </PossiblyInvalidPropertyFetch>
-    <PossiblyNullPropertyAssignmentValue occurrences="2">
-      <code>$httpResponse</code>
-      <code>$httpResponse</code>
-    </PossiblyNullPropertyAssignmentValue>
     <PossiblyNullReference occurrences="2">
       <code>getBody</code>
       <code>getHeaders</code>
@@ -75,9 +71,8 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Twitter.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="1">
       <code>! is_string($id) &amp;&amp; ! is_int($id)</code>
-      <code>null === $this-&gt;cookieJar</code>
     </DocblockTypeContradiction>
     <InvalidNullableReturnType occurrences="1">
       <code>Http\Client</code>
@@ -181,10 +176,9 @@
     <MixedArrayTypeCoercion occurrences="1">
       <code>$params[$key]</code>
     </MixedArrayTypeCoercion>
-    <MixedAssignment occurrences="22">
+    <MixedAssignment occurrences="21">
       <code>$accessToken</code>
       <code>$accessToken</code>
-      <code>$detectedType</code>
       <code>$httpClient</code>
       <code>$httpClient</code>
       <code>$httpClientOptions</code>
@@ -211,38 +205,29 @@
     <PossiblyInvalidMethodCall occurrences="1">
       <code>addHeaderLine</code>
     </PossiblyInvalidMethodCall>
-    <PossiblyNullArgument occurrences="2">
+    <PossiblyNullArgument occurrences="1">
       <code>$inReplyToStatusId</code>
-      <code>$this-&gt;oauthConsumer</code>
     </PossiblyNullArgument>
     <PossiblyUndefinedMethod occurrences="1">
       <code>addHeaderLine</code>
     </PossiblyUndefinedMethod>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$cookieJar</code>
-      <code>$username</code>
-    </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>! $this-&gt;isAuthorised($client) &amp;&amp; $this-&gt;username !== null</code>
-      <code>$this-&gt;username !== null</code>
-    </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType occurrences="1">
       <code>! is_string($name)</code>
     </TypeDoesNotContainType>
   </file>
   <file src="test/ImageTest.php">
-    <MissingClosureReturnType occurrences="8">
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
+    <MissingClosureReturnType occurrences="4">
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
     </MissingClosureReturnType>
-    <PossiblyInvalidFunctionCall occurrences="4"/>
+    <PossiblyInvalidFunctionCall occurrences="4">
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $image, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $image, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $image, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $image, Media::class)()</code>
+    </PossiblyInvalidFunctionCall>
     <UndefinedThisPropertyFetch occurrences="4">
       <code>$this-&gt;imageFilename</code>
       <code>$this-&gt;imageFilename</code>
@@ -252,12 +237,11 @@
   </file>
   <file src="test/MediaTest.php">
     <MissingClosureReturnType occurrences="5">
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
+      <code>fn() =&gt; $this-&gt;httpResponse</code>
+      <code>fn() =&gt; $this-&gt;httpResponse</code>
+      <code>fn() =&gt; $this-&gt;httpResponse</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
     </MissingClosureReturnType>
     <MixedArgument occurrences="8">
       <code>$client-&gt;reveal()</code>
@@ -366,7 +350,13 @@
       <code>willReturn</code>
       <code>willReturn</code>
     </MixedMethodCall>
-    <PossiblyInvalidFunctionCall occurrences="5"/>
+    <PossiblyInvalidFunctionCall occurrences="5">
+      <code>Closure::bind(fn() =&gt; $this-&gt;httpResponse, $response, TwitterResponse::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;httpResponse, $response, TwitterResponse::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;httpResponse, $response, TwitterResponse::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $media, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $media, Media::class)()</code>
+    </PossiblyInvalidFunctionCall>
     <UndefinedThisPropertyAssignment occurrences="1">
       <code>$this-&gt;client</code>
     </UndefinedThisPropertyAssignment>
@@ -438,10 +428,13 @@
       <code>toValue</code>
       <code>willReturn</code>
     </MixedMethodCall>
-    <MixedPropertyFetch occurrences="3">
+    <MixedPropertyFetch occurrences="6">
       <code>$payload-&gt;users[0]-&gt;id</code>
       <code>$payload[0]-&gt;id</code>
       <code>$status-&gt;resources</code>
+      <code>$status-&gt;resources-&gt;statuses</code>
+      <code>$status-&gt;resources-&gt;statuses-&gt;{'/statuses/user_timeline'}</code>
+      <code>$status-&gt;resources-&gt;statuses-&gt;{'/statuses/user_timeline'}-&gt;remaining</code>
     </MixedPropertyFetch>
     <PossiblyInvalidArgument occurrences="1">
       <code>$payload</code>
@@ -459,21 +452,23 @@
       <code>$this-&gt;jsonFlags</code>
       <code>$this-&gt;jsonFlags</code>
     </UndefinedThisPropertyFetch>
-    <UnusedVariable occurrences="3">
-      <code>$expected</code>
-      <code>$expected</code>
+    <UnusedVariable occurrences="1">
       <code>$return</code>
     </UnusedVariable>
   </file>
   <file src="test/VideoTest.php">
     <MissingClosureReturnType occurrences="4">
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
-      <code>fn()</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;imageFilename</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
+      <code>fn() =&gt; $this-&gt;mediaType</code>
     </MissingClosureReturnType>
-    <PossiblyInvalidFunctionCall occurrences="4"/>
+    <PossiblyInvalidFunctionCall occurrences="4">
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $video, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;imageFilename, $video, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $video, Media::class)()</code>
+      <code>Closure::bind(fn() =&gt; $this-&gt;mediaType, $video, Media::class)()</code>
+    </PossiblyInvalidFunctionCall>
     <UndefinedThisPropertyFetch occurrences="4">
       <code>$this-&gt;imageFilename</code>
       <code>$this-&gt;imageFilename</code>
@@ -501,9 +496,6 @@
     </MixedMethodCall>
   </file>
   <file src="test/_files/normalize_json.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK | JSON_BIGINT_AS_STRING | JSON_UNESCAPED_SLASHES</code>
-    </InvalidScalarArgument>
     <MissingFile occurrences="1">
       <code>require_once __DIR__ . '/../../../../vendor/autoload.php'</code>
     </MissingFile>

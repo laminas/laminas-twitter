@@ -2,15 +2,16 @@
 
 namespace Laminas\Twitter;
 
+use JsonException;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Json\Exception\ExceptionInterface as JsonException;
-use Laminas\Json\Json;
-use Laminas\Twitter\RateLimit;
 use stdClass;
 
 use function assert;
 use function in_array;
+use function json_decode;
 use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Representation of a response from Twitter.
@@ -168,7 +169,7 @@ class Response
         $this->rateLimit    = new RateLimit($this->httpResponse->getHeaders());
 
         try {
-            $jsonBody       = Json::decode($this->rawBody, Json::TYPE_OBJECT);
+            $jsonBody       = json_decode($this->rawBody, false, 512, JSON_THROW_ON_ERROR);
             $this->jsonBody = $jsonBody;
         } catch (JsonException $e) {
             throw new Exception\DomainException(sprintf(
