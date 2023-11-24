@@ -4,7 +4,7 @@ pages:
   - Home: index.md
   - Introduction: intro.md
 site_name: laminas-twitter
-site_description: 'PHP OOP wrapper for the Twitter API'
+site_description: 'Abandoned. PHP OOP wrapper for the Twitter API'
 repo_url: 'https://github.com/laminas/laminas-twitter'
 extra:
   project: Components
