@@ -1,6 +1,10 @@
 # laminas-twitter
 
-[![Build Status](https://github.com/laminas/laminas-twitter/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-twitter/actions?query=workflow%3A"Continuous+Integration")
+> ## Abandoned
+> 
+> This package is **abandoned** and will receive no further development!
+>
+> See the Technical Steering Committee [meeting minutes](https://github.com/laminas/technical-steering-committee/blob/main/meetings/minutes/2023-11-06-TSC-Minutes.md#proposal-to-abandon-and-archive-laminas-twitter)
 
 > ## 🇷🇺 Русским гражданам
 >
